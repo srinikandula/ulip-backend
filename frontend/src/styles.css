@@ -1,0 +1,93 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.p-toast-message{
+    padding:2%;
+    /* height: 20vh; */
+}
+
+.redBtnEffect {
+    /* background-color: #D6223A; */
+    position: relative;
+    overflow: hidden;
+}
+
+.redBtnEffect::after {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    content: "";
+    opacity: 0.1;
+    cursor: pointer;
+    background-color: black;
+    left: 0;
+    transition: all ease-in-out 0.3s;
+    /* z-index: -1; */
+    color: white;
+}
+
+.redBtnEffect:hover::after {
+    width: 100% !important;
+}
+.p-sidebar-right{
+    width: 30rem;
+}
+.p-sidebar-header{
+    display: none;
+}
+
+.pCheckboxFilter{
+    gap: 7%;
+    width: 100%;
+}
+
+
+
+.p-menu-list{
+    display: flex;
+    flex-direction: column;
+}
+.p-menu-list li{
+    height: 4vh;
+}
+.p-menu-list li div{
+    width: 100%;
+    padding: 2%;
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+.p-menu-list li div a{
+    height: 100%;
+}
+
+.timePartOnLogs{
+    font-size: 0.8em;
+    border-radius: 5px;
+    padding: 3%;
+    position: absolute;
+    background-color: #111;
+    color: white;
+    top: -30%;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: all ease-out 0.1s;
+}
+.generatedApiPart:hover{
+    .timePartOnLogs{
+        opacity: 1;
+        transform: translateY(-3px);
+    }    
+}

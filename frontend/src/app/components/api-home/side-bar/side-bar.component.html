@@ -1,0 +1,45 @@
+<p-sidebar [(visible)]="keypage.createKeyBool" position="right" styleClass="w-30rem">
+    <form id="sideBarContent" >
+        <button id="closeSideBar" (click)="handleOnClickMenu()">
+            X
+        </button>
+        <div id="upperSideBarSection">
+            <div id="h2Sidebar">
+                <h2>Create Keys</h2>
+            </div>
+            <div id="sideBarPara">
+                <p>Enter the below details to create passkeys</p>
+            </div>
+
+        </div>
+        <div id="allInputsSideBar">
+            <div class="inputDivSidebar">
+                <div class="inputDivSidePara">
+                    <p>Application Name</p>
+                </div>
+                <div class="inputDivSideInp"><input [(ngModel)]="applicationName" name="applicationName" type="text"
+                        placeholder="Enter Application Name"></div>
+            </div>
+            <div class="inputDivSidebar">
+                <div class="inputDivSidePara">
+                    <p>Owner Name</p>
+                </div>
+                <div class="inputDivSideInp"><input [(ngModel)]="ownerName" name="ownerName" type="text"
+                        placeholder="Enter Owner Name"></div>
+            </div>
+            <div class="inputDivSidebar">
+                <div class="inputDivSidePara">
+                    <p>Contact Name</p>
+                </div>
+                <div class="inputDivSideInp"><input [(ngModel)]="contactName" name="contactName" type="text"
+                        placeholder="Enter Contact Name"></div>
+            </div>
+        </div>
+        <div id="submitOptionKeyOuterDiv">
+            <div id="submitOptionKey">
+                <button class="redBtnEffect" (click)="handleOnCreateKey()" type="submit">Done</button>
+            </div>
+
+        </div>
+    </form>
+</p-sidebar>

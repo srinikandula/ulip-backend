@@ -1,0 +1,247 @@
+/* style.css */
+body, html {
+    height: 100vh;
+    margin: 0;
+}
+
+#dNZnPop4vEWlLc {
+    font-size: 25px;
+}
+
+
+
+
+
+
+/* li {
+  list-style: none;
+}
+li::before {
+  content: '';
+  display: inline-block;
+  left: 10px;
+  height: 10px;
+  width: 10px;
+  background-image: url(./key.png);
+} */
+
+
+
+#diCgqRzdsILqdTa {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+#zEYPp41JmDPM4Qy {
+    /* display: inline-block; */
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+#button_div {
+    display: flex;
+    width: 70%;
+    justify-content: right;
+}
+
+#N8NODaXdtouCuiJ {
+    width: 100px;
+    background-color: #D6223A;
+    color: white;
+    height: 40px;
+    border-radius: 4px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+
+#jZ3qbrkXCeEdwsa {
+    display: inline-block;
+    height: 30px;
+}
+
+
+
+#content_table {
+    position: relative;
+    /* top: 50%; */
+    top: 50px;
+    left: 50%;
+    display: flex;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    justify-content: center;
+}
+
+table {
+    width: 100%;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+
+
+th,
+td {
+	padding: 15px;
+	color: black;
+}
+
+th {
+	text-align: left;
+}
+
+thead {
+	th {
+		background-color: #DDE2EA;
+	}
+}
+
+tbody {
+    background-color: white;
+	tr {
+		&:hover {
+			background-color: rgb(235, 234, 234);
+		}
+        
+	}
+}
+.keyVal:hover{
+    text-decoration:underline;
+    cursor: pointer;
+}
+.copyBtnDiv{
+    left: 15px;
+    position: absolute;
+    display: flex;
+    width: 100%;
+    bottom: 75%;
+    /* display: none; */
+    opacity: 0;
+
+    transform: translateY(8px);
+    transition: all ease-in 0.3s;
+}
+.copyBtnDiv p{
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    background-color: #111;
+    padding: 3%;
+    color: white;
+    border-radius:5px ;
+    font-size: 0.8em;
+}
+.generatedApiPart{
+    position: relative;
+}
+.generatedApiPart:hover{
+    .copyBtnDiv{
+        opacity: 1;
+        display: flex;
+        transform: translateY(0px);
+    }
+}
+.secKeyCreate button{
+    padding: 5%;
+    border-radius: 40px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #e4e4e4;
+    cursor: pointer;
+    position: relative;
+    background-color: transparent;
+    z-index: 2;
+}
+
+.secKeyCreate{
+    position: relative;
+}
+.allBlur{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    backdrop-filter: blur(5px);
+    z-index: 1;
+}
+.spinnerPart{
+    z-index: 2;
+    position: absolute;
+    /* left: -14%; */
+    bottom: -26%;
+    scale: 0.8;
+    z-index: 1;
+}
+
+#ifNoKey{
+    text-align: center;
+    /* width: 22%; */
+    width: 100%;
+    height: 50svh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+}
+
+#ifNoKey:hover{
+    #imageHoverNoKey{
+        opacity: 0.3;
+    }
+}
+#imageShowTableNoKey{
+    
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+#ifNoKey img{
+    width: 30%;
+}
+#ifNoKey p{
+    color: #333;
+    font-size: 2em;
+}
+#imageHoverNoKey{
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background-color: white;
+    opacity: 0.1;
+}
+
+.genSecKeyTd{
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+.genSecKeyBtn{
+    font-size: 0.8em;
+    border-radius: 5px;
+    padding: 3%;
+    position: absolute;
+    background-color: #111;
+    color: white;
+    top: -40%;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: all ease-out 0.1s;
+    z-index: 3;
+    width: 100%;
+    text-align: center;
+}
+.genSecKeyTd:hover{
+    .genSecKeyBtn{
+        opacity: 1;
+        transform: translateY(-3px);
+    }
+}

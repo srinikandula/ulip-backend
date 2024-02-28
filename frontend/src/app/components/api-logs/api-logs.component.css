@@ -1,0 +1,470 @@
+/* style.css */
+body, html {
+    height: 100vh;
+    margin: 0;
+}
+
+#big_container {
+    display: flex;
+    height: 100%;
+}
+
+#left_container {
+    width: 20%;
+    background-color: #F9FAFB;
+    height: 100svh;
+    display: inline-block;
+    position: sticky;
+    left: 0;
+    display: flex;
+    top: 0;
+    flex-direction: column;
+    gap: 21px;
+}
+
+
+
+#mahindra_logo {
+    width: 80%;
+    padding: 4%;
+    padding-left: 6%;
+}
+
+
+.grey_font {
+    color: #222; 
+    position: relative;
+    cursor: pointer;
+    font-weight: bold;
+}
+/* .grey_font:hover{
+    color: white;
+} */
+.grey_font::after{
+    background-color: #D6223A;
+    transition: all ease-out 0.1s;
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    content: "";
+    color: white;
+    left: 0;
+    z-index: -1;
+    top: 0;
+
+}
+.grey_font:hover::after{
+    width: 100%;
+}
+.grey_font:hover{
+    color: white;
+}
+#dNZnPop4vEWlLc {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#pwsld {
+    padding: 20px;
+    position: relative;
+    font-weight: bold;
+    top: 20px;
+}
+
+
+#MrKCgSxHMeTD2Rk {
+    padding: 20px;
+    /* list-style-image: url(./key.png) ; */
+}
+
+#cNKt81CvfXNk5Of {
+    padding: 20px;
+}
+
+
+/* li {
+  list-style: none;
+}
+li::before {
+  content: '';
+  display: inline-block;
+  left: 10px;
+  height: 10px;
+  width: 10px;
+  background-image: url(./key.png);
+} */
+
+#right_container {
+    padding: 20px;
+    width: 79%;
+    display: inline-block;
+    flex-direction: column;
+    background-color: #F3F3F4; /* Example background color */
+    overflow: auto;
+}
+
+#VYFc1qozkId5mra {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+#toggle_menu_div {
+    width: 20%;
+
+}
+
+#toggle_menu {
+    background-color: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    width: 20%;
+}
+
+#person_id_profile {
+    /* display: inline-block;
+    position: relative;
+    right: 0px;
+    left: 50%; */
+
+    /* flex: 1 1 0; */
+
+    justify-content: right;
+  display: flex;
+  width: 80%;
+    
+}
+
+#diCgqRzdsILqdTa {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+#zEYPp41JmDPM4Qy {
+    /* display: inline-block; */
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+#button_div {
+    display: flex;
+    width: 70%;
+    justify-content: right;
+}
+
+#N8NODaXdtouCuiJ {
+    width: 100px;
+    background-color: #D6223A;
+    color: white;
+    height: 40px;
+    border-radius: 4px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+
+#jZ3qbrkXCeEdwsa {
+    display: inline-block;
+    height: 30px;
+}
+
+
+
+#content_table {
+    position: relative;
+    /* top: 50%; */
+    top: 50px;
+    left: 50%;
+    display: flex;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    justify-content: center;
+}
+
+table {
+    width: 100%;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+
+
+th,
+td {
+	padding: 15px;
+	color: black;
+}
+
+th {
+	text-align: left;
+}
+
+thead {
+	th {
+		background-color: #DDE2EA;
+	}
+}
+
+tbody {
+    background-color: white;
+	tr {
+		&:hover {
+			background-color: rgb(235, 234, 234);
+		}
+        
+	}
+}
+.keyVal:hover{
+    text-decoration:underline;
+    cursor: pointer;
+}
+.copyBtnDiv{
+    left: 15px;
+    position: absolute;
+    display: flex;
+    width: 100%;
+    bottom: 75%;
+    /* display: none; */
+    opacity: 0;
+
+    transform: translateY(8px);
+    transition: all ease-in 0.3s;
+}
+.copyBtnDiv p{
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    background-color: #111;
+    padding: 3%;
+    color: white;
+    border-radius:5px ;
+    font-size: 0.8em;
+}
+.generatedApiPart{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+.generatedApiPart:hover{
+    .copyBtnDiv{
+        opacity: 1;
+        display: flex;
+        transform: translateY(0px);
+    }
+}
+.secKeyCreate button{
+    padding: 5%;
+    border-radius: 40px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #e4e4e4;
+    cursor: pointer;
+    position: relative;
+    background-color: transparent;
+    z-index: 2;
+}
+
+.secKeyCreate{
+    position: relative;
+}
+.allBlur{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    backdrop-filter: blur(5px);
+    z-index: 1;
+}
+.spinnerPart{
+    left: 0;
+    z-index: 2;
+    position: absolute;
+    left: -12%;
+    /* top: revert-layer; */
+    bottom: -27%;
+    scale: 0.8;
+    z-index: 1;
+}
+
+#ifNoKey{
+    text-align: center;
+    /* width: 22%; */
+    width: 100%;
+    height: 50svh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+}
+
+#ifNoKey:hover{
+    #imageHoverNoKey{
+        opacity: 0.3;
+    }
+}
+#imageShowTableNoKey{
+    
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+#ifNoKey img{
+    width: 30%;
+}
+#ifNoKey p{
+    color: #333;
+    font-size: 2em;
+}
+#imageHoverNoKey{
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background-color: white;
+    opacity: 0.1;
+}
+.searchLogs{
+    width: 70%;
+    display: flex;
+    justify-content: right;
+}
+.filterBtnDiv button{
+    width: 30px;
+    border: none;
+    cursor: pointer;
+    background-color: #D6223A;
+    color: white;
+    height: 30px;
+    border-radius: 5px;
+}
+.searchLogs{
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    height: 100%;
+}
+.searchLogsSpan{
+    background-color: white;
+    height: 51%;
+    display: flex;
+    /* flex-direction: column; */
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 32%;
+    position: relative;
+    border-radius: 5px;
+}
+.searchLogsPiSearch{
+    
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+
+}
+.searchLogsSpan input{
+    border: none;
+    height: 100%;
+    padding: 1%;
+    font-size: 0.9em;
+}
+.searchLogsSpan button{
+    border:none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 100;
+    color: #444;
+}
+#filterMenuDiv{
+    z-index: 2;
+    position: absolute;
+    right: 1%;
+    background-color: white;
+    padding: 25%;
+    border-radius: 8px;
+    width: 12vw;
+    margin-top: 35%;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.filterDiv{
+    position: relative;
+}
+.field-checkbox{
+    padding: 4%;
+    font-size: 0.8em;
+}
+#filterByH{
+    padding: 5%;
+}
+#downloadLogs{
+    position: fixed;
+    width: 11%;
+    bottom: 5%;
+    z-index: 5;
+    right: 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+}
+#downloadLogs button{
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    border: none;
+    font-size: 2em;
+    background-color: white;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+    color: #148247;
+    border-radius: 70px;
+    z-index: 2;
+
+}
+#downloadShowLabl{
+    background-color: black;
+    padding: 4%;
+    color: white;
+    text-align: center;
+    font-size: 0.8em;
+    width: 100%;
+    border-radius: 5px;
+    transform: translateY(10px);
+    z-index: 2;
+    opacity: 0;
+    transition: all ease-in-out 0.3s;
+}
+#downloadLogs:hover{
+    #downloadShowLabl{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.timePartOnLogs{
+    font-size: 0.8em;
+    border-radius: 5px;
+    padding: 3%;
+    position: absolute;
+    background-color: #111;
+    color: white;
+    top: -30%;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: all ease-out 0.1s;
+}
+.generatedApiPart:hover{
+    .timePartOnLogs{
+        opacity: 1;
+        transform: translateY(-3px);
+    }    
+}

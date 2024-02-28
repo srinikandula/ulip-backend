@@ -1,0 +1,51 @@
+<!-- <ngx-ui-loader></ngx-ui-loader> -->
+
+<div id="loginPageDiv">
+    <div id="logo-div">
+        <img src="https://cdn.cargoinsights.co/wp-content/uploads/2023/10/31213739/Mahindra-Logistics-reports-Q2-H1-FY24-results.webp"
+            alt="mahindralogo">
+    </div>
+    <div class="login-container-div">
+        <div class="login-container">
+            <form id="formComponent" (ngSubmit)="handleOnLogin()">
+                <h1><b>MLL ULIP Integrated App</b></h1>
+                <div id="allFormComp">
+
+                    <div id="formUpperPara">
+                        <p id="formWelcome"><b>Welcome!</b></p>
+                        <p id="para2Form">Please enter your login credentials to access your account.</p>
+                    </div>
+                    <div id="loginBottomPortion">
+                        <div id="loginInputDiv">
+                            <div class="inputDivAllTexts">
+                                <div class="inputDivUpperText">
+                                    <p> Username</p>
+                                </div>
+                                <input class="inputTexts" [(ngModel)]="username" name="username" id='username'
+                                    placeholder="Enter your Username" required><br>
+
+                            </div>
+                            <div class="inputDivAllTexts">
+                                <div class="inputDivUpperText">
+                                    <p>Password</p>
+                                </div>
+                                <input class="inputTexts" [(ngModel)]="password" type="password" name="password"
+                                    id='pass' placeholder="Enter Password" required>
+                            </div>
+                        </div>
+                        <div id="bottomLoginDiv">
+                            <a href="forget" class="red-link">Forget Password</a><br>
+                            <div id="buttonSubmit">
+                                <!-- <input type="submit" value="Login" id="loginBtn"> -->
+                                <button type="submit" id="loginBtn">Login</button>
+                                <button type="submit" class="buttonAfter"></button>
+                            </div>
+
+                            <p class="blue-link">Don't have an account<a href="signup">Signup</a></p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

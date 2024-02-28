@@ -1,0 +1,175 @@
+
+#formComponent{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+#loginPageDiv {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.login-container {
+    width: 32%;
+    padding: 20px;
+    height: 80%;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.buttonAfter{
+    top: 0;
+    position: absolute;
+    width:0;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    background-color: black;
+    left:0;
+    transition: all ease-in-out 0.3s;
+}
+
+#buttonSubmit:hover{
+    .buttonAfter{
+        width: 100%;
+        opacity: 0.2;
+    }
+}
+#buttonSubmit{
+    position: relative;
+}
+.login-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+#loginBtn {
+    width: 100%;
+    background-color: #D6223A;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+
+
+.inputTexts {
+    background-color: #F7F7F7;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    box-sizing: border-box;
+    height: 100%;
+}
+#loginInputDiv{
+    display: flex;
+    flex-direction: column;
+    gap: 29px;
+    height: 18vh;
+}
+#loginBottomPortion{
+    display: flex;
+    flex-direction: column;
+    gap: 27px;
+}
+#para2Form{
+    padding-bottom: 5% 0;
+    font-size: 0.9em;
+    color: #222;
+}
+#formWelcome{
+    font-size: 1em;
+    padding-top: 2% 0;
+    font-weight: bold;
+}
+
+#allFormComp{
+    display: flex;
+    flex-direction: column ;
+    gap: 25px;
+}
+.inputDivAllTexts{
+    background-color: #F7F7F7;
+    color: grey;
+    font-size: 0.8em;
+}
+.inputDivUpperText{
+    padding-left: 10px;
+    position: relative;
+    height: 2vh;
+
+}
+.inputDivUpperText p{
+    position: absolute;
+    bottom: -80%;
+}
+.inputTexts:focus{
+    outline: none;
+}
+#formComponent h1{
+    font-size: 1.5em;
+    padding: 4% 0;
+    color: #333;
+}
+
+.loginInputDiv{
+    display: flex;
+    flex-direction: column;
+    gap: 29px;
+    height: 18vh;
+}
+img {
+    width: 140px;
+}
+
+.red-link {
+    color: red;
+    /* Set hyperlink color to red */
+
+    display: block;
+    padding: 2% 0;
+    text-align: right;
+}
+
+.blue-link {
+    color: blue;
+    text-align: right;
+    display: flex;
+    padding: 5% 0;
+    text-align: right;
+    gap: 7px;
+    justify-content: right;
+}
+
+.login-container-div {
+    width: 93%;
+    display: flex;
+    justify-content: right;
+    height: 80svh;
+    /* align-items: center; */
+    padding-top: 2%;
+}
+
+#logo-div {
+    width: 100%;
+    padding-left: 2%;
+    height: 20svh;
+    display: flex;
+    align-items: center;
+
+}

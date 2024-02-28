@@ -1,0 +1,66 @@
+<app-side-bar (keyCardAdd)="addKeyCard($event)"></app-side-bar>
+<div class="allBlur" *ngIf="keypage.createKeyBool"></div>
+
+    
+
+        
+        <div id="diCgqRzdsILqdTa">
+            <div id="zEYPp41JmDPM4Qy">
+                <div id="xPDn9ScBR72CeT" class="grey_font">Home</div>
+                <div id="dNZnPop4vEWlLc">Create Keys</div>
+
+            </div>
+            <div id="button_div">
+                <button id="N8NODaXdtouCuiJ" (click)="handleOnCreate()" class="redBtnEffect"> + Create</button>
+            </div>
+        </div>
+
+        <div id="jZ3qbrkXCeEdwsa" class="grey_font">History of Created Keys</div>
+        <div id="table_container">
+            <table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Application Name</th>
+                            <th>Owner Name</th>
+                            <th>Contact Number</th>
+                            <th>Generated Passkey</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let i of apiHome">
+                        <tr>
+                            <td>{{i.applicationName}}</td>
+                            <td>{{i.ownerName}}</td>
+                            <td>{{i.contactNo}}</td>
+                            <td class="generatedApiPart" (click)="handleOnCopyClick(i.key)">
+                                <div class="copyBtnDiv">
+                                    <p class="copyBtn">Click to copy</p>
+                                </div>
+                                <p class="keyVal">{{i.key.slice(0,20)}}...</p>
+                            </td>
+                            <td class="secKeyCreate genSecKeyTd">
+                                <div class="timePartOnLogs genSecKeyBtn">Generate Secret Key</div>
+                                <button (click)="handleOnGenSecKey(i.key)"><i
+                                        class="fa-solid fa-play"></i>
+                                </button>
+                                <p-progressSpinner *ngIf="onProgressSecKey && handleIfCurrentLoaded(i.key)" styleClass="w-2rem h-2rem" strokeWidth="2"
+                                    fill="var(--surface-ground)" animationDuration=".5s"
+                                    class="spinnerPart">Text
+                                </p-progressSpinner>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </table>
+            <div id="ifNoKey" *ngIf="apiHome.length === 0" (click)="handleOnCreate()">
+                <div id="imageShowTableNoKey">
+                    <div id="imageHoverNoKey"></div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/6_key_copy.svg/640px-6_key_copy.svg.png"
+                        alt="">
+                </div>
+                <p>No keys to Display</p>
+
+            </div>
+        </div>
+
