@@ -30,7 +30,7 @@ An Application has to be designed and built to act as a Middleware for all the I
 <ol><li>
        
 
-        Creating user : Make a POST request :<br>
+        Creating user : Make a POST request :
            curl  -X POST \
            'http://localhost:5000/user/signup' \
            --header 'Accept: /' \
