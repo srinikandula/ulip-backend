@@ -10,16 +10,19 @@ An Application has to be designed and built to act as a Middleware for all the I
 4.How to Access:
      1.Users can Login either using their Credentials directly.
      2.New Users will need to connect with the Super Admin to get the access to LogiFreight.
+     
 5.How to Use Backend:-
        1.	Go to the backend directory.
        2.	Install all packages from npm i
        3.	Run backend from node index.js
+       
 6.How to use Frontend:-
        1.	Go to the frontend directory.
        2.	Install all packages from npm i - - force
        3.	Install an additional package from  npm i engine.io-parser@5.2.1 --force
        4.	Run frontend from ng serve
        5.	The frontend is running at port 4200
+       
 7.Direction for the Backend:-
        1.Creating user : Make a POST request
            curl  -X POST \
@@ -38,6 +41,7 @@ An Application has to be designed and built to act as a Middleware for all the I
            Username:user,
            Password:12345678
            (You can set your own username and password while creating a user.)
+           
 8.Making a ULIP request
        1.	Create an API Key from  frontend and copy passkey and secret key as  api-key and seckey from the frontend and do the following API request.
           i.The CURL code for making a POST request at VAHAAN 
