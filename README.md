@@ -28,13 +28,14 @@ An Application has to be designed and built to act as a Middleware for all the I
        
 **7.Direction for the Backend:-** 
 <ol>
-       <li>Creating user : Make a POST request :<br>
+       
+
+        <li>Creating user : Make a POST request :<br>
            curl  -X POST \
            'http://localhost:5000/user/signup' \
            --header 'Accept: /' \
            --header 'Content-Type: application/json' \
            --data-raw '{
-
                         "username":"ser",
                         "name":"name",
                         "password":"12345678",
