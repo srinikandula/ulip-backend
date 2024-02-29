@@ -14,33 +14,33 @@ An Application has to be designed and built to act as a Middleware for all the I
        1.	Go to the backend directory.
        2.	Install all packages from npm i
        3.	Run backend from node index.js
-6. How to use Frontend:-
+6.How to use Frontend:-
        1.	Go to the frontend directory.
        2.	Install all packages from npm i - - force
        3.	Install an additional package from  npm i engine.io-parser@5.2.1 --force
        4.	Run frontend from ng serve
        5.	The frontend is running at port 4200
 7.Direction for the Backend:-
-       1.	Creating user : Make a POST request
+       1.Creating user : Make a POST request
            curl  -X POST \
            'http://localhost:5000/user/signup' \
            --header 'Accept: /' \
            --header 'Content-Type: application/json' \
            --data-raw '{
 
-                              "username":"ser",
-                              "name":"name",
-                              "password":"12345678",
-                              "contactNo":"9999999999",
-                              "email":"amankumar@gmail.com"
+                        "username":"ser",
+                        "name":"name",
+                        "password":"12345678",
+                        "contactNo":"9999999999",
+                        "email":"amankumar@gmail.com"
                        }'
-       2.	Go to the frontend to login with the given credentials: 
+        2.Go to the frontend to login with the given credentials: 
            Username:user,
            Password:12345678
            (You can set your own username and password while creating a user.)
 8.Making a ULIP request
        1.	Create an API Key from  frontend and copy passkey and secret key as  api-key and seckey from the frontend and do the following API request.
-          i.	The CURL code for making a POST request at VAHAAN 
+          i.The CURL code for making a POST request at VAHAAN 
 
             curl --location 'http://localhost:5000/aping/ulip/v1.0.0/VAHAN/01' \
             --header 'Accept: application/json' \
@@ -50,7 +50,7 @@ An Application has to be designed and built to act as a Middleware for all the I
             --data '{
                       "vehiclenumber": "DL12CX0574"
                     }'
-          ii.	The CURL code for making a POST request at  SARTHI:
+          ii.The CURL code for making a POST request at  SARTHI:
 
             curl --location 'http://localhost:5000/aping/ulip/v1.0.0/SARATHI/01' \
             --header 'Accept: application/json' \
@@ -61,7 +61,7 @@ An Application has to be designed and built to act as a Middleware for all the I
                         "dlnumber": "GJ04 20120005008",
                         "dob": "1987-05-26"
                     }'
-          iii.	The CURL code for making a POST request at  LDB:
+          iii.The CURL code for making a POST request at  LDB:
             curl --location 'http://localhost:5000/aping/ulip/v1.0.0/LDB/01' \
             --header 'Accept: application/json' \
             --header 'Content-Type: application/json' \
@@ -70,7 +70,7 @@ An Application has to be designed and built to act as a Middleware for all the I
             --data '{
                        "containerNumber" : "ACMP1000010"
                     }'
-          iv.	The CURL code for making a POST request at  FOIS:
+          iv.The CURL code for making a POST request at  FOIS:
             curl --location 'http://localhost:5000/aping/ulip/v1.0.0/FOIS/01' \
             --header 'Content-Type: application/json' \
             --header 'Accept: application/json' \
@@ -79,7 +79,7 @@ An Application has to be designed and built to act as a Middleware for all the I
             --data '{
                       "fnrnumber": "21030407355"
                     }'
-          v.	The CURL code for making a POST request at FASTAG
+          v.The CURL code for making a POST request at FASTAG
 
              curl --location 'http://localhost:5000/aping/ulip/v1.0.0/FASTAG/01' \
              --header 'Accept: application/json' \
