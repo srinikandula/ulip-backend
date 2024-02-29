@@ -45,7 +45,7 @@ An Application has to be designed and built to act as a Middleware for all the I
         
        
 </li>
-<li> 2.Go to the frontend to login with the given credentials: <br>
+<li>Go to the frontend to login with the given credentials: <br>
            Username:user,
            Password:12345678
            (You can set your own username and password while creating a user.)
