@@ -49,8 +49,9 @@ An Application has to be designed and built to act as a Middleware for all the I
            
 **8.Making a ULIP request-**
        1.	Create an API Key from  frontend and copy passkey and secret key as  api-key and seckey from the frontend and do the following API request.
-          i.The CURL code for making a POST request at VAHAAN 
-
+       
+          i. The CURL code for making a POST request at VAHAAN :
+          
             curl --location 'http://localhost:5000/aping/ulip/v1.0.0/VAHAN/01' \
             --header 'Accept: application/json' \
             --header 'Content-Type: application/json' \
@@ -59,7 +60,7 @@ An Application has to be designed and built to act as a Middleware for all the I
             --data '{
                       "vehiclenumber": "DL12CX0574"
                     }'
-          ii.The CURL code for making a POST request at  SARTHI:
+          ii. The CURL code for making a POST request at  SARTHI:
 
             curl --location 'http://localhost:5000/aping/ulip/v1.0.0/SARATHI/01' \
             --header 'Accept: application/json' \
