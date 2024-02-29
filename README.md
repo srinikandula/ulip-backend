@@ -53,7 +53,7 @@ An Application has to be designed and built to act as a Middleware for all the I
     </ol>
     <br>           
 
-**8.Making a ULIP request-**
+**8.Making a ULIP request-**  <br>
        1.	Create an API Key from  frontend and copy passkey and secret key as  api-key and seckey from the frontend and do the following API request.
        
           i. The CURL code for making a POST request at VAHAAN :
