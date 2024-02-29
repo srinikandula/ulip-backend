@@ -7,7 +7,7 @@ Currently in Mahindra Logistics, there are lots of Information systems being han
 3.Solution Approach:
 An Application has to be designed and built to act as a Middleware for all the Information Systems across Mahindra Logistics which will be used to Call any API of ULIP to fetch the relevant Data for their usage.
 
-4. How to Access and Use the portal:
+4.How to Access and Use the portal:
    How to Access:
      •	Users can Login either using their Credentials directly.
      •	New Users will need to connect with the Super Admin to get the access to LogiFreight.
