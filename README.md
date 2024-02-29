@@ -1,29 +1,29 @@
-1.Project Title:-
+**1.Project Title:-**
 Unified Logistics Interface Portal (ULIP) API integrated web portal
 
-2.Problem Statement:
+**2.Problem Statement:-**
 Currently in Mahindra Logistics, there are lots of Information systems being handled by different departments across the Company. But None of the Information Systems has an Integration with the Unified Logistics Interface Portal.
 
-3.Solution Approach:
+**3.Solution Approach:-**
 An Application has to be designed and built to act as a Middleware for all the Information Systems across Mahindra Logistics which will be used to Call any API of ULIP to fetch the relevant Data for their usage.
 
-4.How to Access:
+**4.How to Access:-**
      1.Users can Login either using their Credentials directly.
      2.New Users will need to connect with the Super Admin to get the access to LogiFreight.
      
-5.How to Use Backend:-
+**5.How to Use Backend:-**
        1.	Go to the backend directory.
        2.	Install all packages from npm i
        3.	Run backend from node index.js
        
-6.How to use Frontend:-
+**6.How to use Frontend:-**
        1.	Go to the frontend directory.
        2.	Install all packages from npm i - - force
        3.	Install an additional package from  npm i engine.io-parser@5.2.1 --force
        4.	Run frontend from ng serve
        5.	The frontend is running at port 4200
        
-7.Direction for the Backend:-
+**7.Direction for the Backend:-**
        1.Creating user : Make a POST request
            curl  -X POST \
            'http://localhost:5000/user/signup' \
@@ -42,7 +42,7 @@ An Application has to be designed and built to act as a Middleware for all the I
            Password:12345678
            (You can set your own username and password while creating a user.)
            
-8.Making a ULIP request
+**8.Making a ULIP request-**
        1.	Create an API Key from  frontend and copy passkey and secret key as  api-key and seckey from the frontend and do the following API request.
           i.The CURL code for making a POST request at VAHAAN 
 
