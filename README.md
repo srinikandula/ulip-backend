@@ -45,7 +45,7 @@ An Application has to be designed and built to act as a Middleware for all the I
        <li> 2.Go to the frontend to login with the given credentials: <br>
            Username:user,
            Password:12345678
-           (You can set your own username and password while creating a user.)</li></ol>
+           (You can set your own username and password while creating a user.)</li></ol><br>
            
 **8.Making a ULIP request-**
        1.	Create an API Key from  frontend and copy passkey and secret key as  api-key and seckey from the frontend and do the following API request.
