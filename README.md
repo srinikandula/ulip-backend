@@ -1,3 +1,11 @@
+**.env file for backend**
+ulip_url = https://www.ulipstaging.dpiit.gov.in/ulip/v1.0.0
+ulip_username = mahindra_usr
+ulip_password = mahindra@13122022
+ulip_login_url = https://www.ulipstaging.dpiit.gov.in/ulip/v1.0.0/user/login
+ip_fetch_rul = http://api.ipify.org/?format=json
+
+
 **1.Project Title:-**
 Unified Logistics Interface Portal (ULIP) API integrated web portal
 
