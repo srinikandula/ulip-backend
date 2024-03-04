@@ -27,6 +27,12 @@ import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { WebsocketService } from './services/websocket/websocket.service';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { EditKeyComponent } from './components/edit-key/edit-key.component';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+
 
 // const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 //   "bgsColor": "red",
@@ -71,7 +77,8 @@ const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
     SideBarComponent,
     ApiLogsComponent,
     ProfileComponent,
-    HomeComponent
+    HomeComponent,
+    EditKeyComponent
   ],
   imports: [
     BrowserModule,
@@ -89,9 +96,12 @@ const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
     ButtonModule,
     DialogModule,
     TableModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    RadioButtonModule,
+    BreadcrumbModule,
+    ConfirmDialogModule
   ],
-  providers: [KeypageService, MessageService, ToastService, WebsocketService],
+  providers: [KeypageService, MessageService, ToastService, WebsocketService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,10 +4,11 @@
     </div>
     <button (click)="handleOnDownloadFile()" pRipple><i class="fa-solid fa-file-arrow-down"></i></button>
 </div>
-<div id="diCgqRzdsILqdTa">
-    <div id="zEYPp41JmDPM4Qy">
-        <div id="xPDn9ScBR72CeT" class="grey_font">Home</div>
-        <div id="dNZnPop4vEWlLc">View Logs</div>
+
+<div id="page_desc_container">
+    <div id="page_desc">
+        <div id="desc_home" class="grey_font">Home</div>
+        <div id="desc_page_name">View Logs</div>
 
     </div>
     <div class="card flex flex-wrap justify-content-center gap-3 searchLogs">
@@ -18,7 +19,8 @@
 
         </span>
         <div class="card flex justify-content-center filterDiv">
-            <div class="filterBtnDiv"><button (click)="handleOnToggleApiMenu()">
+            <div class="filterBtnDiv">
+                <button (click)="handleOnToggleApiMenu()">
                     <i *ngIf="!apiMenuFilter" class="fa-solid fa-filter"></i>
                     <i *ngIf="apiMenuFilter" class="fa-solid fa-xmark"></i>
                 </button>

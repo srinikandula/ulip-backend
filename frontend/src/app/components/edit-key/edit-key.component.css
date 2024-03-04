@@ -1,0 +1,284 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100svh;
+    width: 100%;
+}
+
+#navbar {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    /* background-color: rgb(206, 206, 206); */
+    background-color: #dfdede;
+}
+
+#logo_container {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#logo {
+    width: 80%;
+}
+
+#path {
+    flex: 1;
+    color: black;
+    display: flex;
+    padding: 7px;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#hint_help {
+    /* flex: 1; */
+    display: flex;
+    align-items: center;
+    margin-right: 40px;
+}
+
+#hints_button {
+    height: 100%;
+    /* background-color: rgb(206, 206, 206); */
+    background-color: #dfdede;
+    border: none;
+    /* border-left: 1px solid black;
+    border-right: 1px solid black; */
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#help_button {
+    margin-left: 5px;
+    border-radius: 12px;
+    background-color: rgb(66, 65, 65);
+    color: white;
+    cursor: pointer;
+}
+
+
+#body_container {
+    display: flex;
+    height: 100%;
+}
+
+#left_content {
+    /* flex: 1; */
+    width: 35%;
+    flex-direction: column;
+    /* padding: 7px; */
+    /* background-color: green; */
+    margin-right: 4px;
+    border-right: 1px solid black;
+}
+
+#left_top {
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid black;
+    align-items: center;
+}
+
+#left_top_apikeys{
+    width: 50%;
+    display: flex;
+    justify-content: end;
+    flex-direction: column;
+    padding: 5px;
+
+}
+
+#action_button {
+    width: 50%;
+    margin: 5px;
+    padding: 10px;
+    background-color: #D6223A;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+}
+
+#search_box_div {
+    padding: 7px;
+    margin-right: 5px;
+    height: 70svh;
+    overflow: hidden;
+    overflow-y: auto;
+}
+#search_box {
+    width: 100%;
+    border: 1px solid black;
+}
+
+#right_content {
+    /* background-color: magenta; */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #eeeeee;
+
+}
+
+#right_top {
+    display: flex;
+    padding: 7px;
+    border-bottom: 1px solid black;
+    align-items: center;
+}
+
+#customer_num {
+    flex: 1;
+}
+
+#delete_configure_buttons {
+    border: none;
+    display: flex;
+    gap: 18px;
+}
+
+#delete_api_button {
+    /* background-image: linear-gradient(to bottom , white , rgb(180, 180, 180)); */
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #D6223A;
+    color: white;
+    
+}
+
+#Configure_tags_button {
+    /* background-image: linear-gradient(to bottom , white , rgb(180, 180, 180)); */
+    background-color: #D6223A;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+
+#description {
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+#table_1 {
+    /* border: 1px solid black;  */
+    flex: 1;
+    width: 100%;
+    /* height: 90%; */
+
+}
+
+.first{
+    /* border: 1px solid black; */
+    width: 50%;
+    text-align: end;
+    padding: 5px;
+}
+
+.second {
+    /* border: 1px solid black; */
+    width: 50%;
+    text-align: start;
+    padding: 5px;
+}
+
+#edit {
+    width: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    
+}
+
+#edit_button {
+    margin: 5px;
+    border: none;
+    padding: 10px;
+    width: 50px;
+    /* background-image: linear-gradient(to bottom , white , rgb(180, 180, 180)); */
+    background-color: #D6223A;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#usage_plans {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    font-size: large;
+    padding: 5px;
+    border-bottom: 1px solid black;
+}
+
+#lower_pane {
+    height: 50%;
+    /* background-color: rgb(201, 201, 201); */
+}
+
+#add_to_plan_button {
+    padding: 10px;
+    border: none;
+    margin: 5px;
+    background-color: #D6223A;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#table_2_container {
+    
+}
+
+#table_2 {
+    width: 100%;
+    border: 1px solid black;
+    margin: 5px;
+}
+
+#table_2_row {
+    width: 100%;
+}
+
+.table_2_row_head {
+    /* border: 1px solid black; */
+    text-align: left;
+    padding: 5px;
+    background-color: #dfdede;
+}
+
+.table_2_row_data {
+    /* border: 1px solid black; */
+    text-align: left;
+    padding: 5px;
+    background-color: white;
+}
+
+
+:host ::ng-deep {
+    .p-scroller-viewport {
+        flex: none;
+    }
+}
+
+#allListOfHist ul{
+    list-style: none;
+}
+
+.clickBtnSet{
+    background-color: #D6223A;
+    padding: 1%;
+    color: white;
+    border-radius: 8px;
+    width: 90px;
+}

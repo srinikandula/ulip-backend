@@ -1,57 +1,56 @@
-/* style.css */
 body, html {
     height: 100vh;
     margin: 0;
+    font-family: "georama";
+    font-stretch: semi-expanded;
 }
 
-#dNZnPop4vEWlLc {
-    font-size: 25px;
+.grey_font {
+    color: #676767;
 }
 
 
 
 
 
-
-/* li {
-  list-style: none;
-}
-li::before {
-  content: '';
-  display: inline-block;
-  left: 10px;
-  height: 10px;
-  width: 10px;
-  background-image: url(./key.png);
-} */
-
-
-
-#diCgqRzdsILqdTa {
+#page_desc_container {
     width: 100%;
-    height: 80px;
+    height: 10%;
     display: flex;
     align-items: center;
 }
 
-#zEYPp41JmDPM4Qy {
+#page_desc {
     /* display: inline-block; */
     display: flex;
     flex-direction: column;
     width: 30%;
 }
 
-#button_div {
+#desc_home {
+    font-weight: bold;
+}
+
+#desc_page_name {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+
+
+#create_keys_button_div {
     display: flex;
     width: 70%;
     justify-content: right;
+    height: 100%;
+    align-items: center;
 }
 
-#N8NODaXdtouCuiJ {
+#create_keys_button {
     width: 100px;
+    height: 54%;
     background-color: #D6223A;
     color: white;
-    height: 40px;
     border-radius: 4px;
     border: none;
     font-weight: bold;
@@ -60,9 +59,10 @@ li::before {
 
 
 
-#jZ3qbrkXCeEdwsa {
+#history_keys_title {
     display: inline-block;
     height: 30px;
+    font-weight: 600;
 }
 
 
@@ -90,12 +90,12 @@ table {
 
 th,
 td {
-	padding: 15px;
+	/* padding: 15px; */
+    /* border: 1px solid black; */
 	color: black;
-}
-
-th {
-	text-align: left;
+    height: 9vh;
+    
+    text-align: center;
 }
 
 thead {
@@ -125,7 +125,7 @@ tbody {
     bottom: 75%;
     /* display: none; */
     opacity: 0;
-
+    justify-content: center;
     transform: translateY(8px);
     transition: all ease-in 0.3s;
 }
@@ -223,6 +223,7 @@ tbody {
     display: flex;
     justify-content: center;
     position: relative;
+    align-items: center;
 }
 .genSecKeyBtn{
     font-size: 0.8em;
@@ -231,7 +232,7 @@ tbody {
     position: absolute;
     background-color: #111;
     color: white;
-    top: -40%;
+    top: -10%;
     opacity: 0;
     transform: translateY(5px);
     transition: all ease-out 0.1s;
@@ -244,4 +245,32 @@ tbody {
         opacity: 1;
         transform: translateY(-3px);
     }
+}
+
+
+
+@media only screen and (max-width: 600px) {
+    .grey_font {
+        font-size: 10px;
+    }
+
+    #desc_page_name {
+        font-size: 15px;
+    }
+
+    /* #page_desc_container {
+
+    } */
+
+    #create_keys_button {
+        width: 70px;
+        font-size: 10px;
+        height: 60%;
+    }
+
+    table {
+        font-size: 10px;
+    }
+    
+
 }

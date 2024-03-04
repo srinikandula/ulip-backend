@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+  import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-signup',
@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
+name: any;
+username: any;
 
 }

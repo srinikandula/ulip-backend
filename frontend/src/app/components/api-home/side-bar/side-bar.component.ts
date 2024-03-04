@@ -5,8 +5,7 @@ import { MessageService } from 'primeng/api';
 import { ApiKeys } from 'src/app/ApiKeys';
 import { KeypageService } from 'src/app/services/keypage/keypage.service';
 import emailjs, { type EmailJSResponseStatus } from '@emailjs/browser';
-
-
+import { MenuItem } from 'primeng/api';
 
 
 @Component({
@@ -15,10 +14,32 @@ import emailjs, { type EmailJSResponseStatus } from '@emailjs/browser';
   styleUrls: ['./side-bar.component.css']
 })
 export class SideBarComponent {
+
+  items: MenuItem[] | undefined;
   applicationName: string = "";
   ownerName: string = "";
   contactName: string = "";
   sidebarVisible2: boolean = false;
+  emailAddress: string = "";
+  myIp: string = ""
+  position: string = "0.0.0.0";
+  positionOptions = [
+    {
+      label: 'Allow access from anywhere',
+      value: "0.0.0.0"
+    },
+    {
+      label: 'Custom IP',
+      value: "Custom"
+    },
+    {
+      label: 'Current IP',
+      value: "Current"
+    }
+  ];
+  tokeVal: string = `${localStorage.getItem("authtoken")}`;
+
+
 
   constructor(private http: HttpClient, private router: Router, public keypage: KeypageService, private messageService: MessageService) { }
   @Output() keyCardAdd: EventEmitter<ApiKeys> = new EventEmitter();
@@ -41,52 +62,65 @@ export class SideBarComponent {
       'auth-token': localStorage.getItem('authtoken') || '',
       'Content-Type': 'application/json'
     });
-    this.http.post<any>('http://localhost:5000/aping/createkey', {
-      "key": apiKey,
-      "ownerName": this.ownerName,
-      "contactNo": this.contactName,
-      "applicationName": this.applicationName
-    }, { headers }).subscribe({
-      next: data => {
-        // console.log(data)
-        const todoCard = {
-          key: apiKey,
-          ownerName: this.ownerName,
-          contactNo: this.contactName,
-          applicationName: this.applicationName,
-          secKey: "",
-          updatedAt: ""
+    this.http.get("http://api.ipify.org/?format=json").subscribe((res: any) => {
+      if (this.position === "Current") {
+        this.myIp = res.ip
 
-        }
-        this.messageService.add({ severity: 'success', summary: 'Key Created', detail: apiKey })
-        this.keyCardAdd.emit(todoCard)
-
-      },
-      error: error => {
-        console.error("There is an error", error)
-        this.messageService.add({ severity: 'error', summary: 'Failed', detail: "Please check your server" })
       }
-    })
-    this.keypage.createKeyBool = false
-    // const templateParams = {
-    //   usermail: "aksr2003@gmail.com",
-    //   from_name: "MLL-ULIP",
-    //   apiKey:apiKey,
-    //   applicationName: this.applicationName,
-    //   ownerName:this.ownerName
-    // };
-    emailjs.init("QuMxBAxGcl10ggVaf")
-    emailjs.send('service_3ekbj9u', 'template_617bkto',{
-        usermail: "aksr2003@gmail.com",
-        from_name: "MLL-ULIP",
-        apiKey: apiKey,
-        applicationName: this.applicationName,
-        ownerName: this.ownerName
+
+      this.http.post<any>('http://localhost:5000/aping/createkey', {
+        "key": apiKey,
+        "ownerName": this.ownerName,
+        "contactNo": this.contactName,
+        "applicationName": this.applicationName,
+        "email": this.emailAddress,
+        "ip": this.position === "0.0.0.0" ? "0.0.0.0" : `${this.myIp}`
+      }, { headers }).subscribe({
+        next: data => {
+          // console.log(data)
+          // const secKey  = this.handleOnGenSecKey(apiKey)
+          const todoCard = {
+            key: apiKey,
+            ownerName: this.ownerName,
+            contactNo: this.contactName,
+            applicationName: this.applicationName,
+            email: this.emailAddress,
+            ip: this.position === "0.0.0.0" ? "0.0.0.0" : `${this.myIp}`,
+            secKey:data.keyIs.secKey,
+            updatedAt: "",
 
 
+          }
+
+
+          this.messageService.add({ severity: 'success', summary: 'Key Created', detail: apiKey })
+          this.keyCardAdd.emit(todoCard)
+
+        },
+        error: error => {
+          console.error("There is an error", error)
+          this.messageService.add({ severity: 'error', summary: 'Failed', detail: "Please check your server" })
+        }
       })
+
+    })
+
+
+
+    this.keypage.createKeyBool = false
+    emailjs.init("QuMxBAxGcl10ggVaf")
+    emailjs.send('service_3ekbj9u', 'template_617bkto', {
+      usermail: "aksr2003@gmail.com",
+      from_name: "MLL-ULIP",
+      apiKey: apiKey,
+      applicationName: this.applicationName,
+      ownerName: this.ownerName
+
+
+    })
 
   }
 
+  
 
 }

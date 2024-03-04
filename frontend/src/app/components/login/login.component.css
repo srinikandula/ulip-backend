@@ -1,4 +1,91 @@
 
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#loginPageDiv {
+    font-family: "Georama" , Arial, sans-serif;
+    font-stretch: semi-expanded;
+    background-color: #F9F9FB;
+    /* display: flex;
+    align-items: center; */
+    height: 100%;
+}
+
+#logo-div {
+    /* width: 100%; */
+    position: absolute;
+    /* padding-left: 40px; */
+    /* padding-top: 34px; */
+
+    height: 10%;
+    display: flex;
+    align-items: center;
+    /* z-index: 1; */
+    margin-left: 2%;
+    margin-top: 1.5%;
+}
+
+/* #mahindra_logo {
+    width: 80%;
+} */
+
+.login-container-div {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    /* justify-content: right; */
+    /* height: 80svh; */
+    /* align-items: center; */
+    /* padding-top: 2%; */
+    /* background-color: brown; */
+}
+
+#GIF_container {
+    /* flex: 1; */
+    width: 70%;
+    height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+#GIF_video {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+
+#login_container_box {
+    width: 40%;
+    height: 100svh;
+    /* background-color: brown; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    /* flex: 1; */
+    /* margin-top: 100px; */
+    width: 80%;
+    height: 70%;
+    /* margin: 50px; */
+    padding: 20px;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.login-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 #formComponent{
     height: 100%;
     display: flex;
@@ -6,19 +93,136 @@
     gap: 2px;
 }
 
-#loginPageDiv {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+#form_heading{
+    font: normal normal bold 30px/33px "georama";
+    font-stretch: semi-expanded;
+    letter-spacing: 0px;
+    color: #434141;
+    opacity: 1;
+    /* font-size: 1.5em; */
+    padding: 4% 0;
+    /* color: #333; */
+    height: 15%;
 }
 
-.login-container {
-    width: 32%;
-    padding: 20px;
-    height: 80%;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+#allFormComp{
+    display: flex;
+    flex-direction: column ;
+    /* gap: 25px; */
+    height: 85%;
 }
+
+#formUpperPara {
+    height: 20%;
+}
+
+#formWelcome{
+    font: normal normal 600 22px/28px "georama" semi-expanded;
+    /* padding-top: 2% 0; */
+    margin-top: 3.5%;
+}
+
+#para2Form{
+    /* padding-bottom: 5% 0; */
+    font-size: 14px;
+    color: #222;
+}
+
+#loginBottomPortion{
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    /* gap: 27px; */
+}
+
+#loginInputDiv{
+    /* display: flex;
+    flex-direction: column;
+    gap: 29px;
+    height: 18vh; */
+    display: flex;
+    flex-direction: column;
+    height: 70%;
+}
+
+.inputDivAllTexts{
+    margin-top: 4%;
+    /* margin-bottom: 2.5%; */
+    background: #F7F7F7 0% 0% no-repeat padding-box;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.inputDivUpperText{
+    /* color: #A8A8A8;
+    position: relative;
+    height: 2vh; */
+    position: relative;
+    background: #F7F7F7 0% 0% no-repeat padding-box;
+    font-size: 14px;
+    /* background-color: green; */
+    
+}
+.inputDivUpperText p{
+    font-weight: bold;
+    color: #A8A8A8;
+}
+
+.inputTexts {
+    background-color: #F7F7F7;
+    width: 100%;
+    /* padding: 10px;    */
+    border: none;
+    border-radius: 3px;
+    box-sizing: border-box;
+    /* height: 100%; */
+    /* background-color: brown; */
+}
+
+.inputTexts::placeholder {
+    font-size: 16px;
+    color: #707175;
+}
+.inputTexts:focus{
+    outline: none;
+}
+
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 3px;
+    /* margin-bottom: 15px; */
+    /* border-radius: 3px; */
+    box-sizing: border-box;
+}
+
+/* #bottomLoginDiv {
+    height: 20%;
+} */
+
+.red-link {
+    color: #D6223A;
+    /* Set hyperlink color to red */
+
+    display: block;
+    padding: 2% 0;
+    text-align: right;
+
+    font: normal normal medium 15px/18px "georama";
+    font-stretch: semi-expanded;
+}
+
+#loginBtn {
+    width: 100%;
+    background-color: #D6223A;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
 
 .buttonAfter{
     top: 0;
@@ -41,135 +245,75 @@
 #buttonSubmit{
     position: relative;
 }
-.login-container h2 {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.login-container input[type="text"],
-.login-container input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 3px;
-    box-sizing: border-box;
-}
-
-#loginBtn {
-    width: 100%;
-    background-color: #D6223A;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-
-
-.inputTexts {
-    background-color: #F7F7F7;
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 3px;
-    box-sizing: border-box;
-    height: 100%;
-}
-#loginInputDiv{
-    display: flex;
-    flex-direction: column;
-    gap: 29px;
-    height: 18vh;
-}
-#loginBottomPortion{
-    display: flex;
-    flex-direction: column;
-    gap: 27px;
-}
-#para2Form{
-    padding-bottom: 5% 0;
-    font-size: 0.9em;
-    color: #222;
-}
-#formWelcome{
-    font-size: 1em;
-    padding-top: 2% 0;
-    font-weight: bold;
-}
-
-#allFormComp{
-    display: flex;
-    flex-direction: column ;
-    gap: 25px;
-}
-.inputDivAllTexts{
-    background-color: #F7F7F7;
-    color: grey;
-    font-size: 0.8em;
-}
-.inputDivUpperText{
-    padding-left: 10px;
-    position: relative;
-    height: 2vh;
-
-}
-.inputDivUpperText p{
-    position: absolute;
-    bottom: -80%;
-}
-.inputTexts:focus{
-    outline: none;
-}
-#formComponent h1{
-    font-size: 1.5em;
-    padding: 4% 0;
-    color: #333;
-}
-
-.loginInputDiv{
-    display: flex;
-    flex-direction: column;
-    gap: 29px;
-    height: 18vh;
-}
-img {
-    width: 140px;
-}
-
-.red-link {
-    color: red;
-    /* Set hyperlink color to red */
-
-    display: block;
-    padding: 2% 0;
-    text-align: right;
-}
 
 .blue-link {
-    color: blue;
+    color: #3062D0;
     text-align: right;
     display: flex;
-    padding: 5% 0;
+    /* padding: 5% 0; */
+    margin-top: 3%;
     text-align: right;
-    gap: 7px;
+    gap: 3px;
     justify-content: right;
 }
 
-.login-container-div {
-    width: 93%;
-    display: flex;
-    justify-content: right;
-    height: 80svh;
-    /* align-items: center; */
-    padding-top: 2%;
+.blue-link a {
+    font-weight: 350;
+    color: #3062D0;
 }
 
-#logo-div {
-    width: 100%;
-    padding-left: 2%;
-    height: 20svh;
-    display: flex;
-    align-items: center;
+@media only screen and (max-width: 1200px) {
 
+    #login_container_box {
+        width: 60%;
+    }
+}
+
+@media only screen and (max-width: 931px) {
+
+    #login_container_box {
+        width: 70%;
+        z-index: 2;
+        margin: auto;
+    }
+    #GIF_container{
+        position: fixed;
+        z-index: 0;
+        width: 100%;
+    }
+    #logo-div{
+        z-index: 3;
+    }
+
+}
+
+@media only screen and (max-width: 500px) {
+
+    #login_container_box {
+        width: 100%;
+        z-index: 2;
+        margin: auto;
+        opacity: 0.9;
+    }
+    .login-container{
+        height: 77%;
+    }
+    #logo-div img{
+        width: 50%;
+    }
+    #form_heading{
+        font-size: 1.5em;
+    }
+    #loginInputDiv{
+        justify-content: center;
+    }
+    .blue-link{
+        color: #3062D0;
+        text-align: right;
+        display: flex;
+        margin-top: 3%;
+        text-align: center;
+        flex-direction: column;
+        gap: 3px;
+    }
 }

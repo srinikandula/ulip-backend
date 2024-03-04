@@ -1,6 +1,13 @@
+.grey_font {
+    color: #97999B;
+    position: relative;
+    font-weight: bold;
+}
 #big_container {
     display: flex;
     height: 100%;
+    font-family: "georama";
+    font-stretch: semi-expanded;
 }
 
 #left_container {
@@ -13,82 +20,69 @@
     display: flex;
     top: 0;
     flex-direction: column;
-    gap: 21px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
+#logo_container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 
 #mahindra_logo {
-    width: 80%;
-    padding: 4%;
-    padding-left: 6%;
+    width: 70%;
+    margin: 10%;
+    /* visibility: hidden; */
 }
 
 
-.grey_font {
-    color: #222;
+
+#left_container_home {
+    padding: 20px;
     position: relative;
-    cursor: pointer;
     font-weight: bold;
 }
 
-/* .grey_font:hover{
-    color: white;
+/* #left_container_menu {
+    background-color: green;
 } */
-.grey_font::after {
-    background-color: #D6223A;
-    transition: all ease-out 0.1s;
-    position: absolute;
-    width: 0%;
-    height: 100%;
-    content: "";
-    color: white;
-    left: 0;
-    z-index: -1;
-    top: 0;
 
+.menu_items {
+    padding: 7%;
+    margin-top: 2%;
+    cursor: pointer;
+
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border-left: 7px solid black;
+    border-radius: 4px;
+    border-color: transparent;
 }
 
-.grey_font:hover::after {
+/* #branding {
     width: 100%;
-}
+    height: 10%;
+    background-color: green;
+} */
 
-.grey_font:hover {
-    color: white;
-}
-
-#pwsld {
-    padding: 20px;
-    position: relative;
-    font-weight: bold;
-    top: 20px;
-}
-
-#MrKCgSxHMeTD2Rk {
-    padding: 20px;
-    /* list-style-image: url(./key.png) ; */
-}
-
-#cNKt81CvfXNk5Of {
-    padding: 20px;
-}
 
 #right_container_div {
     width: 79%;
 }
 
 #right_container {
-    padding: 20px;
+    padding: 2%;
     width: 100%;
     display: inline-block;
     flex-direction: column;
     background-color: #F3F3F4;
-    /* Example background color */
-    overflow: auto;
+
 }
 
-#VYFc1qozkId5mra {
+#top_bar {
     width: 100%;
     height: 50px;
     display: flex;
@@ -101,6 +95,7 @@
 
 
 #toggle_menu {
+    font-size: 20px;
     background-color: transparent;
     border: none;
     text-align: left;
@@ -113,26 +108,71 @@
     display: flex;
     width: 80%;
     gap: 3px;
-    align-items: center;
+    align-items: end;
 
 }
-.filterDiv{
-    position: relative;
+
+.profileLabel {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 2px;
 }
 
-#menuProfileBtn{
+.labelPrfName {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.labelOperation {
+    color: #393B3F;
+    font-size: 12px;
+}
+
+#profile_btn_container {
+    width: 48px;
+    height: 48px;
+}
+
+#menuProfileBtn {
+    padding: 1%;
+    display: flex;
+    border-radius: 50px;
+    gap: 5px;
+    width: 100%;
+    height: 100%;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    
     background-image: url('https://i.pinimg.com/1200x/b1/88/c6/b188c6801ad1d71d3c962c6e4aa2d0cf.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: 147%;
     border: none;
 }
-.profileLabel{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-}
-.labelPrfName{
-    font-weight: bold;
+
+
+
+@media only screen and (max-width: 600px) {
+
+    #mahindra_logo {
+        width: 100%;
+    }
+    
+    .grey_font {
+        font-size: 10px;
+    }
+    #toggle_menu {
+        font-size: 10px;
+    }
+    .labelPrfName {
+        font-size: 10px;
+    }
+    
+    .labelOperation {        
+        font-size: 7px;
+    }
+    #profile_btn_container {
+        height: 24px;
+        width: 24px;
+    }
 }
