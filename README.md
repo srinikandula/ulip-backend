@@ -1,9 +1,9 @@
-**.env file for backend**
-ulip_url = https://www.ulipstaging.dpiit.gov.in/ulip/v1.0.0
-ulip_username = mahindra_usr
-ulip_password = mahindra@13122022
-ulip_login_url = https://www.ulipstaging.dpiit.gov.in/ulip/v1.0.0/user/login
-ip_fetch_rul = http://api.ipify.org/?format=json
+**.env file for backend** <br>
+ulip_url = https://www.ulipstaging.dpiit.gov.in/ulip/v1.0.0 <br>
+ulip_username = mahindra_usr<br>
+ulip_password = mahindra@13122022<br>
+ulip_login_url = https://www.ulipstaging.dpiit.gov.in/ulip/v1.0.0/user/login <br>
+ip_fetch_rul = http://api.ipify.org/?format=json <br>
 
 
 **1.Project Title:-**
