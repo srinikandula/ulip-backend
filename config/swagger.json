@@ -1,0 +1,137 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Logione Apllication API",
+      "description": "Logione Apllication API",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:3040",
+    "basePath": "/api/",
+    "tags": [
+      {
+        "name": "Users",
+        "description": "API for users in the system"
+      },
+      {
+        "name": "Auth",
+        "description": "API for authentication in the system"
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "securityDefinitions": {
+      "AuthHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    },
+    "paths": {
+      "/auth/login": {
+        "post": {
+          "tags": ["Auth"],
+          "description": "Login to the system",
+        "parameters": [{
+          "name": "auth",
+          "in": "body",
+          "description": "User auth details",
+          "schema": {
+            "type": "object",
+            "required": ["email", "password"],
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              }
+            }
+          }
+        }],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "User is loggedin"
+          }
+        }
+      }
+      },
+      "/auth/saveUser": {
+        "post": {
+          "tags": ["Auth"],
+          "description": "Register to the system",
+          "parameters": [{
+            "name": "auth",
+            "in": "body",
+            "description": "User details",
+            "schema": {
+              "type": "object",
+              "required": ["email"],
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "fullName": {
+                  "type": "string"
+                },
+                "customerCode": {
+                  "type": "string"
+                },
+                "accessRequest": {
+                  "type": "string"
+                }
+              }
+            }
+          }],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "User Added Successfully"
+            }
+          }
+        }
+      },
+      "/user/getAllUsers": {
+        "post": {
+          "tags": ["Users"],
+          "description": "to get the all users in the system",
+          "parameters": [{
+            "name": "users",
+            "in": "body",
+            "description": "All Users",
+            "schema": {
+              "type": "object",
+              "properties": {
+              }
+            }
+          }],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Users fetched Successfully"
+            },
+            "401" : {
+              "description": "Un Authorized"
+            }
+          }
+        }
+      }
+    }
+}
