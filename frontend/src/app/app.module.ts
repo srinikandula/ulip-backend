@@ -25,7 +25,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+// import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { WebsocketService } from './services/websocket/websocket.service';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { EditKeyComponent } from './components/edit-key/edit-key.component';
@@ -65,7 +65,7 @@ import { ConfirmationService } from 'primeng/api';
 //   "minTime": 300
 // }
 
-const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
+// const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
 
 
 @NgModule({
@@ -96,7 +96,7 @@ const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
     ButtonModule,
     DialogModule,
     TableModule,
-    SocketIoModule.forRoot(config),
+    // SocketIoModule.forRoot(config),
     RadioButtonModule,
     BreadcrumbModule,
     ConfirmDialogModule
