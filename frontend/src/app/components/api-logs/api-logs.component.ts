@@ -151,9 +151,9 @@ showDialogResData(myresData:string) {
   ngOnInit() {
 
     this.keypage.pageNav = 1
-    this.websocketservice.listen("testevent").subscribe((data)=>{
-      console.log(data)
-    })
+    // this.websocketservice.listen("testevent").subscribe((data)=>{
+    //   console.log(data)
+    // })
 
     
 

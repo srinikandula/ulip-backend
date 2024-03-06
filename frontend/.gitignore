@@ -4,6 +4,7 @@
 /Ulip-api
 # dependencies
 /node_modules
+/.angular
 web.config
 /package-lock.json
 
