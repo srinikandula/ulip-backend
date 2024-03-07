@@ -241,8 +241,4 @@ showDialogResData(myresData:string) {
 
     
   }
-
-
-
-
 }

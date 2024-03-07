@@ -104,8 +104,8 @@
                     </tr>
                     <tr *ngIf="isEnabled">
                         <td class="first"><b>Enabled</b></td>
-                        <td class="second"><input disabled="true" [style]="{height:'4vh', padding:'3%'}" type="text" pInputText
-                                [(ngModel)]="isEnabled" /></td>
+                        <td class="second"><input disabled="true" [style]="{height:'4vh', padding:'3%'}" type="text"
+                                pInputText [(ngModel)]="isEnabled" /></td>
                     </tr>
                 </table>
 
@@ -114,22 +114,24 @@
                 </div>
             </div>
 
-            <div id="usage_plans">Associated Usage Plans</div>
+            <div id="usage_plans">API Usage</div>
             <div id="lower_pane">
-                <button class="redBtnEffect" id="add_to_plan_button">Add to Usage Plan</button>
+                <!-- <button class="redBtnEffect" id="add_to_plan_button">Add to Usage Plan</button> -->
                 <!-- Table insert -->
                 <div id="table_2_container">
                     <table id="table_2">
                         <tr class="table_2_row">
-                            <th class="table_2_row_head">Usage Plan</th>
-                            <th class="table_2_row_head">API</th>
-                            <th class="table_2_row_head">Stage</th>
+                            <th class="table_2_row_head">Usage Counts</th>
+                            <th class="table_2_row_head">API Key</th>
+                            <th class="table_2_row_head">Ulip</th>
                         </tr>
-                        <tr class="table_2_row">
-                            <td class="table_2_row_data">...</td>
-                            <td class="table_2_row_data">...</td>
-                            <td class="table_2_row_data">...</td>
-                        </tr>
+                        <tbody>
+                            <tr class="table_2_row" *ngFor="let i of this.tableReqDatas">
+                                <td class="table_2_row_data">{{i.val}}</td>
+                                <td class="table_2_row_data">{{this.myParamsKeyLog}}</td>
+                                <td class="table_2_row_data">{{i.data}}</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
