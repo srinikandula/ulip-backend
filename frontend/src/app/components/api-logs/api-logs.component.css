@@ -129,6 +129,7 @@ tbody {
     position: relative;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
 }
 .generatedApiPart:hover{
@@ -369,4 +370,8 @@ tbody {
         font-size: 1em;
     }
 
+}
+.reqBtnApiLogs{
+    display: flex;
+    justify-content: center;
 }
