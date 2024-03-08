@@ -6,7 +6,7 @@
     <div id="signPageDiv">
         <div class="sign-container-div">
             <div class="sign-container">
-                <form id="formComponent">
+                <form id="formComponent" (ngSubmit)="handleOnSubmitSignup()">
                     <h1><b>MLL ULIP Integrated App Signup</b></h1>
                     <div id="allFormComp">
                         <div id="formUpperPara">
@@ -30,19 +30,19 @@
                                         placeholder="Enter your Username" required><br>
                                 </div>
                                 <div class="inputDivAllTexts">
-                                    <input class="inputTexts" type="password" name="password" id="password"
+                                    <input class="inputTexts" [(ngModel)]="password" type="password" name="password" id="password"
                                         placeholder="Password" required><br>
                                 </div>
                                 <div class="inputDivAllTexts">
-                                    <input class="inputTexts" name="con_pass" type="password" id="con_pass"
+                                    <input class="inputTexts" [(ngModel)]="conPassword" name="con_pass" type="password" id="con_pass"
                                         placeholder="Confirm Password" required><br>
                                 </div>
                                 <div class="inputDivAllTexts">
-                                    <input class="inputTexts" name="email" type="email" id="email" placeholder="Email"
+                                    <input class="inputTexts" [(ngModel)]="email" name="email" type="email" id="email" placeholder="Email"
                                         required><br>
                                 </div>
                                 <div class="inputDivAllTexts">
-                                    <input class="inputTexts" name="contact" type="tel" id="contact"
+                                    <input class="inputTexts" [(ngModel)]="contact" name="contact" type="tel" id="contact"
                                         placeholder="Contact" required><br>
                                 </div>
 
@@ -56,7 +56,6 @@
 
                                     <button type="submit" id="SignupBtn">Sign Up</button>
                                     <button type="submit" class="buttonAfter"></button>
-
 
                                 </div>
                             </div>

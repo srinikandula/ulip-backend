@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService, ConfirmEventType } from 'primeng/api';
+import { ApiLogs } from 'src/app/ApiLogs';
 
 @Component({
   selector: 'app-edit-key',
@@ -9,6 +10,7 @@ import { ConfirmationService, MenuItem, MessageService, ConfirmEventType } from 
   styleUrls: ['./edit-key.component.css']
 })
 export class EditKeyComponent implements OnInit {
+  editKeyLogs: ApiLogs[] = []
   handleOnSaveKey() {
     const myParamsKey = this.route.snapshot.paramMap.get('apikey');
 
@@ -16,20 +18,20 @@ export class EditKeyComponent implements OnInit {
       'auth-token': this.tokeVal || '', // Ensure a default value if authtoken is null
       'Content-Type': 'application/json' // 'content-type' changed to 'Content-Type'
     });
-    
-      const body = { "passKey": myParamsKey, "applicationName":this.applicationName, "ownerName":this.ownerName, "apiKey":this.apikey, "contactNo":this.contactName };
+
+    const body = { "passKey": myParamsKey, "applicationName": this.applicationName, "ownerName": this.ownerName, "apiKey": this.apikey, "contactNo": this.contactName };
 
 
-      this.http.put<any>('http://localhost:5000/aping/updatekey', body, { headers }).subscribe({
-        next: data => {
-          console.log(data)
-          this.messageService.add({ severity: 'success', summary: 'API key changed Successfully', detail: this.applicationName });
-          this.router.navigate(['home/createkey'])
-        },
-        error: error => {
-          console.error("There is an error", error)
-        }
-      })
+    this.http.put<any>('http://localhost:5000/aping/updatekey', body, { headers }).subscribe({
+      next: data => {
+        console.log(data)
+        this.messageService.add({ severity: 'success', summary: 'API key changed Successfully', detail: this.applicationName });
+        this.router.navigate(['home/createkey'])
+      },
+      error: error => {
+        console.error("There is an error", error)
+      }
+    })
   }
   handleOnSetIP() {
     const myParamsKey = this.route.snapshot.paramMap.get('apikey');
@@ -104,12 +106,14 @@ export class EditKeyComponent implements OnInit {
   applicationName: string = "";
   ownerName: string = "";
   apikey: string = "";
+  myParamsKeyLog: string = ""
   contactName: string = "";
   isEnabled: boolean = false;
   myIp: string = "0.0.0.0";
   setEdit: boolean = false
   actionsArr: string[] = [];
   tokeVal: string = `${localStorage.getItem("authtoken")}`;
+  tableReqDatas:{data:string, val:string}[] = []
 
   confirmDisable(event: Event) {
     this.confirmationService.confirm({
@@ -154,11 +158,20 @@ export class EditKeyComponent implements OnInit {
   handleIpConfigShow() {
     this.visibleIP = true
   }
-  constructor(private route: ActivatedRoute, private http: HttpClient, private messageService: MessageService, private confirmationService: ConfirmationService, private router:Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private messageService: MessageService, private confirmationService: ConfirmationService, private router: Router) {
 
+  }
+  api_filter_function_key(obj: ApiLogs, myParamsKey: string) {
+    console.log("myy params key", this.myParamsKeyLog, obj.key)
+    if (obj.key === this.myParamsKeyLog) {
+      return true
+    }
+    return false
   }
   ngOnInit() {
     const myParamsKey = this.route.snapshot.paramMap.get('apikey');
+    this.myParamsKeyLog = `${this.route.snapshot.paramMap.get('apikey')}`
+
     console.log("my params key is ", myParamsKey)
 
 
@@ -187,6 +200,42 @@ export class EditKeyComponent implements OnInit {
 
 
     this.itemBreadCrumb = [{ label: 'Create Keys' }, { label: 'Edit Key' }];
+
+    this.http.post<any>('http://localhost:5000/aping/fetchLogs', {}, { headers }).subscribe({
+      next: data => {
+
+        this.editKeyLogs = data.allLogs.filter(this.api_filter_function_key.bind(this));
+
+        let umap = new Map();
+        this.editKeyLogs.forEach(i => {
+          if(!umap.has(i.ulip)){
+            umap.set(i.ulip, 1)
+          }
+          else{
+            umap.set(i.ulip, umap.get(i.ulip) + 1)
+
+          }
+        });
+        let reqArr: { data: string, val: string }[] = []
+        for (let [key, value] of umap) {
+          let tempArr = {
+            data: key,
+            val: value
+          }
+          reqArr.push(tempArr)
+        }
+        this.tableReqDatas = reqArr
+
+
+      },
+      error: error => {
+        console.error("There is an error", error)
+      }
+    })
+
+
+
+
   }
 
 }

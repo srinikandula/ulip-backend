@@ -1,3 +1,40 @@
+<p-dialog [(visible)]="visibleReq" [modal]="true" [style]="{ width: '50vw',  }" [draggable]="false" [resizable]="false">
+    <p class="m-0" [style]="{padding:'3%'}">
+        <p-table [value]="reqDataObjArr" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Data</th>
+                    <th>Value</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-reqDataObjArr>
+                <tr>
+                    <td>{{ reqDataObjArr.dt }}</td>
+                    <td>{{ reqDataObjArr.vl }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p>
+</p-dialog>
+
+<p-dialog [(visible)]="visibleRes" [modal]="true" [style]="{ width: '50vw',  }" [draggable]="false" [resizable]="false">
+    <p class="m-0" [style]="{padding:'3%'}">
+        <p-table [value]="reqDataObjArr" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Data</th>
+                    <th>Value</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-resDataObjArr>
+                <tr>
+                    <td>{{ resDataObjArr.dt }}</td>
+                    <td>{{ resDataObjArr.vl }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p>
+</p-dialog>
 <div id="downloadLogs">
     <div id="downloadShowLabl">
         <p>Download your log file</p>
@@ -13,7 +50,8 @@
     </div>
     <div class="card flex flex-wrap justify-content-center gap-3 searchLogs">
         <span class="p-input-icon-left searchLogsSpan">
-            <input placeholder="Search in table" type="text" pInputText [(ngModel)]="filterSearchvalue" name="filterSearchvalue" />
+            <input placeholder="Search in table" type="text" pInputText [(ngModel)]="filterSearchvalue"
+                name="filterSearchvalue" />
             <button (click)="changeFilterChecks()"><i class="fa-solid fa-magnifying-glass "></i></button>
 
 
@@ -31,7 +69,8 @@
                     <h4 id="filterByH">Filter by</h4>
                     <div class="flex flex-column gap-2">
                         <div *ngFor="let category of categories" class="field-checkbox">
-                            <p-checkbox (onChange)="changeFilterChecks()"  class="pCheckboxFilter" [label]="category.name" name="group" [value]="category"
+                            <p-checkbox (onChange)="changeFilterChecks()" class="pCheckboxFilter"
+                                [label]="category.name" name="group" [value]="category"
                                 [(ngModel)]="selectedCategories"></p-checkbox>
                         </div>
                     </div>
@@ -43,81 +82,48 @@
 
 
 <div id="table_container">
+
     <table>
-        <table>
-            <thead>
-                <tr>
-                    <th>Application Name</th>
-                    <th>API</th>
-                    <th>Request Data</th>
-                    <th>Time</th>
-                    <th>Response Data</th>
-                </tr>
-            </thead>
-            <tbody *ngFor="let i of apiLogsTemp">
-                <tr>
-                    <td>{{i.applicationName}}</td>
-                    <td>{{i.ulip}}</td>
-                    <td>
-                        <div class="card flex justify-content-center">
-                            <p-button [style]="{padding:'4%', display:'flex', gap:'10px', fontSize:'0.6em', backgroundColor:'#D6223A', border:'none', borderRadius:'5px'}"
-                                (click)="showDialogReqData(i.reqData)" icon="pi pi-external-link"
-                                label="Request data">
-                            </p-button>
-                            <p-dialog [(visible)]="visibleReq" [modal]="true" [style]="{ width: '50vw',  }"
-                                [draggable]="false" [resizable]="false">
-                                <p class="m-0" [style]="{padding:'3%'}">
-                                    <p-table [value]="reqDataObjArr" [tableStyle]="{ 'min-width': '50rem' }">
-                                        <ng-template pTemplate="header">
-                                            <tr>
-                                                <th>Data</th>
-                                                <th>Value</th>
-                                            </tr>
-                                        </ng-template>
-                                        <ng-template pTemplate="body" let-reqDataObjArr>
-                                            <tr>
-                                                <td>{{ reqDataObjArr.dt }}</td>
-                                                <td>{{ reqDataObjArr.vl }}</td>
-                                            </tr>
-                                        </ng-template>
-                                    </p-table>
-                                </p>
-                            </p-dialog>
-                        </div>
-                    </td>
-                    <td class="generatedApiPart">
-                        <div class="timePartOnLogs">{{this.convertDate(i.time).getHours()}}: {{this.convertDate(i.time).getMinutes()}}: {{this.convertDate(i.time).getSeconds()}}</div>
-                        <div class="datePartOnLogs">{{this.convertDate(i.time).toString().slice(0,15)}}</div>
-                    </td>
-                    <td class="secKeyCreate"><p-button [outlined]="true" [style]="{padding:'4%', display:'flex', gap:'10px', fontSize:'0.6em', border:'none', color:'#D6223A', borderRadius:'5px'}"
-                        (click)="showDialogReqData(i.resData)" icon="pi pi-external-link"
-                        label="Response">
-                    </p-button>
-                    <p-dialog [(visible)]="visibleRes" [modal]="true" [style]="{ width: '50vw',  }"
-                        [draggable]="false" [resizable]="false">
-                        <p class="m-0" [style]="{padding:'3%'}">
-                            <p-table [value]="reqDataObjArr" [tableStyle]="{ 'min-width': '50rem' }">
-                                <ng-template pTemplate="header">
-                                    <tr>
-                                        <th>Data</th>
-                                        <th>Value</th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-resDataObjArr>
-                                    <tr>
-                                        <td>{{ resDataObjArr.dt }}</td>
-                                        <td>{{ resDataObjArr.vl }}</td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                        </p>
-                    </p-dialog> 
-                    
+        <thead>
+            <tr>
+                <th>Application Name</th>
+                <th>API</th>
+                <th>Request Data</th>
+                <th>Time</th>
+                <th>Response Data</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let i of apiLogsTemp">
+            <tr>
+                <td>{{i.applicationName}}</td>
+                <td>{{i.ulip}}</td>
+                <td>
+                    <div class="card flex justify-content-center reqBtnApiLogs">
+                        <p-button
+                            [style]="{padding:'4%', display:'flex', gap:'10px', fontSize:'0.6em', backgroundColor:'#D6223A', border:'none', borderRadius:'5px'}"
+                            (click)="showDialogReqData(i.reqData)" icon="pi pi-external-link" label="Request data">
+                        </p-button>
+
+                    </div>
                 </td>
-                </tr>
-            </tbody>
-        </table>
+                <td class="generatedApiPart">
+                    <div class="timePartOnLogs">{{this.convertDate(i.time).getHours()}}:
+                        {{this.convertDate(i.time).getMinutes()}}: {{this.convertDate(i.time).getSeconds()}}</div>
+                    <div class="datePartOnLogs">{{this.convertDate(i.time).toString().slice(0,15)}}</div>
+                </td>
+                <td class="secKeyCreate">
+                    <p-button [outlined]="true"
+                        [style]="{padding:'4%', display:'flex', gap:'10px', fontSize:'0.6em', border:'none', color:'#D6223A', borderRadius:'5px'}"
+                        class="reqBtnApiLogs"
+                        (click)="showDialogReqData(i.resData)" icon="pi pi-external-link" label="Response">
+                    </p-button>
+
+
+                </td>
+            </tr>
+        </tbody>
     </table>
+
     <!-- <div id="ifNoKey" *ngIf="apiHome.length === 0" (click)="handleOnCreate()">
         <div id="imageShowTableNoKey">
             <div id="imageHoverNoKey"></div>

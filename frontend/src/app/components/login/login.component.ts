@@ -7,21 +7,6 @@ import { Router } from '@angular/router';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  // animations:[
-  //   trigger('animatingBtn',[
-  //     transition('void => *',[
-  //       // style({width:"0%"}),
-  //       animate('0.4s', style({width:"0%"}))
-  //       // animate("0.4s")
-  //     ] ),
-  //     transition('* => void', [
-  //       // style({width:"100%"}),
-  //       animate('0.4s', style({width:"100%"}))
-  //       // animate('0.4s')
-  //     ])
-  //   ]
-  //   )
-  // ]
 })
 export class LoginComponent implements OnInit {
   username: string = ""
