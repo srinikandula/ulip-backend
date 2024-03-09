@@ -17,6 +17,12 @@ import { WebsocketService } from 'src/app/services/websocket/websocket.service';
 })
 export class ApiLogsComponent implements OnInit {
 
+  date1: Date | undefined;
+
+  date2: Date | undefined;
+
+  date3: Date | undefined;
+
   
 
   getApiLog(){
@@ -171,17 +177,21 @@ showDialogResData(myresData:string) {
     const resDataJson = JSON.parse(obj.resData)
     return resDataJson.error === "true"?false:true
   }
-  funcDateSort(a: ApiLogs,b: ApiLogs){
+  funcDateSort(a: ApiLogs){
     
-    let t1 = new Date(Number(a.time))
-    let t2 = new Date(Number(b.time))
-    return t1.getTime()-t2.getTime()
+    let t1 = Number(a.time)
+    if(t1<=Number(this.date2?.getTime()) && t1>=Number(this.date1?.getTime())){
+      return true;
+    }
+    // return t1.getTime()
+    return false;
 
   }
 
   
   
   changeFilterChecks(){
+    console.log("dates are ", this.date1?.getTime(), " ", this.date2)
     let cateMapFilter = new Map();
 
     for(let i = 0; i<this.selectedCategories.length; ++i){
@@ -236,7 +246,7 @@ showDialogResData(myresData:string) {
       this.apiLogsTemp = this.apiLogsTemp.filter(this.api_filter_function_m.bind(this));
     }
     if(cateMapFilter.has("P")){
-      this.apiLogsTemp = this.apiLogsTemp.sort(this.funcDateSort);
+      this.apiLogsTemp = this.apiLogsTemp.filter(this.funcDateSort.bind(this));
     }
 
     

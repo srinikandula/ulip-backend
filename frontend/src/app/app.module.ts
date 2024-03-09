@@ -32,7 +32,7 @@ import { EditKeyComponent } from './components/edit-key/edit-key.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
-
+import { CalendarModule } from 'primeng/calendar';
 
 // const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 //   "bgsColor": "red",
@@ -99,7 +99,9 @@ import { ConfirmationService } from 'primeng/api';
     // SocketIoModule.forRoot(config),
     RadioButtonModule,
     BreadcrumbModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    CalendarModule
+    
   ],
   providers: [KeypageService, MessageService, ToastService, WebsocketService, ConfirmationService],
   bootstrap: [AppComponent]

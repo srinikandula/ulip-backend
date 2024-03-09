@@ -148,3 +148,6 @@
     margin: 0 5%;
     height: 4vh;
 }
+.p-calendar input{
+    padding: 5%;
+}

@@ -375,3 +375,14 @@ tbody {
     display: flex;
     justify-content: center;
 }
+
+.calenderDiv{
+    display: flex;
+    width: 50%;
+    gap: 20px;
+}
+.calEach{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

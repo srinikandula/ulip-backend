@@ -49,22 +49,31 @@
 
     </div>
     <div class="card flex flex-wrap justify-content-center gap-3 searchLogs">
+        <div class="card flex flex-wrap gap-3 p-fluid calenderDiv">
+            <div class="flex-auto calEach">
+                <p-calendar (click)="changeFilterChecks()" [(ngModel)]="date1" [showIcon]="true" placeholder="From" inputId="buttondisplay"></p-calendar>
+            </div>
+        
+            <div class="flex-auto calEach">
+                <p-calendar (click)="changeFilterChecks()" [(ngModel)]="date2" [showIcon]="true" placeholder="To" inputId="buttondisplay"></p-calendar>
+            </div>
+        </div>
         <span class="p-input-icon-left searchLogsSpan">
             <input placeholder="Search in table" type="text" pInputText [(ngModel)]="filterSearchvalue"
                 name="filterSearchvalue" />
             <button (click)="changeFilterChecks()"><i class="fa-solid fa-magnifying-glass "></i></button>
-
-
         </span>
+
         <div class="card flex justify-content-center filterDiv">
             <div class="filterBtnDiv">
                 <button (click)="handleOnToggleApiMenu()">
                     <i *ngIf="!apiMenuFilter" class="fa-solid fa-filter"></i>
                     <i *ngIf="apiMenuFilter" class="fa-solid fa-xmark"></i>
                 </button>
-
             </div>
+
             <div id="filterMenuDiv" *ngIf="apiMenuFilter">
+
                 <div class="card flex justify-content-center">
                     <h4 id="filterByH">Filter by</h4>
                     <div class="flex flex-column gap-2">
@@ -114,8 +123,8 @@
                 <td class="secKeyCreate">
                     <p-button [outlined]="true"
                         [style]="{padding:'4%', display:'flex', gap:'10px', fontSize:'0.6em', border:'none', color:'#D6223A', borderRadius:'5px'}"
-                        class="reqBtnApiLogs"
-                        (click)="showDialogReqData(i.resData)" icon="pi pi-external-link" label="Response">
+                        class="reqBtnApiLogs" (click)="showDialogReqData(i.resData)" icon="pi pi-external-link"
+                        label="Response">
                     </p-button>
 
 
