@@ -10,6 +10,47 @@ var fetchapi = require("../middleware/fetchapi")
 var convert = require('xml-js');
 var crypto = require('crypto');
 require('dotenv').config()
+var nodemailer = require("nodemailer");
+const fs = require("fs")
+// import sendMailTextFunc from "../Html/index.mjs";
+
+
+router.post("/sendmailcreatekey", fetchuser, async(req, res)=>{
+
+    const htmlTemplate = fs.readFileSync('Html/index.html', 'utf8');
+    
+    // Replace placeholders with provided parameters
+    const renderedHtmlContent = htmlTemplate.replace('{apiKey}', req.body.apiKey)
+                                           .replace('{applicationName}', req.body.applicationName)
+                                           .replace('{ownerName}', req.body.ownerName);
+
+
+    var transporter = nodemailer.createTransport({
+        service:'gmail',
+        auth:{
+            user:"service.ulipmll@gmail.com",
+            pass:"fpxa maku oavr owcv"
+        }
+    })
+    var mailOptions = {
+        from:"service.ulipmll@gmail.com",
+        to:req.body.email,
+        subject:"Testing mail",
+        html:renderedHtmlContent
+
+    }
+    transporter.sendMail(mailOptions, function (error, info) {
+        if(error){
+            console.log("The error is ", error)
+            res.send("error")
+        }
+        else{
+            console.log("Email sent", info.response)
+            res.send({success:true})
+        }
+    })
+
+})
 
 
 router.post("/createKey", fetchuser, async (req, res) => {

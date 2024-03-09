@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ApiKeys } from 'src/app/ApiKeys';
 import { KeypageService } from 'src/app/services/keypage/keypage.service';
-import emailjs, { type EmailJSResponseStatus } from '@emailjs/browser';
 import { MenuItem } from 'primeng/api';
 
 
@@ -86,7 +85,7 @@ export class SideBarComponent {
             applicationName: this.applicationName,
             email: this.emailAddress,
             ip: this.position === "0.0.0.0" ? "0.0.0.0" : `${this.myIp}`,
-            secKey:data.keyIs.secKey,
+            secKey: data.keyIs.secKey,
             updatedAt: "",
 
 
@@ -95,6 +94,25 @@ export class SideBarComponent {
 
           this.messageService.add({ severity: 'success', summary: 'Key Created', detail: apiKey })
           this.keyCardAdd.emit(todoCard)
+
+          this.http.post<any>('http://localhost:5000/aping/sendmailcreatekey', {
+            "apiKey": apiKey,
+            "ownerName": this.ownerName,
+            "applicationName": this.applicationName,
+            "email": this.emailAddress
+          }, { headers }).subscribe({
+            next: data => {
+
+
+              this.messageService.add({ severity: 'success', summary: 'Email Sent Successfully', detail: "" })
+              
+
+            },
+            error: error => {
+              console.error("There is an error", error)
+              this.messageService.add({ severity: 'error', summary: 'Failed', detail: "Mail Send failure" })
+            }
+          })
 
         },
         error: error => {
@@ -107,20 +125,9 @@ export class SideBarComponent {
 
 
 
-    this.keypage.createKeyBool = false
-    emailjs.init("QuMxBAxGcl10ggVaf")
-    emailjs.send('service_3ekbj9u', 'template_617bkto', {
-      usermail: "aksr2003@gmail.com",
-      from_name: "MLL-ULIP",
-      apiKey: apiKey,
-      applicationName: this.applicationName,
-      ownerName: this.ownerName
-
-
-    })
-
+    
   }
 
-  
+
 
 }
