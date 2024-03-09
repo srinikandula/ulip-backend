@@ -1,1 +1,70 @@
-<p>signup works!</p>
+<body>
+    <div id="logo-div">
+        <img src="https://cdn.cargoinsights.co/wp-content/uploads/2023/10/31213739/Mahindra-Logistics-reports-Q2-H1-FY24-results.webp"
+            alt="mahindralogo">
+    </div>
+    <div id="signPageDiv">
+        <div class="sign-container-div">
+            <div class="sign-container">
+                <form id="formComponent" (ngSubmit)="handleOnSubmitSignup()">
+                    <h1><b>MLL ULIP Integrated App Signup</b></h1>
+                    <div id="allFormComp">
+                        <div id="formUpperPara">
+                            <p id="formWelcome"><b>Welcome!</b></p>
+                            <p id="para2Form">Please enter your details to signup.</p>
+                        </div>
+                        <div id="SignupBottomPortion">
+                            <div id="signUpInputDiv">
+                                <div class="inputDivAllTexts">
+                                    <div class="inputDivUpperText">
+                                        <p>Name</p>
+                                    </div>
+                                    <input class="inputTexts" [(ngModel)]="name" name="name" id='name'
+                                        placeholder="Enter your name" required><br>
+                                </div>
+                                <div class="inputDivAllTexts">
+                                    <div class="inputDivUpperText">
+                                        <p>Username</p>
+                                    </div>
+                                    <input class="inputTexts" [(ngModel)]="username" name="userame" id='username'
+                                        placeholder="Enter your Username" required><br>
+                                </div>
+                                <div class="inputDivAllTexts">
+                                    <input class="inputTexts" [(ngModel)]="password" type="password" name="password" id="password"
+                                        placeholder="Password" required><br>
+                                </div>
+                                <div class="inputDivAllTexts">
+                                    <input class="inputTexts" [(ngModel)]="conPassword" name="con_pass" type="password" id="con_pass"
+                                        placeholder="Confirm Password" required><br>
+                                </div>
+                                <div class="inputDivAllTexts">
+                                    <input class="inputTexts" [(ngModel)]="email" name="email" type="email" id="email" placeholder="Email"
+                                        required><br>
+                                </div>
+                                <div class="inputDivAllTexts">
+                                    <input class="inputTexts" [(ngModel)]="contact" name="contact" type="tel" id="contact"
+                                        placeholder="Contact" required><br>
+                                </div>
+
+                            </div>
+
+
+
+
+                            <div id="bottomSignDiv">
+                                <div id="buttonSubmit">
+
+                                    <button type="submit" id="SignupBtn">Sign Up</button>
+                                    <button type="submit" class="buttonAfter"></button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</body>

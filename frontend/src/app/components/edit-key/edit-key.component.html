@@ -1,0 +1,142 @@
+<body>
+    <div id="navbar">
+
+        <div id="path">
+            <div class="card flex justify-content-center">
+                <p-breadcrumb [style]="{background:'transparent', border:'none'}" class="max-w-full"
+                    [model]="itemBreadCrumb"></p-breadcrumb>
+            </div>
+
+        </div>
+        <!-- <div id="hint_help">
+            <button id="hints_button">Show all hints</button>
+            <button id="help_button"> <b>?</b> </button>
+        </div> -->
+    </div>
+
+    <div id="body_container">
+        <div id="left_content">
+            <div id="left_top">
+                <div id="left_top_apikeys">Actions</div>
+                <button (click)="handleOnSaveKey()" class="redBtnEffect" id="action_button">Save</button>
+            </div>
+            <div id="search_box_div">
+
+
+                <div id="allListOfHist">
+                    <ul *ngFor="let i of actionsArr">
+                        <li>{{i}}</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div id="right_content">
+            <div id="right_top">
+                <div id="customer_num">API key</div>
+                <div id="delete_configure_buttons">
+                    <div class="card flex justify-content-center gap-2">
+
+                        <p-confirmDialog></p-confirmDialog>
+                        <button (click)="confirmDisable($event)" icon="pi pi-check" id="delete_api_button"
+                            class="redBtnEffect"><span *ngIf="isEnabled as value; else elseBlock">Disable</span>
+                            <ng-template #elseBlock>Enable</ng-template> Key</button>
+                    </div>
+                    <div class="card flex justify-content-center">
+                        <button (click)="handleIpConfigShow()" id="Configure_tags_button" class="redBtnEffect">Configure
+                            IP</button>
+                        <p-dialog header="" [(visible)]="visibleIP" [modal]="true" [style]="{ width: '30vw'}"
+                            [draggable]="false" [resizable]="false">
+                            <div class="allEleIP"
+                                [style]="{padding:'2%', display:'flex', flexDirection:'column', gap:'8px'}">
+                                <h3>IP Configuration</h3>
+                                <div [style]="{display:'flex', flexWrap:'wrap', gap:'17px'}"
+                                    class="flex flex-wrap gap-3 mb-5">
+                                    <p-radioButton [style]="{margin:'0 5px'}" *ngFor="let option of positionOptions"
+                                        [name]="option.label" [value]="option.value" [label]="option.label"
+                                        [(ngModel)]="position"></p-radioButton>
+                                </div>
+                                <div class="inputDivSidebar" *ngIf="this.position === 'Custom'">
+                                    <div class="inputDivSidePara">
+                                        <p>Custom IP Address</p>
+                                    </div>
+                                    <div class="inputDivSideInp"><input [(ngModel)]="myIp" name="myIp" type="text"
+                                            placeholder="Custom IP Address"></div>
+                                </div>
+                                <div id="setButtonIP">
+                                    <button (click)="handleOnSetIP()" class="redBtnEffect clickBtnSet">Set</button>
+                                </div>
+                            </div>
+
+                        </p-dialog>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="description">
+                <table id="table_1">
+                    <tr>
+                        <td class="first"><b>Application Name</b></td>
+                        <td class="second"><input (ngModelChange)="handleChangeAppname()" [(ngModel)]="applicationName"
+                                disabled="{{!setEdit}}" [style]="{height:'4vh', padding:'3%'}" type="text" pInputText
+                                [(ngModel)]="applicationName" /></td>
+                    </tr>
+                    <tr>
+                        <td class="first"><b>Owner's Name</b></td>
+                        <td class="second"><input (ngModelChange)="handleChangeOwner()" [(ngModel)]="ownerName"
+                                disabled="{{!setEdit}}" [style]="{height:'4vh', padding:'3%'}" type="text" pInputText
+                                [(ngModel)]="ownerName" /></td>
+                    </tr>
+                    <tr>
+                        <td class="first"><b>API Key</b></td>
+                        <td class="second"><input (ngModelChange)="handleChangeApi()" [(ngModel)]="apikey"
+                                disabled="{{!setEdit}}" [style]="{height:'4vh', padding:'3%'}" type="text" pInputText
+                                [(ngModel)]="apikey" /></td>
+                    </tr>
+                    <tr>
+                        <td class="first"><b>Contact</b></td>
+                        <td class="second"><input (ngModelChange)="handleChangeContact()" [(ngModel)]="contactName"
+                                disabled="{{!setEdit}}" [style]="{height:'4vh', padding:'3%'}" type="text" pInputText
+                                [(ngModel)]="contactName" /></td>
+                    </tr>
+                    <tr *ngIf="isEnabled">
+                        <td class="first"><b>Enabled</b></td>
+                        <td class="second"><input disabled="true" [style]="{height:'4vh', padding:'3%'}" type="text"
+                                pInputText [(ngModel)]="isEnabled" /></td>
+                    </tr>
+                </table>
+
+                <div id="edit">
+                    <button (click)="handleEditEnable()" id="edit_button" class="redBtnEffect">Edit</button>
+                </div>
+            </div>
+
+            <div id="usage_plans">API Usage</div>
+            <div id="lower_pane">
+                <!-- <button class="redBtnEffect" id="add_to_plan_button">Add to Usage Plan</button> -->
+                <!-- Table insert -->
+                <div id="table_2_container">
+                    <table id="table_2">
+                        <tr class="table_2_row">
+                            <th class="table_2_row_head">Usage Counts</th>
+                            <th class="table_2_row_head">API Key</th>
+                            <th class="table_2_row_head">Ulip</th>
+                        </tr>
+                        <tbody>
+                            <tr class="table_2_row" *ngFor="let i of this.tableReqDatas">
+                                <td class="table_2_row_data">{{i.val}}</td>
+                                <td class="table_2_row_data">{{this.myParamsKeyLog}}</td>
+                                <td class="table_2_row_data">{{i.data}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>

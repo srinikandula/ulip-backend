@@ -1,51 +1,72 @@
 <!-- <ngx-ui-loader></ngx-ui-loader> -->
 
 <div id="loginPageDiv">
+
     <div id="logo-div">
-        <img src="https://cdn.cargoinsights.co/wp-content/uploads/2023/10/31213739/Mahindra-Logistics-reports-Q2-H1-FY24-results.webp"
-            alt="mahindralogo">
+        <img src="assets/images/220913 Mahindra Sub Brand Logistics Vertical Logo Lockup CMYK.png" alt="mll" id="mahindra_logo">
     </div>
+
+    
     <div class="login-container-div">
-        <div class="login-container">
-            <form id="formComponent" (ngSubmit)="handleOnLogin()">
-                <h1><b>MLL ULIP Integrated App</b></h1>
-                <div id="allFormComp">
 
-                    <div id="formUpperPara">
-                        <p id="formWelcome"><b>Welcome!</b></p>
-                        <p id="para2Form">Please enter your login credentials to access your account.</p>
-                    </div>
-                    <div id="loginBottomPortion">
-                        <div id="loginInputDiv">
-                            <div class="inputDivAllTexts">
-                                <div class="inputDivUpperText">
-                                    <p> Username</p>
-                                </div>
-                                <input class="inputTexts" [(ngModel)]="username" name="username" id='username'
-                                    placeholder="Enter your Username" required><br>
-
-                            </div>
-                            <div class="inputDivAllTexts">
-                                <div class="inputDivUpperText">
-                                    <p>Password</p>
-                                </div>
-                                <input class="inputTexts" [(ngModel)]="password" type="password" name="password"
-                                    id='pass' placeholder="Enter Password" required>
-                            </div>
-                        </div>
-                        <div id="bottomLoginDiv">
-                            <a href="forget" class="red-link">Forget Password</a><br>
-                            <div id="buttonSubmit">
-                                <!-- <input type="submit" value="Login" id="loginBtn"> -->
-                                <button type="submit" id="loginBtn">Login</button>
-                                <button type="submit" class="buttonAfter"></button>
-                            </div>
-
-                            <p class="blue-link">Don't have an account<a href="signup">Signup</a></p>
-                        </div>
-                    </div>
-                </div>
-            </form>
+        <div id="GIF_container">
+            <video id="GIF_video" autoplay loop>
+                <source src="assets/Videos/Login_page_GIF.mp4" type="video/mp4">
+                <!-- <source src="assets/images/GIF_image.jpg" type="video/mp4"> -->
+            </video>
         </div>
+
+        <div id="login_container_box">
+
+            <div class="login-container">
+                <form id="formComponent" (ngSubmit)="handleOnLogin()">
+    
+                    <h1 id="form_heading">MLL ULIP Integrated App</h1>
+    
+                    <div id="allFormComp">
+    
+                        <div id="formUpperPara">    
+                            <p id="formWelcome"><b>Welcome!</b></p>
+                            <p id="para2Form">Please enter your login credentials to access your account.</p>
+                        </div>
+    
+                        <div id="loginBottomPortion">
+                            <div id="loginInputDiv">
+
+                                <div class="inputDivAllTexts">
+                                    <div class="inputDivUpperText">
+                                        <p> Username</p>
+                                    </div>
+                                    <input class="inputTexts" [(ngModel)]="username" name="username" id='username'
+                                        placeholder="Enter your username" required><br>
+                                </div>
+
+                                <div class="inputDivAllTexts">
+                                    <div class="inputDivUpperText">
+                                        <p>Password</p>
+                                    </div>
+                                    <input class="inputTexts" [(ngModel)]="password" type="password" name="password"
+                                        id='pass' placeholder="Enter password" required>
+                                </div>  
+
+                            </div>
+                            
+                            <div id="bottomLoginDiv">
+                                <a href="forget" class="red-link">Forget Password</a><br>
+                                <div id="buttonSubmit">
+                                    <!-- <input type="submit" value="Login" id="loginBtn"> -->
+                                    <button type="submit" id="loginBtn">Login</button>
+                                    <button type="submit" class="buttonAfter"></button>
+                                </div>
+    
+                                <p class="blue-link">Don't have an account,<a href="signup"><b>Signup</b></a></p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+
     </div>
 </div>

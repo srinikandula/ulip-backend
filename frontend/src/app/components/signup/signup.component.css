@@ -1,0 +1,228 @@
+#formComponent {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+#signPageDiv {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    width: 40%;
+}
+
+.sign-container {
+    width: 100%;
+    padding: 20px;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.buttonAfter {
+    top: 0;
+    position: absolute;
+    width: 0;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    background-color: black;
+    left: 0;
+    transition: all ease-in-out 0.3s;
+}
+
+#buttonSubmit:hover {
+    .buttonAfter {
+        width: 100%;
+        opacity: 0.2;
+    }
+}
+
+#buttonSubmit {
+    position: relative;
+}
+
+.sign-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sign-container input[type="text"],
+.sign-container input[type="password"],
+.sign-container input[type="email"],
+.sign-container input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+#SignBtn {
+    width: 100%;
+    background-color: #D6223A;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#para2Form {
+    padding-bottom: 5% 0;
+    font-size: 0.9em;
+    color: #222;
+}
+
+.inputTexts {
+    background-color: #F7F7F7;
+    width: 100%;
+    padding: 4px;
+    border: none;
+    border-radius: 3px;
+    box-sizing: border-box;
+    height: 50%;
+}
+
+#signUpInputDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    height: 100%;
+}
+
+#SignupBottomPortion {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    height: 78%;
+}
+
+#formWelcome {
+    font-size: 1em;
+    padding-top: 2% 0;
+    font-weight: bold;
+}
+
+#allFormComp {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 100%;
+}
+
+.inputDivAllTexts {
+    background-color: #F7F7F7;
+    color: grey;
+    font-size: 0.8em;
+}
+
+
+.inputDivUpperText{
+    position: relative;
+    background: #F7F7F7 0% 0% no-repeat padding-box;
+    font-size: 14px;
+    padding-left: 4px;
+    
+}
+.inputDivUpperText p{
+    font-weight: bold;
+    color: #A8A8A8;
+}
+
+.inputTexts:focus {
+    outline: none;
+}
+
+#formComponent h1 {
+    font-size: 1.5em;
+    padding: 1% 0;
+    color: #333;
+}
+
+.signUpInputDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 23px;
+    height: 100%;
+}
+
+
+
+
+
+
+.sign-container-div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-right: 30%;
+    height: 90svh;
+    padding-top: 2%;
+}
+
+#logo-div {
+    width: 10%;
+    padding-left: 2%;
+    height: 2svh;
+    position: absolute;
+    left: 2%;
+    align-items: left;
+    top: 2%;
+
+}
+
+#logo-div img {
+    width: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    height: 100svh;
+    width: 100%;
+}
+
+form {
+    border-radius: 8px;
+    width: 100%;
+}
+
+label {
+    display: block;
+    margin-bottom: 12px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 19px;
+    box-sizing: border-box;
+    border: none;
+}
+
+button {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+#SignupBtn {
+    width: 100%;
+    background-color: #D6223A;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}

@@ -1,180 +1,56 @@
-/* style.css */
 body, html {
     height: 100vh;
     margin: 0;
+    font-family: "georama";
+    font-stretch: semi-expanded;
 }
-
-#big_container {
-    display: flex;
-    height: 100%;
-}
-
-#left_container {
-    width: 20%;
-    background-color: #F9FAFB;
-    height: 100svh;
-    display: inline-block;
-    position: sticky;
-    left: 0;
-    display: flex;
-    top: 0;
-    flex-direction: column;
-    gap: 21px;
-}
-
-
-
-#mahindra_logo {
-    width: 80%;
-    padding: 4%;
-    padding-left: 6%;
-}
-
 
 .grey_font {
-    color: #222; 
-    position: relative;
-    cursor: pointer;
-    font-weight: bold;
-}
-/* .grey_font:hover{
-    color: white;
-} */
-.grey_font::after{
-    background-color: #D6223A;
-    transition: all ease-out 0.1s;
-    position: absolute;
-    width: 0%;
-    height: 100%;
-    content: "";
-    color: white;
-    left: 0;
-    z-index: -1;
-    top: 0;
-
-}
-.grey_font:hover::after{
-    width: 100%;
-}
-.grey_font:hover{
-    color: white;
-}
-#dNZnPop4vEWlLc {
-    font-size: 25px;
-    font-weight: bold;
-}
-
-#pwsld {
-    padding: 20px;
-    position: relative;
-    font-weight: bold;
-    top: 20px;
+    color: #676767;
 }
 
 
-#MrKCgSxHMeTD2Rk {
-    padding: 20px;
-    /* list-style-image: url(./key.png) ; */
-}
-
-#cNKt81CvfXNk5Of {
-    padding: 20px;
-}
-
-
-/* li {
-  list-style: none;
-}
-li::before {
-  content: '';
-  display: inline-block;
-  left: 10px;
-  height: 10px;
-  width: 10px;
-  background-image: url(./key.png);
-} */
-
-#right_container {
-    padding: 20px;
-    width: 79%;
-    display: inline-block;
-    flex-direction: column;
-    background-color: #F3F3F4; /* Example background color */
-    overflow: auto;
-}
-
-#VYFc1qozkId5mra {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-}
-
-#toggle_menu_div {
-    width: 20%;
-
-}
-
-#toggle_menu {
-    background-color: transparent;
-    border: none;
-    text-align: left;
-    cursor: pointer;
-    width: 20%;
-}
-
-#person_id_profile {
-    /* display: inline-block;
-    position: relative;
-    right: 0px;
-    left: 50%; */
-
-    /* flex: 1 1 0; */
-
-    justify-content: right;
-  display: flex;
-  width: 80%;
-    
-}
-
-#diCgqRzdsILqdTa {
+#page_desc_container {
     width: 100%;
     height: 80px;
     display: flex;
     align-items: center;
 }
 
-#zEYPp41JmDPM4Qy {
-    /* display: inline-block; */
+#page_desc {
     display: flex;
     flex-direction: column;
     width: 30%;
 }
 
-#button_div {
-    display: flex;
-    width: 70%;
-    justify-content: right;
-}
-
-#N8NODaXdtouCuiJ {
-    width: 100px;
-    background-color: #D6223A;
-    color: white;
-    height: 40px;
-    border-radius: 4px;
-    border: none;
+#desc_home {
     font-weight: bold;
-    cursor: pointer;
+}
+
+#desc_page_name {
+    font-size: 25px;
+    font-weight: bold;
 }
 
 
-
-#jZ3qbrkXCeEdwsa {
-    display: inline-block;
-    height: 30px;
+#content_table {
+    position: relative;
+    /* top: 50%; */
+    top: 50px;
+    left: 50%;
+    display: flex;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    justify-content: center;
 }
 
+table {
+    width: 100%;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    position: relative;
+}
 
 
 #content_table {
@@ -200,12 +76,12 @@ table {
 
 th,
 td {
-	padding: 15px;
+	/* padding: 15px; */
+    /* border: 1px solid black; */
 	color: black;
-}
-
-th {
-	text-align: left;
+    height: 9vh;
+    
+    text-align: center;
 }
 
 thead {
@@ -223,6 +99,8 @@ tbody {
         
 	}
 }
+
+
 .keyVal:hover{
     text-decoration:underline;
     cursor: pointer;
@@ -251,6 +129,8 @@ tbody {
     position: relative;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 .generatedApiPart:hover{
     .copyBtnDiv{
@@ -346,6 +226,7 @@ tbody {
     height: 30px;
     border-radius: 5px;
 }
+
 .searchLogs{
     align-items: center;
     display: flex;
@@ -385,6 +266,9 @@ tbody {
     font-weight: 100;
     color: #444;
 }
+.filterDiv{
+    position: relative;
+}
 #filterMenuDiv{
     z-index: 2;
     position: absolute;
@@ -395,9 +279,6 @@ tbody {
     width: 12vw;
     margin-top: 35%;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-}
-.filterDiv{
-    position: relative;
 }
 .field-checkbox{
     padding: 4%;
@@ -467,4 +348,41 @@ tbody {
         opacity: 1;
         transform: translateY(-3px);
     }    
+}
+
+
+@media only screen and (max-width: 600px) {
+    .grey_font {
+        font-size: 10px;
+    }
+
+    #desc_page_name {
+        font-size: 15px;
+    }
+
+    table {
+        font-size: 10px;
+    }
+    
+    #downloadLogs button {
+        width: 40px;
+        height: 40px;
+        font-size: 1em;
+    }
+
+}
+.reqBtnApiLogs{
+    display: flex;
+    justify-content: center;
+}
+
+.calenderDiv{
+    display: flex;
+    width: 50%;
+    gap: 20px;
+}
+.calEach{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

@@ -13,6 +13,9 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./api-home.component.css']
 })
 export class ApiHomeComponent implements OnInit {
+handleOnEditKeyPressed(apikey: string) {
+  this.router.navigate([`home/editkey/${apikey}`])
+}
   onProgressSecKey: boolean = false;
   visibleSidebar(boolVal: boolean) {
 
@@ -24,38 +27,9 @@ export class ApiHomeComponent implements OnInit {
     this.apiHome.unshift(keyCard)
 
   }
-  currectKeySelected:string=""
-  handleIfCurrentLoaded( keyVal: string): boolean {
-    return keyVal === this.currectKeySelected;
-}
-  handleOnGenSecKey(keyVal: string) {
-    this.onProgressSecKey = true
-    this.currectKeySelected = keyVal
+  currectKeySelected: string = ""
 
-    const headers = new HttpHeaders({
-      'auth-token': this.tokeVal || '', // Ensure a default value if authtoken is null
-      'Content-Type': 'application/json' // 'content-type' changed to 'Content-Type'
-    });
-    const body = {
-      passKey: keyVal
-
-    }
-
-    this.http.put<any>('http://localhost:5000/aping/generateseckey', body, { headers }).subscribe({
-      next: data => {
-        console.log(data)
-        navigator.clipboard.writeText(data.secKeyIs)
-        this.messageService.add({ severity: 'success', summary: 'Secret key copied', detail: "Check your clipboard" })
-        this.onProgressSecKey = false
-
-      },
-      error: error => {
-        console.error("There is an error", error)
-        this.messageService.add({ severity: 'error', summary: 'Failed', detail: "Check your Server" })
-      }
-    })
-
-  }
+  
 
   apiHome: ApiKeys[] = [];
   tokeVal: string = `${localStorage.getItem("authtoken")}`;
@@ -96,18 +70,18 @@ export class ApiHomeComponent implements OnInit {
   ngOnInit() {
     this.keypage.pageNav = 0
 
-    
+
 
 
 
   }
-  handleOnLogout(){
+  handleOnLogout() {
     localStorage.removeItem("authtoken")
     this.router.navigate(['login'])
   }
   handleOnCreate() {
     this.keypage.createKeyBool = true
-    
+
 
   }
 

@@ -1,0 +1,20 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+/Client
+/Ulip-api
+# dependencies
+/node_modules
+/.angular
+web.config
+/package-lock.json
+
+# env file
+.env
+.idea
+# misc
+# package-lock.json
+
+# README.md
+README.md
+
+# config folders

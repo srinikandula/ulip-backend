@@ -1,7 +1,7 @@
 <p-sidebar [(visible)]="keypage.createKeyBool" position="right" styleClass="w-30rem">
     <form id="sideBarContent" >
         <button id="closeSideBar" (click)="handleOnClickMenu()">
-            X
+            x
         </button>
         <div id="upperSideBarSection">
             <div id="h2Sidebar">
@@ -33,6 +33,31 @@
                 </div>
                 <div class="inputDivSideInp"><input [(ngModel)]="contactName" name="contactName" type="text"
                         placeholder="Enter Contact Name"></div>
+            </div>
+
+            <div class="inputDivSidebar">
+                <div class="inputDivSidePara">
+                    <p>Email Address</p>
+                </div>
+                <div class="inputDivSideInp"><input [(ngModel)]="emailAddress" name="emailAddress" type="text"
+                        placeholder="Enter Contact Name"></div>
+            </div>
+            <div class="" [style]="{display:'flex', gap:'5px', flexDirection:'column'}">
+                <div class="">
+                    <p>IP Config</p>
+                </div>
+                
+                <div [style]="{display:'flex', flexWrap:'wrap', gap:'17px'}" class="flex flex-wrap gap-3 mb-5">
+                    <p-radioButton [style]="{margin:'0 5px'}" *ngFor="let option of positionOptions" [name]="option.label" [value]="option.value" [label]="option.label" [(ngModel)]="position" ></p-radioButton>
+                </div>
+                
+            </div>
+            <div class="inputDivSidebar" *ngIf="this.position === 'Custom'">
+                <div class="inputDivSidePara">
+                    <p>Custom IP Address</p>
+                </div>
+                <div class="inputDivSideInp"><input [(ngModel)]="myIp" name="myIp" type="text"
+                        placeholder="Custom IP Address"></div>
             </div>
         </div>
         <div id="submitOptionKeyOuterDiv">
