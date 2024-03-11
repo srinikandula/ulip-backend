@@ -9,6 +9,7 @@ import * as XLSX from 'xlsx';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { Observable, filter } from 'rxjs';
 import { WebsocketService } from 'src/app/services/websocket/websocket.service';
+import {apiService} from "../../services/api/apiservice";
 
 @Component({
   selector: 'app-api-logs',
@@ -112,7 +113,8 @@ showDialogResData(myresData:string) {
     this.apiMenuFilter = !this.apiMenuFilter
   }
 
-  constructor(private http: HttpClient, private router: Router, public keypage: KeypageService, private messageService: MessageService, public websocketservice: WebsocketService) {
+  constructor(private http: HttpClient, private router: Router, public keypage: KeypageService, private messageService: MessageService, public websocketservice: WebsocketService,
+              private apiSrivice: apiService) {
 
 
     const headers = new HttpHeaders({
@@ -123,7 +125,7 @@ showDialogResData(myresData:string) {
 
     console.log(localStorage.getItem('authtoken'))
 
-    this.http.post<any>('http://localhost:5000/aping/fetchLogs', {}, { headers }).subscribe({
+    this.http.post<any>(this.apiSrivice.mainUrl + 'aping/fetchLogs', {}, { headers }).subscribe({
       next: data => {
         console.log(data)
 

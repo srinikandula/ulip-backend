@@ -48,6 +48,32 @@
               ],
               "outputHashing": "all"
             },
+            "qa": {
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.qa.ts"
+                }
+              ]
+            },
+            "production": {
+              "outputPath": "prod_build/dist",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environments.prod.ts"
+                }
+              ]
+            },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
@@ -99,5 +125,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "ebda2f55-c0a7-4ae6-a587-c6ef1c0ce430"
   }
 }

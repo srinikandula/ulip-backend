@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService, ConfirmEventType } from 'primeng/api';
 import { ApiLogs } from 'src/app/ApiLogs';
+import {apiService} from "../../services/api/apiservice";
 
 @Component({
   selector: 'app-edit-key',
@@ -22,7 +23,7 @@ export class EditKeyComponent implements OnInit {
     const body = { "passKey": myParamsKey, "applicationName": this.applicationName, "ownerName": this.ownerName, "apiKey": this.apikey, "contactNo": this.contactName };
 
 
-    this.http.put<any>('http://localhost:5000/aping/updatekey', body, { headers }).subscribe({
+    this.http.put<any>(this.apiSrivice.mainUrl + 'aping/updatekey', body, { headers }).subscribe({
       next: data => {
         console.log(data)
         this.messageService.add({ severity: 'success', summary: 'API key changed Successfully', detail: this.applicationName });
@@ -47,7 +48,7 @@ export class EditKeyComponent implements OnInit {
       const body = { "passKey": myParamsKey, myIp: this.position === "0.0.0.0" ? "0.0.0.0" : `${this.myIp}` };
 
 
-      this.http.put<any>('http://localhost:5000/aping/changeip', body, { headers }).subscribe({
+      this.http.put<any>(this.apiSrivice.mainUrl + 'aping/changeip', body, { headers }).subscribe({
         next: data => {
           console.log(data)
           this.messageService.add({ severity: 'success', summary: 'IP changed successfully', detail: this.myIp });
@@ -135,7 +136,7 @@ export class EditKeyComponent implements OnInit {
         });
         const body = { "passKey": myParamsKey, isEnable: this.isEnabled };
 
-        this.http.put<any>('http://localhost:5000/aping/toggle-api-key', body, { headers }).subscribe({
+        this.http.put<any>(this.apiSrivice.mainUrl + 'aping/toggle-api-key', body, { headers }).subscribe({
           next: data => {
             console.log(data)
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
@@ -158,7 +159,8 @@ export class EditKeyComponent implements OnInit {
   handleIpConfigShow() {
     this.visibleIP = true
   }
-  constructor(private route: ActivatedRoute, private http: HttpClient, private messageService: MessageService, private confirmationService: ConfirmationService, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private messageService: MessageService, private confirmationService: ConfirmationService, private router: Router,
+              private apiSrivice: apiService) {
 
   }
   api_filter_function_key(obj: ApiLogs, myParamsKey: string) {
@@ -184,7 +186,7 @@ export class EditKeyComponent implements OnInit {
     console.log(localStorage.getItem('authtoken'))
 
 
-    this.http.post<any>('http://localhost:5000/aping/fetchmykey', body, { headers }).subscribe({
+    this.http.post<any>(this.apiSrivice.mainUrl + 'aping/fetchmykey', body, { headers }).subscribe({
       next: data => {
         this.applicationName = data.mykey.applicationName
         this.ownerName = data.mykey.ownerName
@@ -201,7 +203,7 @@ export class EditKeyComponent implements OnInit {
 
     this.itemBreadCrumb = [{ label: 'Create Keys' }, { label: 'Edit Key' }];
 
-    this.http.post<any>('http://localhost:5000/aping/fetchLogs', {}, { headers }).subscribe({
+    this.http.post<any>(this.apiSrivice.mainUrl + 'aping/fetchLogs', {}, { headers }).subscribe({
       next: data => {
 
         this.editKeyLogs = data.allLogs.filter(this.api_filter_function_key.bind(this));

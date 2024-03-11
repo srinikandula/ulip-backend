@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { ApiKeys } from 'src/app/ApiKeys';
 import { KeypageService } from 'src/app/services/keypage/keypage.service';
 import { MenuItem } from 'primeng/api';
+import {apiService} from "../../../services/api/apiservice";
 
 
 @Component({
@@ -40,7 +41,7 @@ export class SideBarComponent {
 
 
 
-  constructor(private http: HttpClient, private router: Router, public keypage: KeypageService, private messageService: MessageService) { }
+  constructor(private http: HttpClient, private router: Router, public keypage: KeypageService, private messageService: MessageService, private apiSrivice: apiService) { }
   @Output() keyCardAdd: EventEmitter<ApiKeys> = new EventEmitter();
 
   generateApiKey(length: number = 32): string {
@@ -67,7 +68,7 @@ export class SideBarComponent {
 
       }
 
-      this.http.post<any>('http://localhost:5000/aping/createkey', {
+      this.http.post<any>(this.apiSrivice.mainUrl + 'aping/createkey', {
         "key": apiKey,
         "ownerName": this.ownerName,
         "contactNo": this.contactName,
@@ -95,7 +96,7 @@ export class SideBarComponent {
           this.messageService.add({ severity: 'success', summary: 'Key Created', detail: apiKey })
           this.keyCardAdd.emit(todoCard)
 
-          this.http.post<any>('http://localhost:5000/aping/sendmailcreatekey', {
+          this.http.post<any>(this.apiSrivice.mainUrl + 'aping/sendmailcreatekey', {
             "apiKey": apiKey,
             "ownerName": this.ownerName,
             "applicationName": this.applicationName,
