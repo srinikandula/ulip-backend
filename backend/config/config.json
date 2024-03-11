@@ -1,9 +1,9 @@
 {
 "development": {
-    "username": "root",
-    "password": "password",
-    "database": "mll",
-    "host": "localhost",
+    "username": "mlluser",
+    "password": "M!!U$#&@",
+    "database": "ulip",
+    "host": "10.11.0.92",
     "dialect": "mysql",
     "timezone":"+05:30"
 },

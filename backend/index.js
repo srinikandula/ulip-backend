@@ -37,6 +37,7 @@ app.use("/vehicle", vehicleRouter)
 app.use("/aping", apingRouter)
 // app.use("/apingsaarthi", apingSaarthiRouter)
 
+app.get('/', (req, res) => res.send('This is ulip-backend'))
 
 db.sequelize.sync().then(()=>{
     app.listen(5000, ()=>{
