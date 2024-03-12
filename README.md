@@ -1,3 +1,11 @@
+**.env file for backend** <br>
+ulip_url = https://www.ulipstaging.dpiit.gov.in/ulip/v1.0.0 <br>
+ulip_username = {{username}}<br>
+ulip_password = {{password}}<br>
+ulip_login_url = https://www.ulipstaging.dpiit.gov.in/ulip/v1.0.0/user/login <br>
+ip_fetch_rul = http://api.ipify.org/?format=json <br>
+
+
 **1.Project Title:-**
 Unified Logistics Interface Portal (ULIP) API integrated web portal
 
@@ -30,7 +38,7 @@ An Application has to be designed and built to act as a Middleware for all the I
 <ol><li>
        
 
-        Creating user : Make a POST request :<br>
+        Creating user : Make a POST request :
            curl  -X POST \
            'http://localhost:5000/user/signup' \
            --header 'Accept: /' \
@@ -45,7 +53,7 @@ An Application has to be designed and built to act as a Middleware for all the I
         
        
 </li>
-<li> 2.Go to the frontend to login with the given credentials: <br>
+<li>Go to the frontend to login with the given credentials: <br>
            Username:user,
            Password:12345678
            (You can set your own username and password while creating a user.)
@@ -53,7 +61,7 @@ An Application has to be designed and built to act as a Middleware for all the I
     </ol>
     <br>           
 
-**8.Making a ULIP request-**
+**8.Making a ULIP request-**  <br>
        1.	Create an API Key from  frontend and copy passkey and secret key as  api-key and seckey from the frontend and do the following API request.
        
           i. The CURL code for making a POST request at VAHAAN :

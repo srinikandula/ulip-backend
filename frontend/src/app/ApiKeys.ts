@@ -5,5 +5,7 @@ export class ApiKeys{
     "applicationName":string
     "secKey":string
     "updatedAt":string
+    "email":string
+    "ip":string
 
 }

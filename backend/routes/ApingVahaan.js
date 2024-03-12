@@ -10,18 +10,86 @@ var fetchapi = require("../middleware/fetchapi")
 var convert = require('xml-js');
 var crypto = require('crypto');
 require('dotenv').config()
+var nodemailer = require("nodemailer");
+const fs = require("fs")
+// import sendMailTextFunc from "../Html/index.mjs";
+
+
+router.post("/sendmailcreatekey", fetchuser, async(req, res)=>{
+
+    const htmlTemplate = fs.readFileSync('Html/index.html', 'utf8');
+    
+    // Replace placeholders with provided parameters
+    const renderedHtmlContent = htmlTemplate.replace('{apiKey}', req.body.apiKey)
+                                           .replace('{applicationName}', req.body.applicationName)
+                                           .replace('{ownerName}', req.body.ownerName);
+
+
+    var transporter = nodemailer.createTransport({
+        service:'gmail',
+        auth:{
+            user:"service.ulipmll@gmail.com",
+            pass:"fpxa maku oavr owcv"
+        }
+    })
+    var mailOptions = {
+        from:"service.ulipmll@gmail.com",
+        to:req.body.email,
+        subject:"Testing mail",
+        html:renderedHtmlContent
+
+    }
+    transporter.sendMail(mailOptions, function (error, info) {
+        if(error){
+            console.log("The error is ", error)
+            res.send("error")
+        }
+        else{
+            console.log("Email sent", info.response)
+            res.send({success:true})
+        }
+    })
+
+})
 
 
 router.post("/createKey", fetchuser, async (req, res) => {
     try {
 
+        let secKey = crypto.randomUUID()
+
+        const newKey = crypto.createCipher('aes-128-cbc', "secKey");
+        var mystr = newKey.update(secKey, 'utf8', 'hex')
+        mystr += newKey.final('hex');
+
+        const dateTime = new Date()
+        dateTime.setDate(dateTime.getDate() + 15)
+
+
         let key = req.body
         key.username = req.usn
+        key.secKey = mystr
+        key.secValidity = dateTime
         // let keyVal = key.key
         // keyVal = CrockfordBase32.encode(keyVal)
         const keyIs = await ApiKeys.create(key)
         res.json({ success: true, keyIs })
         // res.json({success:true,key, keyVal})
+
+    } catch (error) {
+        res.status(500).send("Internal Server Error")
+        console.log(error.message)
+    }
+
+})
+
+router.put("/changeip", fetchuser, async (req, res) => {
+    try {
+        const { myIp, passKey } = req.body
+        const apiKeyIs = await ApiKeys.update({
+            ip: myIp
+        }, { returning: true, where: { key: passKey } })
+        res.send({ success: true, apiKeyIs })
 
     } catch (error) {
         res.status(500).send("Internal Server Error")
@@ -83,6 +151,51 @@ router.post("/fetchKeys", fetchuser, async (req, res) => {
 
 })
 
+router.put("/toggle-api-key", fetchuser, async (req, res) => {
+    try {
+        const { passKey, isEnable } = req.body
+        const apiKeyIs = await ApiKeys.update({
+            active: !isEnable
+        }, { returning: true, where: { key: passKey } })
+        res.send({ success: true, apiKeyIs })
+
+    } catch (error) {
+        res.status(500).send("Internal Server Error")
+        console.log(error.message)
+    }
+
+})
+
+router.put("/updatekey", fetchuser, async (req, res) => {
+    try {
+        const { passKey, applicationName, ownerName, apiKey, contactNo } = req.body
+        const apiKeyIs = await ApiKeys.update({
+            applicationName:applicationName,
+            ownerName:ownerName,
+            contactNo:contactNo,
+            apiKey:apiKey
+        }, { returning: true, where: { key: passKey } })
+        res.send({ success: true, apiKeyIs })
+
+    } catch (error) {
+        res.status(500).send("Internal Server Error")
+        console.log(error.message)
+    }
+
+})
+
+router.post("/fetchmykey", fetchuser, async (req, res) => {
+    try {
+        const { passKey } = req.body
+        let mykey = await ApiKeys.findOne({ where: { key: passKey } })
+        res.send({ success: true, mykey })
+    } catch (error) {
+
+        console.log(error.message)
+        res.status(500).send("Internal Server Error")
+
+    }
+})
 
 router.post("/fetchLogs", fetchuser, async (req, res) => {
     try {
@@ -100,21 +213,21 @@ router.post("/fetchLogs", fetchuser, async (req, res) => {
 })
 
 
-const correctVahan = (jsval)=>{
+const correctVahan = (jsval) => {
     console.log("insdie the correct vahan", jsval)
     // jsval = jsval.json
-    let tempJs= {}
+    let tempJs = {}
     let jsKey = Object.keys(jsval)
     let jsValAll = Object.values(jsval)
     for (let i = 0; i < jsValAll.length; i++) {
-        if(jsValAll[i]._text){
+        if (jsValAll[i]._text) {
             tempJs[jsKey[i]] = jsValAll[i]._text
 
         }
-        else{
+        else {
             tempJs[jsKey[i]] = jsValAll[i]
         }
-        
+
     }
     return tempJs
 
@@ -150,20 +263,20 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
 
         // console.log("all done", req.authorization)
         let json = await response.json()
-        
-        
+
+
 
         // console.log(json, "is the response")
 
-        
+
         let respBody = {
-            error:json.error,
-            code:json.code,
-            message:json.message
+            error: json.error,
+            code: json.code,
+            message: json.message
         }
 
         if (req.params.ulipIs === "VAHAN") {
-            
+
             const xmlString = json.response[0].response
             var result1 = convert.xml2js(xmlString, { compact: true, spaces: 4 });
             const vhdet = result1["VehicleDetails"]
@@ -173,8 +286,8 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
             console.log(json)
 
         }
-       
-        
+
+
         // if(req.params.ulipIs === "FASTAG"){
         //     respBody = json.json.response[0].response
         // }

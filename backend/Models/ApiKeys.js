@@ -27,6 +27,18 @@ module.exports = (Sequelize, DataTypes) => {
         },
         secValidity:{
             type:DataTypes.DATE,
+        },
+        email:{
+            type:DataTypes.STRING,
+            allowNull:false
+        },
+        ip:{
+            type:DataTypes.STRING,
+            allowNull:false
+        },
+        active:{
+            type:DataTypes.BOOLEAN,
+            defaultValue:true
         }
         
         
