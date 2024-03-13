@@ -11,6 +11,7 @@ import { ApiLogs } from 'src/app/ApiLogs';
 })
 export class EditKeyComponent implements OnInit {
   editKeyLogs: ApiLogs[] = []
+  backUrl:string = "http://ulipapi.mlldev.com"
   handleOnSaveKey() {
     const myParamsKey = this.route.snapshot.paramMap.get('apikey');
 
@@ -22,7 +23,7 @@ export class EditKeyComponent implements OnInit {
     const body = { "passKey": myParamsKey, "applicationName": this.applicationName, "ownerName": this.ownerName, "apiKey": this.apikey, "contactNo": this.contactName };
 
 
-    this.http.put<any>('http://localhost:5000/aping/updatekey', body, { headers }).subscribe({
+    this.http.put<any>(`${this.backUrl}/aping/updatekey`, body, { headers }).subscribe({
       next: data => {
         console.log(data)
         this.messageService.add({ severity: 'success', summary: 'API key changed Successfully', detail: this.applicationName });

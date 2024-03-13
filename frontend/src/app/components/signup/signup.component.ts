@@ -9,8 +9,9 @@ import { Router } from '@angular/router';
 })
 export class SignupComponent {
   constructor(private http: HttpClient, private router:Router){}
+  backUrl:string = "http://ulipapi.mlldev.com"
   handleOnSubmitSignup() {
-    this.http.post<any>('http://localhost:5000/user/signup', {
+    this.http.post<any>(`${this.backUrl}/user/signup`, {
       "username":this.username,
       "name":this.name,
       "password":this.password,

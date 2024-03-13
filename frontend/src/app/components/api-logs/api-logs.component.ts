@@ -16,6 +16,7 @@ import { WebsocketService } from 'src/app/services/websocket/websocket.service';
   styleUrls: ['./api-logs.component.css']
 })
 export class ApiLogsComponent implements OnInit {
+  backUrl:string = "http://ulipapi.mlldev.com"
 
   date1: Date | undefined;
 
@@ -123,7 +124,7 @@ showDialogResData(myresData:string) {
 
     console.log(localStorage.getItem('authtoken'))
 
-    this.http.post<any>('http://localhost:5000/aping/fetchLogs', {}, { headers }).subscribe({
+    this.http.post<any>(`${this.backUrl}/aping/fetchLogs`, {}, { headers }).subscribe({
       next: data => {
         console.log(data)
 

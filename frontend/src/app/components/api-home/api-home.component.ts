@@ -13,6 +13,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./api-home.component.css']
 })
 export class ApiHomeComponent implements OnInit {
+  backUrl:string = "backUrl"
 handleOnEditKeyPressed(apikey: string) {
   this.router.navigate([`home/editkey/${apikey}`])
 }
@@ -44,7 +45,7 @@ handleOnEditKeyPressed(apikey: string) {
 
     console.log(localStorage.getItem('authtoken'))
 
-    this.http.post<any>('http://localhost:5000/aping/fetchKeys', {}, { headers }).subscribe({
+    this.http.post<any>(`${this.backUrl}/aping/fetchKeys`, {}, { headers }).subscribe({
       next: data => {
         console.log(data)
 

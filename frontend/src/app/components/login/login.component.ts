@@ -9,11 +9,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  backUrl:string = "http://ulipapi.mlldev.com"
   username: string = ""
   password: string = ""
   handleOnLogin() {
     console.log("cliccked")
-    this.http.post<any>('http://localhost:5000/user/login', {
+    this.http.post<any>(`${this.backUrl}/user/login`, {
       "username": this.username,
       "password": this.password
     }).subscribe({
