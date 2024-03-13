@@ -33,6 +33,12 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
+import { SplitterModule } from 'primeng/splitter';
+import { InputTextModule } from 'primeng/inputtext';
+
+import { TabViewModule } from 'primeng/tabview';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { TableModule } from 'primeng/table';
 
 // const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 //   "bgsColor": "red",
@@ -98,6 +104,11 @@ import { CalendarModule } from 'primeng/calendar';
     TableModule,
     // SocketIoModule.forRoot(config),
     RadioButtonModule,
+    SplitterModule,
+    InputTextModule,
+    TabViewModule,
+    InputTextareaModule,
+    TableModule,
     BreadcrumbModule,
     ConfirmDialogModule,
     CalendarModule
