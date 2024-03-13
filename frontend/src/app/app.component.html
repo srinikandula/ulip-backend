@@ -5,6 +5,33 @@
   <p-toast></p-toast>
  
 </div>
+<p-splitter [style]="{ height: '700px' }" styleClass="mb-5" layout="vertical">
+  <ng-template pTemplate>
+      <div class="col flex align-items-center justify-content-center">
 
+        <p-tabView>
+          <p-tabPanel header="Headers">
+            <p-table  [tableStyle]="{ 'min-width': '50rem' }">
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th>Key</th>
+                      <th>Value</th>
+                     
+                  </tr>
+              </ng-template>
+             
+          </p-table>
+          </p-tabPanel>
+          <p-tabPanel header="Body">
+            <textarea rows="5" cols="30" pInputTextarea [autoResize]="true"></textarea>
+          </p-tabPanel>
+         
+      </p-tabView>
+      </div>
+  </ng-template>
+  <ng-template pTemplate>
+      <div class="col flex align-items-center justify-content-center">Response</div>
+  </ng-template>
+</p-splitter>
   <router-outlet></router-outlet>
 
