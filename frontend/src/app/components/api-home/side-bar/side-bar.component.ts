@@ -62,7 +62,7 @@ export class SideBarComponent {
       'auth-token': localStorage.getItem('authtoken') || '',
       'Content-Type': 'application/json'
     });
-    this.http.get("http://api.ipify.org/?format=json").subscribe((res: any) => {
+    this.http.get("https://api.ipify.org/?format=json").subscribe((res: any) => {
       if (this.position === "Current") {
         this.myIp = res.ip
 
