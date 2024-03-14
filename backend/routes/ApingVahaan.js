@@ -189,16 +189,7 @@ router.post("/createLog",[
 })
 
 
-router.post("/fetchKeys", fetchuser,[
-    body("username", "Username must be more than 4 characters").isLength({min:4})
-]
-
-, async (req, res) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
-    }
-
+router.post("/fetchKeys", fetchuser, async (req, res) => {
     try {
         
         let allKey = await ApiKeys.findAll({ where: { username: req.usn } })
