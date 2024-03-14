@@ -7,6 +7,6 @@ import {environment} from "../../../environments/environments";
 
 
 export class apiService {
-    mainUrl = 'http://localhost:5000/';
-    // mainUrl = environment.baseUrl;
+    // mainUrl = 'http://localhost:5000/';
+    mainUrl = environment.baseUrl;
 }
