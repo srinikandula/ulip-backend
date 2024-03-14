@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import {apiService} from "../../services/api/apiservice";
 
 @Component({
   selector: 'app-signup',
@@ -8,10 +9,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
-  constructor(private http: HttpClient, private router:Router){}
-  backUrl:string = "http://ulipapi.mlldev.com"
+  constructor(private http: HttpClient, private router:Router, private apiSrivice: apiService){}
   handleOnSubmitSignup() {
-    this.http.post<any>(`${this.backUrl}/user/signup`, {
+    this.http.post<any>(this.apiSrivice.mainUrl + 'user/signup', {
       "username":this.username,
       "name":this.name,
       "password":this.password,

@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { ApiKeys } from 'src/app/ApiKeys';
 import { KeypageService } from 'src/app/services/keypage/keypage.service';
 import { MenuItem } from 'primeng/api';
+import {apiService} from "../../../services/api/apiservice";
 
 
 @Component({
@@ -13,7 +14,7 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./side-bar.component.css']
 })
 export class SideBarComponent {
-  backUrl:string = "http://ulipapi.mlldev.com"
+
   items: MenuItem[] | undefined;
   applicationName: string = "";
   ownerName: string = "";
@@ -40,7 +41,7 @@ export class SideBarComponent {
 
 
 
-  constructor(private http: HttpClient, private router: Router, public keypage: KeypageService, private messageService: MessageService) { }
+  constructor(private http: HttpClient, private router: Router, public keypage: KeypageService, private messageService: MessageService, private apiSrivice: apiService) { }
   @Output() keyCardAdd: EventEmitter<ApiKeys> = new EventEmitter();
 
   generateApiKey(length: number = 32): string {
@@ -61,13 +62,13 @@ export class SideBarComponent {
       'auth-token': localStorage.getItem('authtoken') || '',
       'Content-Type': 'application/json'
     });
-    this.http.get("https://api.ipify.org/?format=json").subscribe((res: any) => {
+    this.http.get("http://api.ipify.org/?format=json").subscribe((res: any) => {
       if (this.position === "Current") {
         this.myIp = res.ip
 
       }
 
-      this.http.post<any>(`${this.backUrl}/aping/createkey`, {
+      this.http.post<any>(this.apiSrivice.mainUrl + 'aping/createkey', {
         "key": apiKey,
         "ownerName": this.ownerName,
         "contactNo": this.contactName,
@@ -95,7 +96,7 @@ export class SideBarComponent {
           this.messageService.add({ severity: 'success', summary: 'Key Created', detail: apiKey })
           this.keyCardAdd.emit(todoCard)
 
-          this.http.post<any>(`${this.backUrl}/aping/sendmailcreatekey`, {
+          this.http.post<any>(this.apiSrivice.mainUrl + 'aping/sendmailcreatekey', {
             "apiKey": apiKey,
             "ownerName": this.ownerName,
             "applicationName": this.applicationName,

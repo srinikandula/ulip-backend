@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService, ConfirmEventType } from 'primeng/api';
 import { ApiLogs } from 'src/app/ApiLogs';
+import { apiService } from "../../services/api/apiservice";
 
 @Component({
   selector: 'app-edit-key',
@@ -11,7 +12,6 @@ import { ApiLogs } from 'src/app/ApiLogs';
 })
 export class EditKeyComponent implements OnInit {
   editKeyLogs: ApiLogs[] = []
-  backUrl:string = "http://ulipapi.mlldev.com"
   handleOnSaveKey() {
     const myParamsKey = this.route.snapshot.paramMap.get('apikey');
 
@@ -23,7 +23,7 @@ export class EditKeyComponent implements OnInit {
     const body = { "passKey": myParamsKey, "applicationName": this.applicationName, "ownerName": this.ownerName, "apiKey": this.apikey, "contactNo": this.contactName };
 
 
-    this.http.put<any>(`${this.backUrl}/aping/updatekey`, body, { headers }).subscribe({
+    this.http.put<any>(this.apiSrivice.mainUrl + 'aping/updatekey', body, { headers }).subscribe({
       next: data => {
         console.log(data)
         this.messageService.add({ severity: 'success', summary: 'API key changed Successfully', detail: this.applicationName });
@@ -48,7 +48,7 @@ export class EditKeyComponent implements OnInit {
       const body = { "passKey": myParamsKey, myIp: this.position === "0.0.0.0" ? "0.0.0.0" : `${this.myIp}` };
 
 
-      this.http.put<any>('http://localhost:5000/aping/changeip', body, { headers }).subscribe({
+      this.http.put<any>(this.apiSrivice.mainUrl + 'aping/changeip', body, { headers }).subscribe({
         next: data => {
           console.log(data)
           this.messageService.add({ severity: 'success', summary: 'IP changed successfully', detail: this.myIp });
@@ -114,7 +114,52 @@ export class EditKeyComponent implements OnInit {
   setEdit: boolean = false
   actionsArr: string[] = [];
   tokeVal: string = `${localStorage.getItem("authtoken")}`;
-  tableReqDatas:{data:string, val:string}[] = []
+  tableReqDatas: { data: string, val: string }[] = []
+
+  confirmDelete(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Do you want to delete this key?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptIcon: "none",
+      rejectIcon: "none",
+
+      accept: () => {
+
+        const myParamsKey = this.route.snapshot.paramMap.get('apikey');
+
+        const headers = new HttpHeaders({
+          'auth-token': this.tokeVal || '', // Ensure a default value if authtoken is null
+          'Content-Type': 'application/json' // 'content-type' changed to 'Content-Type'
+        });
+        const body = { "apiKey": myParamsKey};
+        const options = { 
+          headers: headers, 
+          body: { "apiKey": myParamsKey }
+        };
+        console.log("The link is ", this.apiSrivice.mainUrl + 'aping/deletemykey', body)
+        this.http.delete<any>(this.apiSrivice.mainUrl + 'aping/deletemykey', {body:body, headers: headers }).subscribe({
+          next: data => {
+            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'API key deleted' });
+            this.router.navigate(['home/createkey'])
+          },
+          error: error => {
+            console.error("There is an error", error)
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Key deletion Failed' });
+          }
+        })
+
+        
+      },
+      reject: () => {
+        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+      }
+    });
+  }
+
 
   confirmDisable(event: Event) {
     this.confirmationService.confirm({
@@ -136,7 +181,7 @@ export class EditKeyComponent implements OnInit {
         });
         const body = { "passKey": myParamsKey, isEnable: this.isEnabled };
 
-        this.http.put<any>('http://localhost:5000/aping/toggle-api-key', body, { headers }).subscribe({
+        this.http.put<any>(this.apiSrivice.mainUrl + 'aping/toggle-api-key', body, { headers }).subscribe({
           next: data => {
             console.log(data)
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
@@ -159,7 +204,8 @@ export class EditKeyComponent implements OnInit {
   handleIpConfigShow() {
     this.visibleIP = true
   }
-  constructor(private route: ActivatedRoute, private http: HttpClient, private messageService: MessageService, private confirmationService: ConfirmationService, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private messageService: MessageService, private confirmationService: ConfirmationService, private router: Router,
+    private apiSrivice: apiService) {
 
   }
   api_filter_function_key(obj: ApiLogs, myParamsKey: string) {
@@ -185,7 +231,7 @@ export class EditKeyComponent implements OnInit {
     console.log(localStorage.getItem('authtoken'))
 
 
-    this.http.post<any>('http://localhost:5000/aping/fetchmykey', body, { headers }).subscribe({
+    this.http.post<any>(this.apiSrivice.mainUrl + 'aping/fetchmykey', body, { headers }).subscribe({
       next: data => {
         this.applicationName = data.mykey.applicationName
         this.ownerName = data.mykey.ownerName
@@ -202,17 +248,17 @@ export class EditKeyComponent implements OnInit {
 
     this.itemBreadCrumb = [{ label: 'Create Keys' }, { label: 'Edit Key' }];
 
-    this.http.post<any>('http://localhost:5000/aping/fetchLogs', {}, { headers }).subscribe({
+    this.http.post<any>(this.apiSrivice.mainUrl + 'aping/fetchLogs', {}, { headers }).subscribe({
       next: data => {
 
         this.editKeyLogs = data.allLogs.filter(this.api_filter_function_key.bind(this));
 
         let umap = new Map();
         this.editKeyLogs.forEach(i => {
-          if(!umap.has(i.ulip)){
+          if (!umap.has(i.ulip)) {
             umap.set(i.ulip, 1)
           }
-          else{
+          else {
             umap.set(i.ulip, umap.get(i.ulip) + 1)
 
           }

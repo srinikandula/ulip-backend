@@ -69,11 +69,11 @@ router.post("/sendmailcreatekey", [
     })
 
 
-router.post("/createKey",[
+router.post("/createKey", [
     body("email", "Must be a email").isEmail(),
     body("applicationName", "Application Name must have some value").isLength({ min: 1 }),
     body("ownerName", "Owner Name must have some value").isLength({ min: 1 }),
-    body("ip", "Should be a valid IP address").isLength({ min: 4}),
+    body("ip", "Should be a valid IP address").isLength({ min: 4 }),
     body("key", "Empty API key passed").isLength({ min: 1 }),
     body("contactNo", "Contact Number should be greater than 8 characters").isLength({ min: 8 }),
 
@@ -111,6 +111,24 @@ router.post("/createKey",[
 
 })
 
+router.delete("/deletemykey", [
+    body("apiKey", "Empty API key passed").isLength({ min: 1 }),
+
+], fetchuser, async (req, res) => {
+    try {
+        const { apiKey } = req.body
+        await ApiKeys.destroy({
+            where: {
+                key: apiKey
+            },
+        });
+        res.send({success:true, msg:"Key deleted successfully"})
+    } catch (error) {
+        res.status(500).send("Internal Server Error")
+        console.log(error.message)
+    }
+})
+
 router.put("/changeip", fetchuser, async (req, res) => {
     try {
         const { myIp, passKey } = req.body
@@ -126,72 +144,72 @@ router.put("/changeip", fetchuser, async (req, res) => {
 
 })
 
-router.put("/generateseckey",[
-    body("passKey", "Key should have value").isLength({min:1})
+router.put("/generateseckey", [
+    body("passKey", "Key should have value").isLength({ min: 1 })
 ],
- fetchuser, async (req, res) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
-    }
+    fetchuser, async (req, res) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() })
+        }
 
-    try {
-        const { passKey } = req.body
+        try {
+            const { passKey } = req.body
 
-    let secKey = crypto.randomUUID()
+            let secKey = crypto.randomUUID()
 
-    const newKey = crypto.createCipher('aes-128-cbc', "secKey");
-    var mystr = newKey.update(secKey, 'utf8', 'hex')
-    mystr += newKey.final('hex');
+            const newKey = crypto.createCipher('aes-128-cbc', "secKey");
+            var mystr = newKey.update(secKey, 'utf8', 'hex')
+            mystr += newKey.final('hex');
 
-    const dateTime = new Date()
-    dateTime.setDate(dateTime.getDate() + 15)
+            const dateTime = new Date()
+            dateTime.setDate(dateTime.getDate() + 15)
 
-    console.log(dateTime)
-    const apiKeyIs = await ApiKeys.update(
-        {
-            secKey: mystr,
-            secValidity: dateTime
-        },
-        { returning: true, where: { key: passKey } }
-    )
-    res.send({ success: true, secKeyIs: mystr })
-        
-    } catch (error) {
-        res.status(500).send("Internal Server Error")
-    }
+            console.log(dateTime)
+            const apiKeyIs = await ApiKeys.update(
+                {
+                    secKey: mystr,
+                    secValidity: dateTime
+                },
+                { returning: true, where: { key: passKey } }
+            )
+            res.send({ success: true, secKeyIs: mystr })
+
+        } catch (error) {
+            res.status(500).send("Internal Server Error")
+        }
 
 
-})
+    })
 
-router.post("/createLog",[
-    body("key", "Invalid API key").isLength({min:1}),
-    body("ulip", "Invalid ULIP data request").isLength({min:1}),
-    body("applicationName", "Invalid Application Name").isLength({min:1}),
-    body("username", "Username must be 4 characters").isLength({min:4})
+router.post("/createLog", [
+    body("key", "Invalid API key").isLength({ min: 1 }),
+    body("ulip", "Invalid ULIP data request").isLength({ min: 1 }),
+    body("applicationName", "Invalid Application Name").isLength({ min: 1 }),
+    body("username", "Username must be 4 characters").isLength({ min: 4 })
 ],
- async (req, res) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
-    }
+    async (req, res) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() })
+        }
 
-    try {
+        try {
 
-        const keyLog = req.body
-        const keyLogIs = await ApiLogs.create(keyLog)
-        res.json({ success: true, keyLogIs })
+            const keyLog = req.body
+            const keyLogIs = await ApiLogs.create(keyLog)
+            res.json({ success: true, keyLogIs })
 
-    } catch (error) {
-        res.status(500).send("Internal Server Error")
-    }
+        } catch (error) {
+            res.status(500).send("Internal Server Error")
+        }
 
-})
+    })
 
 
 router.post("/fetchKeys", fetchuser, async (req, res) => {
     try {
-        
+
         let allKey = await ApiKeys.findAll({ where: { username: req.usn } })
         res.send({ success: true, allKey })
 
@@ -202,32 +220,32 @@ router.post("/fetchKeys", fetchuser, async (req, res) => {
 
 })
 
-router.put("/toggle-api-key", fetchuser,[
-    body("passKey", "API must be valid").isLength({min:1}),
+router.put("/toggle-api-key", fetchuser, [
+    body("passKey", "API must be valid").isLength({ min: 1 }),
     body("isEnable", "API key toggle failed").isBoolean()
 
 ],
- async (req, res) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
-    }
+    async (req, res) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() })
+        }
 
-    try {
-        const { passKey, isEnable } = req.body
-        const apiKeyIs = await ApiKeys.update({
-            active: !isEnable
-        }, { returning: true, where: { key: passKey } })
-        res.send({ success: true, apiKeyIs })
+        try {
+            const { passKey, isEnable } = req.body
+            const apiKeyIs = await ApiKeys.update({
+                active: !isEnable
+            }, { returning: true, where: { key: passKey } })
+            res.send({ success: true, apiKeyIs })
 
-    } catch (error) {
-        res.status(500).send("Internal Server Error")
-        console.log(error.message)
-    }
+        } catch (error) {
+            res.status(500).send("Internal Server Error")
+            console.log(error.message)
+        }
 
-})
+    })
 
-router.put("/updatekey", fetchuser,[
+router.put("/updatekey", fetchuser, [
     body("passKey", "Empty API key passed").isLength({ min: 1 }),
     body("applicationName", "Application Name must have some value").isLength({ min: 1 }),
     body("ownerName", "Owner Name must have some value").isLength({ min: 1 }),
@@ -235,29 +253,29 @@ router.put("/updatekey", fetchuser,[
     body("contactNo", "Contact Number should be greater than 8 characters").isLength({ min: 8 }),
 ]
 
-, async (req, res) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
-    }
-    try {
-        const { passKey, applicationName, ownerName, apiKey, contactNo } = req.body
-        const apiKeyIs = await ApiKeys.update({
-            applicationName: applicationName,
-            ownerName: ownerName,
-            contactNo: contactNo,
-            apiKey: apiKey
-        }, { returning: true, where: { key: passKey } })
-        res.send({ success: true, apiKeyIs })
+    , async (req, res) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() })
+        }
+        try {
+            const { passKey, applicationName, ownerName, apiKey, contactNo } = req.body
+            const apiKeyIs = await ApiKeys.update({
+                applicationName: applicationName,
+                ownerName: ownerName,
+                contactNo: contactNo,
+                apiKey: apiKey
+            }, { returning: true, where: { key: passKey } })
+            res.send({ success: true, apiKeyIs })
 
-    } catch (error) {
-        res.status(500).send("Internal Server Error")
-        console.log(error.message)
-    }
+        } catch (error) {
+            res.status(500).send("Internal Server Error")
+            console.log(error.message)
+        }
 
-})
+    })
 
-router.post("/fetchmykey", fetchuser,[
+router.post("/fetchmykey", fetchuser, [
     body("passKey", "Empty API key passed").isLength({ min: 1 })
 ], async (req, res) => {
     const errors = validationResult(req)
@@ -278,29 +296,29 @@ router.post("/fetchmykey", fetchuser,[
     }
 })
 
-router.post("/fetchLogs", fetchuser,[
+router.post("/fetchLogs", fetchuser, [
     body("username", "Username Must be more than 4 characters").isLength({ min: 4 }),
 
 ],
- async (req, res) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
-    }
+    async (req, res) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() })
+        }
 
-    try {
+        try {
 
-        const { username } = await req.usn
-        console.log(username)
-        let allLogs = await ApiLogs.findAll({ where: { username: req.usn } })
-        res.send({ success: true, allLogs })
+            const { username } = await req.usn
+            console.log(username)
+            let allLogs = await ApiLogs.findAll({ where: { username: req.usn } })
+            res.send({ success: true, allLogs })
 
-    } catch (error) {
-        console.log(error.message)
-        res.status(500).send("Internal Server Error")
-    }
+        } catch (error) {
+            console.log(error.message)
+            res.status(500).send("Internal Server Error")
+        }
 
-})
+    })
 
 
 const correctVahan = (jsval) => {
@@ -328,7 +346,7 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
 
     try {
         const url = `${process.env.ulip_url}/${req.params.ulipIs}/${req.params.reqIs}`
-        
+
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -340,7 +358,7 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
             },
             body: JSON.stringify(req.body)
         })
-        
+
         let json = await response.json()
 
 

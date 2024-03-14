@@ -5,6 +5,7 @@ import { ApiKeys } from 'src/app/ApiKeys';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { KeypageService } from 'src/app/services/keypage/keypage.service';
 import { MessageService } from 'primeng/api';
+import {apiService} from "../../services/api/apiservice";
 
 
 @Component({
@@ -13,7 +14,6 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./api-home.component.css']
 })
 export class ApiHomeComponent implements OnInit {
-  backUrl:string = "backUrl"
 handleOnEditKeyPressed(apikey: string) {
   this.router.navigate([`home/editkey/${apikey}`])
 }
@@ -36,7 +36,8 @@ handleOnEditKeyPressed(apikey: string) {
   tokeVal: string = `${localStorage.getItem("authtoken")}`;
 
 
-  constructor(private http: HttpClient, private router: Router, public keypage: KeypageService, private messageService: MessageService) {
+  constructor(private http: HttpClient, private router: Router, public keypage: KeypageService, private messageService: MessageService,
+              private apiSrivice: apiService) {
     const headers = new HttpHeaders({
       'auth-token': this.tokeVal || '', // Ensure a default value if authtoken is null
       'Content-Type': 'application/json' // 'content-type' changed to 'Content-Type'
@@ -45,7 +46,7 @@ handleOnEditKeyPressed(apikey: string) {
 
     console.log(localStorage.getItem('authtoken'))
 
-    this.http.post<any>(`${this.backUrl}/aping/fetchKeys`, {}, { headers }).subscribe({
+    this.http.post<any>(this.apiSrivice.mainUrl + 'aping/fetchKeys', {}, { headers }).subscribe({
       next: data => {
         console.log(data)
 

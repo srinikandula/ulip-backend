@@ -1,24 +1,26 @@
 {
-"development": {
-    "username": "mlluser",
-    "password": "M!!U$#&@",
-    "database": "ulip",
-    "host": "10.11.0.92",
-    "dialect": "mysql",
-    "timezone":"+05:30"
-},
-"test": {
-    "username": "root",
-    "password": null,
-    "database": "mll",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-},
-"production": {
-    "username": "root",
-    "password": null,
-    "database": "mll",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-}
-}
+    "development": {
+        "username": "mlluser",
+        "password": "M!!U$#&@",
+        "database": "ulip",
+        "host": "10.11.0.92",
+        "dialect": "mysql",
+        "timezone":"+05:30"
+    },
+    "test": {
+        "username": "root",
+        "password": null,
+        "database": "mll",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    },
+    "production": {
+        "username": "root",
+        "password": null,
+        "database": "mll",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    }
+    }
+    
+    
