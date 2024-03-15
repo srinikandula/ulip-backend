@@ -22,6 +22,7 @@ export class SignupComponent {
         console.log(data)
         if (data.success) {
           localStorage.setItem("authtoken", data.authtoken)
+          localStorage.setItem("ulip-person-name", data.name)
           this.router.navigate(['home/createkey'])
         }
       },

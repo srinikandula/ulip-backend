@@ -81,7 +81,6 @@ body, html {
 table {
     width: 100%;
 	border-collapse: collapse;
-	overflow: hidden;
 	box-shadow: 0 0 20px rgba(0,0,0,0.1);
     position: relative;
 }
@@ -273,4 +272,25 @@ tbody {
     }
     
 
+}
+
+.borderColorDisableIdentifier{
+    position: absolute;
+    height: 100%;
+    background-color: #595959;
+    width: 0.5%;
+    top: 0;
+    margin: auto;
+}
+.myHomeRow{
+    position: relative;
+}
+.disableShowDiv{
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    background-color: #111;
+    color: white;
+    padding: 1%;
+    border-radius: 6px;
 }

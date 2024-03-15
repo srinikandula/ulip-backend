@@ -10,6 +10,7 @@ import { KeypageService } from 'src/app/services/keypage/keypage.service';
 })
 export class HomeComponent implements OnInit {
   itemsMenuProfile: MenuItem[] = [];
+  ulipPersonName:string = ""
   
 navigateViewLogs() {
   this.router.navigate(["home/keylogs"])
@@ -20,7 +21,7 @@ navigateCreateKeys() {
 }
 
   constructor(private router:Router, public keypage:KeypageService){
-    
+    this.ulipPersonName = `${localStorage.getItem('ulip-person-name')}`;
   }
 
   handleOnLogout(){

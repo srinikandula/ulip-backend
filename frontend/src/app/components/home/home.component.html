@@ -2,30 +2,38 @@
     <div id="left_container">
         <!-- <img id="mahindra_logo" src="https://companieslogo.com/img/orig/MAHLOG.NS_BIG-b9ce0293.png?t=1604232065"
             alt="mahindta_logo"> -->
-            <div id="logo_container">
-                <img src="assets/images/220913 Mahindra Sub Brand Logistics Vertical Logo Lockup CMYK.png" alt="mahindra logo" id="mahindra_logo">
-            </div>
+        <div id="logo_container">
+            <img src="assets/images/220913 Mahindra Sub Brand Logistics Vertical Logo Lockup CMYK.png"
+                alt="mahindra logo" id="mahindra_logo">
+        </div>
 
         <div id="left_container_home" class="grey_font">Home</div>
         <!-- <div id="menu_items_container"> -->
-            <ul id="left_container_menu">
-    
-                <li 
-                id="menu_create_keys" class="grey_font menu_items" 
-                [style.borderLeftColor]="this.keypage.pageNav === 0 ? '#D6223A' : 'transparent'" 
-                [style.color]="this.keypage.pageNav === 0 ? '#D3223A' : '' " 
-                (click)="navigateCreateKeys()" >
-                    <i class="fa-solid fa-plus"></i> Create Keys 
-                </li>
-    
-                <li 
-                id="menu_view_logs" class="grey_font menu_items" 
-                [style.borderLeftColor]="this.keypage.pageNav === 1 ? '#D6223A' : 'transparent'" 
-                [style.color]="this.keypage.pageNav === 1 ? '#D3223A' : ''" 
-                (click)="navigateViewLogs()">
-                    <i class="fa-solid fa-clock-rotate-left"></i> View Logs 
-                </li>
-        <!-- </div> -->
+        <ul id="left_container_menu">
+
+            <li id="menu_create_keys" class="grey_font menu_items"
+                [style.borderLeftColor]="this.keypage.pageNav === 0 ? '#D6223A' : 'transparent'"
+                [style.color]="this.keypage.pageNav === 0 ? '#D3223A' : '' " (click)="navigateCreateKeys()">
+                <i class="fa-solid fa-plus"></i> Create Keys
+            </li>
+
+            <li id="menu_view_logs" class="grey_font menu_items"
+                [style.borderLeftColor]="this.keypage.pageNav === 1 ? '#D6223A' : 'transparent'"
+                [style.color]="this.keypage.pageNav === 1 ? '#D3223A' : ''" (click)="navigateViewLogs()">
+                <i class="fa-solid fa-clock-rotate-left"></i> View Logs
+            </li>
+            <li id="menu_view_logs"  class="grey_font menu_items moreToolLeftBar"
+                [style.borderLeftColor]="this.keypage.pageNav === 1 ? '#D6223A' : 'transparent'"
+                [style.color]="this.keypage.pageNav === 1 ? '#D3223A' : ''" (click)="navigateViewLogs()">
+                <i class="fa-solid fa-gears"></i> Tools
+                <div id="rightAngleDisplayLeftBar"><i class="fa-solid fa-angle-right"></i></div>
+                <div class="hoverToolsDiv">
+                    <ul>
+                        <li>Fetch Ulip data</li>
+                    </ul>
+                </div>
+            </li>
+            <!-- </div> -->
 
         </ul>
 
@@ -43,13 +51,14 @@
             <div id="person_id_profile">
 
                 <div class="profileLabel">
-                    <label class="labelPrfName">Rohit Shetty</label> 
+                    <label class="labelPrfName">{{this.ulipPersonName}}</label>
                     <label class="labelOperation" for="">Operation</label>
-                </div>   
+                </div>
 
-                <p-menu [style]="{padding:'0.5%', display:'flex', flexDirection:'column', gap:'5px'}" #menu [model]="itemsMenuProfile" [popup]="true"></p-menu>
+                <p-menu [style]="{padding:'0.5%', display:'flex', flexDirection:'column', gap:'5px'}" #menu
+                    [model]="itemsMenuProfile" [popup]="true"></p-menu>
                 <div id="profile_btn_container">
-                    <button id="menuProfileBtn" pButton type="button" (click)="menu.toggle($event)"  label=""></button>
+                    <button id="menuProfileBtn" pButton type="button" (click)="menu.toggle($event)" label=""></button>
                 </div>
 
             </div>

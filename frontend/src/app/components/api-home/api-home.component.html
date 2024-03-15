@@ -29,20 +29,20 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody *ngFor="let i of apiHome">
-                        <tr>
-                            <td>{{i.applicationName}}</td>
+                    <tbody *ngFor="let i of apiHome">                        
+                        <tr (mouseenter)="handleOnMouseEnterRow(i.active)" (mouseout)="handleOnMouseOutRow()" class="myHomeRow" [style.backgroundColor]="i.active ? '#fff' : '#cecece'">
+                            <td><div [style.backgroundColor]="i.active ? '#218700' : '#595959'" class="borderColorDisableIdentifier"></div> {{i.applicationName}}</td>
                             <td>{{i.ownerName}}</td>
                             <td>{{i.contactNo}}</td>
-                            <td class="generatedApiPart" (click)="handleOnCopyClick(i.key)">
-                                <div class="copyBtnDiv">
+                            <td class="generatedApiPart" (mouseenter)="handleOnMouseEnterRow(i.active)" (click)="handleOnCopyClick(i.key)">
+                                <div class="copyBtnDiv" [style.display]="i.active ? 'flex' : 'none'">
                                     <p class="copyBtn">Click to copy</p>
                                 </div>
                                 <p class="keyVal">{{i.key.slice(0,20)}}...</p>
                             </td>
-                            <td class="generatedApiPart" (click)="handleOnCopyClick(i.secKey)">
+                            <td class="generatedApiPart" (mouseenter)="handleOnMouseEnterRow(i.active)" (click)="handleOnCopyClick(i.secKey)">
                                 <div class="copyBtnDiv">
-                                    <p class="copyBtn">Click to copy</p>
+                                    <p class="copyBtn" [style.display]="i.active ? 'flex' : 'none'">Click to copy</p>
                                 </div>
                                 <p class="keyVal">{{i.secKey.slice(0,20)}}...</p>
                             </td>
@@ -64,5 +64,8 @@
                 </div>
                 <p>No keys to Display</p>
 
+            </div>
+            <div class="disableShowDiv" [style.display]="this.isKeyEnable?'none':'flex'" >
+                <p class="disableShowP">API key is Disabled</p>
             </div>
         </div>

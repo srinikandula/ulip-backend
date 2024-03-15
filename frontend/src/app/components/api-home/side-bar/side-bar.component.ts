@@ -88,6 +88,7 @@ export class SideBarComponent {
             ip: this.position === "0.0.0.0" ? "0.0.0.0" : `${this.myIp}`,
             secKey: data.keyIs.secKey,
             updatedAt: "",
+            active:true
 
 
           }

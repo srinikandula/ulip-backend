@@ -34,6 +34,7 @@ handleOnEditKeyPressed(apikey: string) {
 
   apiHome: ApiKeys[] = [];
   tokeVal: string = `${localStorage.getItem("authtoken")}`;
+  isKeyEnable:boolean= true
 
 
   constructor(private http: HttpClient, private router: Router, public keypage: KeypageService, private messageService: MessageService,
@@ -85,6 +86,17 @@ handleOnEditKeyPressed(apikey: string) {
     this.keypage.createKeyBool = true
 
 
+  }
+  handleOnMouseEnterRow(event:boolean){
+    if(event){
+      this.isKeyEnable = true
+    }
+    else{
+      this.isKeyEnable = false
+    }
+  }
+  handleOnMouseOutRow(){
+    this.isKeyEnable = true
   }
 
 

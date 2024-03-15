@@ -7,5 +7,6 @@ export class ApiKeys{
     "updatedAt":string
     "email":string
     "ip":string
+    "active":boolean
 
 }
