@@ -346,6 +346,7 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
 
     try {
         const url = `${process.env.ulip_url}/${req.params.ulipIs}/${req.params.reqIs}`
+        console.log("my url is ", url)
 
         const response = await fetch(url, {
             method: 'POST',
@@ -360,6 +361,9 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
         })
 
         let json = await response.json()
+        if(json.error){
+            return res.send(json)
+        }
 
 
 

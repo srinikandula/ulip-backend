@@ -89,8 +89,6 @@ export class SideBarComponent {
             secKey: data.keyIs.secKey,
             updatedAt: "",
             active:true
-
-
           }
 
 
@@ -118,8 +116,13 @@ export class SideBarComponent {
 
         },
         error: error => {
-          console.error("There is an error", error)
-          this.messageService.add({ severity: 'error', summary: 'Failed', detail: "Please check your server" })
+          console.error("There is an error", error.error)
+          if(error.error.errors){
+            for(let i = 0; i<error.error.errors.length; ++i){
+              this.messageService.add({ severity: 'error', summary: 'Failed', detail: error.error.errors[i].msg })
+            }
+          }
+          
         }
       })
 
