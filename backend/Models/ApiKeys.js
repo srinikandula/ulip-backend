@@ -1,6 +1,5 @@
 module.exports = (Sequelize, DataTypes) => {
     const ApiKeys = Sequelize.define("ApiKeys", {
-
         key: {
             type: DataTypes.STRING,
             allowNull: false,

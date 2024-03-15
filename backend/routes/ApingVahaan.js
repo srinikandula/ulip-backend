@@ -361,6 +361,7 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
         })
 
         let json = await response.json()
+        console.log("reached at json ", json)
         if(json.error){
             return res.send(json)
         }
@@ -419,7 +420,8 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
 
 
     } catch (error) {
-
+        console.log(error.message)
+        res.status(500).send("Internal Server Error")
     }
 
 })
