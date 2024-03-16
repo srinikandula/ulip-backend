@@ -1,5 +1,5 @@
 <div id="big_container">
-    <div id="left_container">
+    <div id="left_container" (mouseover)="handleOnMouseOverSidebar()" (mouseout)="handleOnMouseOutSidebar()" [style.width]="!this.sidebarOpen?'6%':'17%'" [style.position]="this.sidebarHover?'absolute':'sticky'">
         <!-- <img id="mahindra_logo" src="https://companieslogo.com/img/orig/MAHLOG.NS_BIG-b9ce0293.png?t=1604232065"
             alt="mahindta_logo"> -->
         <div id="logo_container">
@@ -9,24 +9,34 @@
 
         <div id="left_container_home" class="grey_font">Home</div>
         <!-- <div id="menu_items_container"> -->
-        <ul id="left_container_menu">
+        <ul id="left_container_menu" [style.display]="sidebarOpen?'block':'flex'"
+        [style.flexDirection]="sidebarOpen?'column':'column'"
+        [style.gap]="sidebarOpen?'0px':'32px'"
+        [style.fontSize]="sidebarOpen?'1em':'1.5em'"
+        >
 
             <li id="menu_create_keys" class="grey_font menu_items"
                 [style.borderLeftColor]="this.keypage.pageNav === 0 ? '#D6223A' : 'transparent'"
-                [style.color]="this.keypage.pageNav === 0 ? '#D3223A' : '' " (click)="navigateCreateKeys()">
-                <i class="fa-solid fa-plus"></i> Create Keys
+                [style.color]="this.keypage.pageNav === 0 ? '#D3223A' : '' " (click)="navigateCreateKeys()"
+                [style.justifyContent]="sidebarOpen?'':'center'"
+                >
+                <i class="fa-solid fa-plus"></i> <span [style.display]="sidebarOpen?'block':'none'">Create Keys</span>
             </li>
 
             <li id="menu_view_logs" class="grey_font menu_items"
                 [style.borderLeftColor]="this.keypage.pageNav === 1 ? '#D6223A' : 'transparent'"
-                [style.color]="this.keypage.pageNav === 1 ? '#D3223A' : ''" (click)="navigateViewLogs()">
-                <i class="fa-solid fa-clock-rotate-left"></i> View Logs
+                [style.color]="this.keypage.pageNav === 1 ? '#D3223A' : ''" (click)="navigateViewLogs()"
+                [style.justifyContent]="sidebarOpen?'':'center'"
+                >
+                <i class="fa-solid fa-clock-rotate-left"></i> <span [style.display]="sidebarOpen?'block':'none'">View Logs</span>
             </li>
             <li id="menu_view_logs"  class="grey_font menu_items moreToolLeftBar"
                 [style.borderLeftColor]="this.keypage.pageNav === 1 ? '#D6223A' : 'transparent'"
-                [style.color]="this.keypage.pageNav === 1 ? '#D3223A' : ''" (click)="navigateViewLogs()">
-                <i class="fa-solid fa-gears"></i> Tools
-                <div id="rightAngleDisplayLeftBar"><i class="fa-solid fa-angle-right"></i></div>
+                [style.color]="this.keypage.pageNav === 1 ? '#D3223A' : ''" (click)="navigateViewLogs()"
+                [style.justifyContent]="sidebarOpen?'':'center'"
+                >
+                <i class="fa-solid fa-gears"></i> <span [style.display]="sidebarOpen?'block':'none'">Tools</span>
+                <div  [style.display]="sidebarOpen?'block':'none'" id="rightAngleDisplayLeftBar"><i class="fa-solid fa-angle-right"></i></div>
                 <div class="hoverToolsDiv">
                     <ul>
                         <li>Fetch Ulip data</li>
@@ -44,7 +54,7 @@
     <div id="right_container">
         <div id="top_bar">
 
-            <div id="toggle_menu_div">
+            <div id="toggle_menu_div" (click)="handleOnLeftbarToggle()">
                 <button id="toggle_menu"><i class="fa-solid fa-bars"></i></button>
             </div>
 

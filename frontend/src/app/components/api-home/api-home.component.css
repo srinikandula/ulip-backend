@@ -293,4 +293,5 @@ tbody {
     color: white;
     padding: 1%;
     border-radius: 6px;
+    transition: scale ease-out 0.05s;
 }

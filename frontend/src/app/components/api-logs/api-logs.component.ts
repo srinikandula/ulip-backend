@@ -66,6 +66,7 @@ showDialogReqData(myreqData:string) {
   
 }
 
+
 showDialogResData(myresData:string) {
   this.resDataObjArr = []
   this.visibleRes = true

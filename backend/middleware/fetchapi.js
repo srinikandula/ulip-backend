@@ -20,8 +20,7 @@ const fetchapi = async(req, res, next)=>{
         console.log("here", process.env.ip_fetch_rul)
         const jsonIp = await responseIp.json()
         if(jsonIp.ip != myKey.ip && myKey.ip != "0.0.0.0"){
-            return res.status(403).send("Data forbidden")
-            
+            return res.status(403).send({success:false, message:"Access Denied!"})   
         }
         req.usn = myKey.username
         const user = myKey.username
@@ -49,10 +48,12 @@ const fetchapi = async(req, res, next)=>{
                 body: JSON.stringify(login_body)
             })
             const resp_login = await response.json()
-            req.authorization = await resp_login.response.id
-            // console.log(resp_login, "Is the response", req.authorization)
-
-            // 
+            if(resp_login.error === 'false'){
+                req.authorization = await resp_login.response.id
+            }
+            else{
+                return res.status(401).send({success:false, message:"Access Denied!"})
+            }
             
             next()
         }

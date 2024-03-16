@@ -78,7 +78,8 @@ import { CalendarModule } from 'primeng/calendar';
     ApiLogsComponent,
     ProfileComponent,
     HomeComponent,
-    EditKeyComponent
+    EditKeyComponent,
+    
   ],
   imports: [
     BrowserModule,

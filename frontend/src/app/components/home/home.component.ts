@@ -11,10 +11,32 @@ import { KeypageService } from 'src/app/services/keypage/keypage.service';
 export class HomeComponent implements OnInit {
   itemsMenuProfile: MenuItem[] = [];
   ulipPersonName:string = ""
+  sidebarOpen:boolean = true;
+  sidebarHover:boolean = false;
+  sideDueToClick: boolean = true
   
 navigateViewLogs() {
   this.router.navigate(["home/keylogs"])
 
+}
+handleOnLeftbarToggle(){
+  this.sidebarOpen = !this.sidebarOpen
+  this.sideDueToClick = !this.sideDueToClick
+  
+}
+handleOnMouseOverSidebar(){
+ if(!this.sidebarOpen && !this.sideDueToClick){
+    this.sidebarHover = true
+    this.sidebarOpen = true
+  }
+
+  }
+handleOnMouseOutSidebar(){
+  if(!this.sideDueToClick){
+    this.sidebarHover = false
+    this.sidebarOpen = false
+
+  }
 }
 navigateCreateKeys() {
   this.router.navigate(["home/createkey"])
