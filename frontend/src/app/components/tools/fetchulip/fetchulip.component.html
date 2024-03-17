@@ -1,0 +1,79 @@
+<div id="container">    
+    <div id="input_api_info_container">
+        <div id="api_name_container">
+            <p>Enter API name : </p>
+            <div id="dropdown_container" class="card flex justify-content-center">
+                <p-dropdown (onChange)="handleOnUlipClick()" [options]="ulipArr" [(ngModel)]="selectedUlipArr" placeholder="Select an API" [editable]="true"></p-dropdown>
+            </div>
+        </div>
+        <div id="api_version_container">
+            <p>Enter API version : </p>
+            <div id="dropdown_container" class="card flex justify-content-center">
+                <p-dropdown [options]="versionUlip" (onChange)="handleOnVersionChange()" [(ngModel)]="selectedVersion" placeholder="Select API version" [editable]="true"></p-dropdown>
+            </div>
+        </div>
+        <div id="api_version_container">
+            <p>Select API key : </p>
+            <div id="dropdown_container" class="card flex justify-content-center">
+                <p-dropdown [options]="apiKeys" (onChange)="handleOnApiChange($event)" [(ngModel)]="selectedApiKeys" placeholder="Select API key" ></p-dropdown>
+            </div>
+        </div>
+        <div id="submit_button_div">
+            <button id="submit_button" class="redBtnEffect" (click)="handleOnSubmitRequest()">Submit</button>
+        </div>
+    </div>
+    
+    <p-splitter [style]="{ height: '100%' }" styleClass="mb-5" layout="horizontal">
+        <ng-template pTemplate>
+            <div id="panel_1" class="col flex align-items-center justify-content-center">
+
+                
+                <!-- <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name" [showClear]="true" placeholder="Select a City"></p-dropdown> -->
+                <div id="v_no_input_container">
+                    <p-table id="input_table" [value]="takeInputObjArr">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Key</th>
+                                <th>Value</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-resDataObjArr let-i="rowIndex">
+                            <tr>
+                                <td class="labels">{{ resDataObjArr.dt }}</td>
+                                <td class="input_field"> 
+                                    <!-- <input id="table_inputs" type="text" pInputText formControlName="text"/>  -->
+                                    <input *ngIf="resDataObjArr.dt !=='Date of Birth'" (change)="handleOnChangeInputs(i)" type="text" pInputText [(ngModel)]="textInputUlip[i]" />
+                                    <div class="card flex justify-content-center">
+                                        <p-calendar  *ngIf="resDataObjArr.dt ==='Date of Birth'" [(ngModel)]="textInputUlip[i]" [touchUI]="true" [readonlyInput]="true"></p-calendar>
+                                    </div>
+                                    
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                    
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate>
+            <div id="panel_2" class="col flex align-items-center justify-content-center">
+                <div id="output_container">
+                    <p-table id="output_table" [value]="outputObjArr">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Labels</th>
+                                <th>Values</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-outputObjArr>
+                            <tr>
+                                <td class="labels">{{ outputObjArr.dt }}</td>
+                                <td class="output_field">{{ outputObjArr.vl }}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </ng-template>
+    </p-splitter>
+</div>

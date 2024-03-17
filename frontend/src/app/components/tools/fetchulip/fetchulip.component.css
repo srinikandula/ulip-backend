@@ -1,0 +1,109 @@
+*{
+    padding: revert-layer;
+}
+#container {
+    height: 100%;
+    width: 100%;
+    background-color: #F3F3F4;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+#panel_1 {
+    background-color: #F3F3F4;
+    /* border: 1px solid black; */
+    overflow-y:auto ;
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    align-items: start;
+    height: 68svh;
+    justify-content: start;
+    flex-direction: column;
+}
+#panel_2 {
+    background-color: #F3F3F4;
+    width: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    padding: 20px;
+}
+
+#input_api_info_container {
+    width: 100%;
+    display: flex;
+}
+#api_name_container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+#api_version_container {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+#submit_button_div {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#submit_button {
+    background-color: #D6223A;
+    color: white;
+    height: 40px;
+    width: 100px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 550;
+}
+
+#v_no_input_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    
+}
+
+#input_table {
+    width: 100%;
+}
+
+tr, th, td {
+    color: black;
+}
+
+th {
+    background-color: #C2CBD9;
+}
+
+/* .input_field {
+    padding: 0px;
+} */
+
+
+#table_inputs {
+    width: 100%;
+    height: 100%;
+    box-shadow: 1px 1px 1px 1px #0000004B;
+}
+
+
+#output_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+#output_table {
+    width: 100%;
+}

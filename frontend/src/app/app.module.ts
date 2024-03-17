@@ -7,7 +7,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { ApiHomeComponent } from './components/api-home/api-home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule} from "@angular/common/http"
+import { HttpClientModule } from "@angular/common/http"
 import { NgxUiLoaderModule, NgxUiLoaderConfig } from "ngx-ui-loader";
 import { SideBarComponent } from './components/api-home/side-bar/side-bar.component';
 import { SidebarModule } from 'primeng/sidebar';
@@ -33,6 +33,9 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
+import { SplitterModule } from 'primeng/splitter';
+import { DropdownModule } from 'primeng/dropdown';
+import { FetchulipComponent } from './components/tools/fetchulip/fetchulip.component';
 
 // const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 //   "bgsColor": "red",
@@ -79,7 +82,8 @@ import { CalendarModule } from 'primeng/calendar';
     ProfileComponent,
     HomeComponent,
     EditKeyComponent,
-    
+    FetchulipComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -101,8 +105,10 @@ import { CalendarModule } from 'primeng/calendar';
     RadioButtonModule,
     BreadcrumbModule,
     ConfirmDialogModule,
-    CalendarModule
-    
+    CalendarModule,
+    SplitterModule,
+    DropdownModule
+
   ],
   providers: [KeypageService, MessageService, ToastService, WebsocketService, ConfirmationService],
   bootstrap: [AppComponent]

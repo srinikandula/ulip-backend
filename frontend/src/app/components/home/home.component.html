@@ -32,14 +32,14 @@
             </li>
             <li id="menu_view_logs"  class="grey_font menu_items moreToolLeftBar"
                 [style.borderLeftColor]="this.keypage.pageNav === 1 ? '#D6223A' : 'transparent'"
-                [style.color]="this.keypage.pageNav === 1 ? '#D3223A' : ''" (click)="navigateViewLogs()"
+                [style.color]="this.keypage.pageNav === 1 ? '#D3223A' : ''" 
                 [style.justifyContent]="sidebarOpen?'':'center'"
                 >
                 <i class="fa-solid fa-gears"></i> <span [style.display]="sidebarOpen?'block':'none'">Tools</span>
                 <div  [style.display]="sidebarOpen?'block':'none'" id="rightAngleDisplayLeftBar"><i class="fa-solid fa-angle-right"></i></div>
                 <div class="hoverToolsDiv">
                     <ul>
-                        <li>Fetch Ulip data</li>
+                        <li (click)="navigateFetchUlip()">Fetch Ulip data</li>
                     </ul>
                 </div>
             </li>

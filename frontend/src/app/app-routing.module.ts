@@ -6,6 +6,7 @@ import { ApiLogsComponent } from './components/api-logs/api-logs.component';
 import { HomeComponent } from './components/home/home.component';
 import { EditKeyComponent } from './components/edit-key/edit-key.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { FetchulipComponent } from './components/tools/fetchulip/fetchulip.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,10 @@ const routes: Routes = [
     {
       path:'editkey/:apikey',
       component:EditKeyComponent
+    },
+    {
+      path:'tools/fetchulip',
+      component:FetchulipComponent
     }
 
     ]

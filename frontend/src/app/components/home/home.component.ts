@@ -9,11 +9,14 @@ import { KeypageService } from 'src/app/services/keypage/keypage.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+navigateFetchUlip() {
+  this.router.navigate(["home/tools/fetchulip"])
+}
   itemsMenuProfile: MenuItem[] = [];
   ulipPersonName:string = ""
   sidebarOpen:boolean = true;
   sidebarHover:boolean = false;
-  sideDueToClick: boolean = true
+  sideDueToClick: boolean = true;
   
 navigateViewLogs() {
   this.router.navigate(["home/keylogs"])

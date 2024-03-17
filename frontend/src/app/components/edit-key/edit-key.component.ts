@@ -117,6 +117,7 @@ export class EditKeyComponent implements OnInit {
   tableReqDatas: { data: string, val: string }[] = []
 
   confirmDelete(event: Event) {
+    console.log("Confirm delete target ", event)
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Do you want to delete this key?',

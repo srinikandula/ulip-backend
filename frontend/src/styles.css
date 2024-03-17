@@ -8,7 +8,7 @@
 * {
     box-sizing: border-box;
     margin: 0;
-    padding: 0;
+    /* padding: 0; */
 }
 
 .p-toast-message{
@@ -152,3 +152,17 @@
     padding: 5%;
 }
 
+.p-splitter .p-splitter-gutter {
+    background-color: #b0e1e4;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 14px;
+    transition: all ease-out 0.2s;
+}
+.p-splitter .p-splitter-gutter:hover{
+    background-color: #74a3a7;
+    width: 0.5%;
+}
+.p-splitter-horizontal>.p-splitter-gutter>.p-splitter-gutter-handle {
+    border-radius: 12px;
+    background-color: #444;
+}
