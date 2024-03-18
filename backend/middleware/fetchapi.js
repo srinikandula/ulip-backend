@@ -20,6 +20,7 @@ const fetchapi = async(req, res, next)=>{
         console.log("here", process.env.ip_fetch_rul)
         const jsonIp = await responseIp.json()
         if(jsonIp.ip != myKey.ip && myKey.ip != "0.0.0.0"){
+            console.log("Ip problem")
             return res.status(403).send({success:false, message:"Access Denied!"})   
         }
         req.usn = myKey.username
@@ -37,8 +38,6 @@ const fetchapi = async(req, res, next)=>{
                 password:process.env.ulip_password
             }
             console.log("login body is ", login_body)
-            // 
-            
             const response = await fetch(process.env.ulip_login_url, {
                 method: 'POST',
                 headers: {
@@ -48,8 +47,11 @@ const fetchapi = async(req, res, next)=>{
                 body: JSON.stringify(login_body)
             })
             const resp_login = await response.json()
+            console.log("response login recieved ", resp_login)
             if(resp_login.error === 'false'){
+                console.log("inside correct authentication")
                 req.authorization = await resp_login.response.id
+                next()
             }
             else{
                 return res.status(401).send({success:false, message:"Access Denied!"})
