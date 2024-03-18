@@ -85,7 +85,7 @@ handleOnSubmitRequest(){
 
   this.http.post<any>(myUrl, reqObj, { headers }).subscribe({
     next: data => {
-      
+      console.log("my data is ", data)
     },
     error: error => {
       // console.error("There is an error", error.error)

@@ -122,7 +122,7 @@ router.delete("/deletemykey", [
                 key: apiKey
             },
         });
-        res.send({success:true, msg:"Key deleted successfully"})
+        res.send({ success: true, msg: "Key deleted successfully" })
     } catch (error) {
         res.status(500).send("Internal Server Error")
         console.log(error.message)
@@ -296,16 +296,8 @@ router.post("/fetchmykey", fetchuser, [
     }
 })
 
-router.post("/fetchLogs", fetchuser, [
-    body("username", "Username Must be more than 4 characters").isLength({ min: 4 }),
-
-],
+router.post("/fetchLogs", fetchuser,
     async (req, res) => {
-        const errors = validationResult(req)
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() })
-        }
-
         try {
 
             const { username } = await req.usn
@@ -362,7 +354,7 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
 
         let json = await response.json()
         console.log("reached at json ", json)
-        if(json.error){
+        if (json.error === "true") {
             return res.send(json)
         }
 
@@ -402,6 +394,7 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
         const urlArray = req.url.split("/")
         const dt = new Date()
         // console.log(JSON.stringify(respBody).length)
+        console.log("Creating log")
         const newApiLog = {
             key: req.header("api-key"),
             ulip: urlArray[3],
