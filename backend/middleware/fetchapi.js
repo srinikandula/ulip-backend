@@ -19,6 +19,7 @@ const fetchapi = async(req, res, next)=>{
         })
         console.log("here", process.env.ip_fetch_rul)
         const jsonIp = await responseIp.json()
+        console.log("My received ip is ", responseIp)
         if(jsonIp.ip != myKey.ip && myKey.ip != "0.0.0.0"){
             console.log("Ip problem")
             return res.status(403).send({success:false, message:"Access Denied!"})   
