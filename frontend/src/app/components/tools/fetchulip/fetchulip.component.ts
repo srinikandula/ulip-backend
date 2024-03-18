@@ -53,7 +53,7 @@ handleOnSubmitRequest(){
         else{
           mydateDStr = String(mydateD)
         }
-        let mystrDate = mydateDStr+"-"+mydateMStr+"-"+mydate.getFullYear()
+        let mystrDate =mydate.getFullYear()+"-"+mydateMStr+"-"+mydateDStr
         reqObj[myKeyArr[i]] = mystrDate
         continue
       }
@@ -86,6 +86,23 @@ handleOnSubmitRequest(){
   this.http.post<any>(myUrl, reqObj, { headers }).subscribe({
     next: data => {
       console.log("my data is ", data)
+      const mydata = data.json
+
+      let allKeys = Object.keys(mydata)
+      let allValues = Object.values(mydata)
+      for(let i = 0; i<allKeys.length; ++i){
+        let tempObj:{
+          dt: string,
+          vl: string
+        } = {
+          dt: '',
+          vl: ''
+        }
+        tempObj.dt = allKeys[i]
+        tempObj.vl = String(allValues[i]);
+        this.outputObjArr.push(tempObj)
+      }
+
     },
     error: error => {
       // console.error("There is an error", error.error)

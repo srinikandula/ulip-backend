@@ -52,7 +52,7 @@ const fetchapi = async(req, res, next)=>{
             if(resp_login.error === 'false'){
                 console.log("inside correct authentication")
                 req.authorization = await resp_login.response.id
-                next()
+                // next()
             }
             else{
                 return res.status(401).send({success:false, message:"Access Denied!"})
