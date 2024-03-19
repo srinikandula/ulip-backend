@@ -386,3 +386,8 @@ tbody {
     flex-direction: column;
     gap: 10px;
 }
+
+#table_container{
+    height: 60svh;
+    overflow-y: auto;
+}

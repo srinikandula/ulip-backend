@@ -13,10 +13,7 @@ import { KeypageService } from 'src/app/services/keypage/keypage.service';
   styleUrls: ['./fetchulip.component.css']
 })
 export class FetchulipComponent implements OnInit {
-handleOnApiChange(event: DropdownChangeEvent) {
-  
 
-}
 handleOnSubmitRequest(){
   this.outputObjArr = []
   let ind = this.selectedVersionMap.get(this.selectedVersion)
@@ -27,7 +24,7 @@ handleOnSubmitRequest(){
   else{
     verNum = String(ind+1)
   }
-  const myUrl = this.apiSrivice.mainUrl + 'aping/ulip/v1.0.0/'+this.selectedUlipArr+"/"+verNum;
+  const myUrl = this.apiSrivice.mainUrl + 'aping/ulipui/'+this.selectedUlipArr+"/"+verNum;
   let ind2 = this.selectedUlipMap.get(this.selectedUlipArr)
   const myKeyArr = this.correctFetchArr[ind2].input[ind]
   
@@ -65,22 +62,13 @@ handleOnSubmitRequest(){
     return
   }
   
-  let myseckey = ''
-  for(let i = 0; i<this.apiData.length; ++i){
-    if(this.apiData[i].key === this.selectedApiKeys){
-      myseckey = this.apiData[i].secKey
-      break
-    }
-  }
-  if(myseckey.length === 0){
-    this.messageService.add({ severity: 'error', summary: 'Submission Failed', detail: 'Plese Enter all the details' });
-    return
-  }
+  
   const headers = new HttpHeaders({
     'auth-token': this.tokeVal || '', 
     'Content-Type': 'application/json',
-    'api-key':`${this.selectedApiKeys}`,
-    'seckey':myseckey
+    'api-key':"16f78afa-e306-424e-8a08-21ad21629404",
+    'seckey':"f968799f2906991647c9941bbd8c97a746cd2cc320f390a310c170e0f072bc5bf71c372060e799b75a323f57d3ccdf8b",
+    'user':`${localStorage.getItem("ulip-person-username")}`
   });
 
   this.http.post<any>(myUrl, reqObj, { headers }).subscribe({
@@ -131,14 +119,15 @@ handleOnSubmitRequest(){
   apiData:ApiKeys[]= []
 
   handleOnUlipClick() {
-    this.selectedVersion = ""
     this.versionUlip = []
     let ind = this.selectedUlipMap.get(this.selectedUlipArr)
-    
+    this.selectedVersion = this.fetchArr[ind].use[0]
+     
     for (let i = 0; i < this.fetchArr[ind].use.length; ++i) {
       this.versionUlip.push(this.fetchArr[ind].use[i])
       this.selectedVersionMap.set(this.fetchArr[ind].use[i], i)
     }
+    this.handleOnVersionChange()   
   }
   handleOnVersionChange() {
     this.takeInputObjArr = []
@@ -229,8 +218,7 @@ handleOnSubmitRequest(){
   versionUlip: string[] = []
   selectedVersion: string | undefined
 
-  apiKeys: string[] = []
-  selectedApiKeys: string | undefined
+
 
   tokeVal: string = `${localStorage.getItem("authtoken")}`;
 
@@ -239,6 +227,7 @@ handleOnSubmitRequest(){
   }
 
   ngOnInit() {
+    this.keypage.pageNav = 2
     // this.apis = ['VAHAN', 'SARATHI', 'FOIS'];
     for (let i = 0; i < this.fetchArr.length; ++i) {
       let obj = {
@@ -249,36 +238,6 @@ handleOnSubmitRequest(){
       this.ulipArr.push(this.fetchArr[i].ulip)
     }
   
-  
-
-
-
-
-    const headers = new HttpHeaders({
-      'auth-token': this.tokeVal || '', // Ensure a default value if authtoken is null
-      'Content-Type': 'application/json' // 'content-type' changed to 'Content-Type'
-    });
-
-    this.http.post<any>(this.apiSrivice.mainUrl + 'aping/fetchKeys', {}, { headers }).subscribe({
-      next: data => {
-        this.apiData = data.allKey
-        for(let i = 0; i<data.allKey.length; ++i){
-          if(data.allKey[i].active){
-            this.apiKeys.push(data.allKey[i].key)
-
-          }
-        }
-        
-
-      },
-      error: error => {
-        console.error("There is an error", error)
-      }
-    })
-    
-
-
-
     
   }
 

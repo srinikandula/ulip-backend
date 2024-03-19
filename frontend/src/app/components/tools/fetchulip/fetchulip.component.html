@@ -12,12 +12,7 @@
                 <p-dropdown [options]="versionUlip" (onChange)="handleOnVersionChange()" [(ngModel)]="selectedVersion" placeholder="Select API version" [editable]="true"></p-dropdown>
             </div>
         </div>
-        <div id="api_version_container">
-            <p>Select API key : </p>
-            <div id="dropdown_container" class="card flex justify-content-center">
-                <p-dropdown [options]="apiKeys" (onChange)="handleOnApiChange($event)" [(ngModel)]="selectedApiKeys" placeholder="Select API key" ></p-dropdown>
-            </div>
-        </div>
+        
         <div id="submit_button_div">
             <button id="submit_button" class="redBtnEffect" (click)="handleOnSubmitRequest()">Submit</button>
         </div>
@@ -30,11 +25,12 @@
                 
                 <!-- <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name" [showClear]="true" placeholder="Select a City"></p-dropdown> -->
                 <div id="v_no_input_container">
+                    <p>Request</p>
                     <p-table id="input_table" [value]="takeInputObjArr">
                         <ng-template pTemplate="header">
                             <tr>
-                                <th>Key</th>
-                                <th>Value</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-resDataObjArr let-i="rowIndex">
@@ -58,11 +54,12 @@
         <ng-template pTemplate>
             <div id="panel_2" class="col flex align-items-center justify-content-center">
                 <div id="output_container">
+                    <p>Response</p>
                     <p-table id="output_table" [value]="outputObjArr">
                         <ng-template pTemplate="header">
                             <tr>
-                                <th>Labels</th>
-                                <th>Values</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-outputObjArr>

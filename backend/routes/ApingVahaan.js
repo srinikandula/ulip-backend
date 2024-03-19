@@ -13,6 +13,7 @@ require('dotenv').config()
 var nodemailer = require("nodemailer");
 const fs = require("fs")
 const { body, validationResult } = require('express-validator');
+const fetchapiui = require("../middleware/fetchapiui");
 
 router.post("/sendmailcreatekey", [
     body("email", "Must be a email").isEmail(),
@@ -355,6 +356,11 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
         let json = await response.json()
         console.log("reached at json ", json)
         if (json.error === "true") {
+            const urlArray = req.url.split("/")
+            const mybody = req.body
+            const appliName = req.applicationName
+            const myKey = req.header("api-key")
+            ulipUiError(urlArray, mybody, json, appliName, myKey, req)
             return res.send(json)
         }
 
@@ -378,36 +384,11 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
 
         }
 
-
-        // if(req.params.ulipIs === "FASTAG"){
-        //     respBody = json.json.response[0].response
-        // }
-        // else if(req.params.ulipIs === "FOIS"){
-        //     respBody = json.json.response[0].response[0]
-        //     console.log("reached here", respBody)
-        // }
-        // else if(req.params.ulipIs === "VAHAN"){
-        //     console.log("reacehd hewrer")
-        //     respBody = await correctVahan(json)
-        // }
-
         const urlArray = req.url.split("/")
-        const dt = new Date()
-        // console.log(JSON.stringify(respBody).length)
-        console.log("Creating log")
-        const newApiLog = {
-            key: req.header("api-key"),
-            ulip: urlArray[3],
-            reqDataCode: urlArray[4],
-            resData: JSON.stringify(respBody),
-            time: dt.getTime(),
-            applicationName: req.applicationName,
-            username: req.usn,
-            reqData: JSON.stringify(req.body)
-
-        }
-        console.log("logs sent")
-        const apiLogIs = await ApiLogs.create(newApiLog)
+        const mybody = req.body
+        const appliName = req.applicationName
+        const myKey = req.header("api-key")
+        ulipUiError(urlArray, mybody, respBody, appliName, myKey, req)
 
         res.send({ success: true, json })
 
@@ -418,6 +399,93 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
     }
 
 })
+
+
+const ulipUiError = async (urlArray, mybody, respBody, appliName, myKey, req) => {
+
+    const dt = new Date()
+    const newApiLog = {
+        key: myKey,
+        ulip: urlArray[3],
+        reqDataCode: urlArray[4],
+        resData: JSON.stringify(respBody),
+        time: dt.getTime(),
+        applicationName: appliName,
+        username: req.usn,
+        reqData: JSON.stringify(mybody)
+
+    }
+    console.log("logs sent")
+    const apiLogIs = await ApiLogs.create(newApiLog)
+}
+
+
+router.post("/ulipui/:ulipIs/:reqIs", fetchapiui, async (req, res) => {
+
+    try {
+        const url = `${process.env.ulip_url}/${req.params.ulipIs}/${req.params.reqIs}`
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': "application/json",
+                'Authorization': `Bearer ${req.authorization}`,
+                // 'Authorization': req.header('Authorization'),
+
+            },
+            body: JSON.stringify(req.body)
+        })
+
+        let json = await response.json()
+        console.log("reached at json ", json)
+        if (json.error === "true") {
+            const urlArray = req.url.split("/")
+            urlArray.splice(0,0,'')
+            const mybody = req.body
+            const appliName = "--"
+            const myKey = "API Interface Used"
+            ulipUiError(urlArray, mybody, json, appliName, myKey, req)
+            return res.send(json)
+        }
+
+
+
+        let respBody = {
+            error: json.error,
+            code: json.code,
+            message: json.message
+        }
+
+        if (req.params.ulipIs === "VAHAN") {
+
+            const xmlString = json.response[0].response
+            var result1 = convert.xml2js(xmlString, { compact: true, spaces: 4 });
+            const vhdet = result1["VehicleDetails"]
+
+            // res.send({ success: true, vhdet })
+            json = await correctVahan(vhdet)
+            console.log(json)
+
+        }
+        const urlArray = req.url.split("/")
+        urlArray.splice(0,0,'')
+        const mybody = req.body
+        const appliName = "--"
+        const myKey = "API Interface Used"
+        ulipUiError(urlArray, mybody, respBody, appliName, myKey, req)
+
+        res.send({ success: true, json })
+
+
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).send("Internal Server Error")
+    }
+
+})
+
+
 
 
 // router.post("/ulip/v1.0.0/VAHAN/02",fetchuser, fetchapi, async(req,res)=>{
