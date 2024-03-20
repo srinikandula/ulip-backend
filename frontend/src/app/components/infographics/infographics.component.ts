@@ -1,0 +1,303 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { Dropdown } from 'primeng/dropdown';
+import { ApiKeys } from 'src/app/ApiKeys';
+import { ApiLogs } from 'src/app/ApiLogs';
+import { apiService } from 'src/app/services/api/apiservice';
+import { KeypageService } from 'src/app/services/keypage/keypage.service';
+
+interface City {
+  name: string;
+  code: string;
+}
+@Component({
+  selector: 'app-infographics',
+  templateUrl: './infographics.component.html',
+  styleUrls: ['./infographics.component.css']
+})
+export class InfographicsComponent implements OnInit {
+  myAllLogs: ApiLogs[] = []
+  myAllLogsPresent:ApiLogs[]= []
+  dataPie: any;
+  optionsPie: any;
+  dataLine: any;
+  optionsLine: any;
+
+
+  api_filter_function_key(obj: ApiLogs) {
+    // console.log("myy params key", this.myParamsKeyLog, obj.key)
+    if (obj.key === this.selectedDropDown1?.name) {
+      return true
+    }
+    return false
+  }
+
+  handleOnApiUsageChange() {
+    if (this.selectedDropDown2?.code === "0") {
+      this.myAllLogs =  this.myAllLogsPresent.filter(this.api_filter_function_key.bind(this));
+      let myFilterPie: { data: string, val: string }[] = []
+      let ulipMap = new Map();
+      const headers = new HttpHeaders({
+        'auth-token': this.tokeVal || '', // Ensure a default value if authtoken is null
+        'Content-Type': 'application/json' // 'content-type' changed to 'Content-Type'
+      });
+
+
+      let umap = new Map();
+      this.myAllLogs.forEach(i => {
+        if (!umap.has(i.ulip)) {
+          umap.set(i.ulip, 1)
+        }
+        else {
+          umap.set(i.ulip, umap.get(i.ulip) + 1)
+
+        }
+      });
+      let reqArr: { data: string, val: string }[] = []
+      for (let [key, value] of umap) {
+        let tempArr = {
+          data: key,
+          val: value
+        }
+        reqArr.push(tempArr)
+      }
+      myFilterPie = reqArr
+      const myLablels: string[] = []
+      const myCounts: string[] = []
+      for (let i = 0; i < myFilterPie.length; ++i) {
+        myLablels.push(myFilterPie[i].data)
+        myCounts.push(myFilterPie[i].val)
+      }
+
+      const documentStyle = getComputedStyle(document.documentElement);
+      const textColor = documentStyle.getPropertyValue('--text-color');
+
+      this.dataPie = {
+        labels: myLablels,
+        datasets: [
+          {
+            data: myCounts,
+            backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500')],
+            hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
+          }
+        ]
+      };
+
+      this.optionsPie = {
+        plugins: {
+          legend: {
+            labels: {
+              usePointStyle: true,
+              color: textColor
+            }
+          }
+        }
+      };
+
+
+    }
+    else if (this.selectedDropDown2?.code === "1") {
+
+
+      const documentStyle = getComputedStyle(document.documentElement);
+      const textColor = documentStyle.getPropertyValue('--text-color');
+      const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+      const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+      this.dataLine = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        datasets: [
+
+          {
+            label: 'Third Dataset',
+            data: [12, 51, 62, 33, 21, 62, 45],
+            fill: true,
+            borderColor: documentStyle.getPropertyValue('--orange-500'),
+            tension: 0.4,
+            backgroundColor: 'rgba(255,167,38,0.2)'
+          }
+        ]
+      };
+
+      this.optionsLine = {
+        maintainAspectRatio: false,
+        aspectRatio: 0.6,
+        plugins: {
+          legend: {
+            labels: {
+              color: textColor
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: textColorSecondary
+            },
+            grid: {
+              color: surfaceBorder
+            }
+          },
+          y: {
+            ticks: {
+              color: textColorSecondary
+            },
+            grid: {
+              color: surfaceBorder
+            }
+          }
+        }
+      };
+      // For third Map
+      this.myAllLogs = this.myAllLogsPresent.filter(this.api_filter_function_key.bind(this));
+      console.log("My all logs are ", this.myAllLogs)
+      const dDown3Map = new Map()
+      for (let i = 0; i < this.myAllLogs.length; ++i) {
+        const myDateData = new Date(Number(this.myAllLogs[i].time))
+        console.log("my logs is ", myDateData.getFullYear())
+        dDown3Map.set(String(myDateData.getFullYear()), true)
+      }
+      let it = 0
+      for (let [key, value] of dDown3Map) {
+        let obj = {
+          name: key,
+          code: String(it)
+        }
+        this.dropDown3 = []
+        this.dropDown3?.push(obj)
+        console.log("my key si ", this.dropDown3)
+        it++;
+      }
+      console.log("My drop down is ", this.dropDown3)
+    }
+
+
+
+  }
+
+  basicData: any;
+
+  basicOptions: any;
+  tokeVal: string = `${localStorage.getItem("authtoken")}`;
+  dropDown1: City[] | undefined;
+  selectedDropDown1: City | undefined;
+
+  dropDown2: City[] | undefined;
+  selectedDropDown2: City | undefined;
+
+  dropDown3: City[] | undefined;
+  selectedDropDown3: City | undefined;
+
+  apiKeysList: ApiKeys[] = []
+
+  constructor(private http: HttpClient, private router: Router, public keypage: KeypageService, private messageService: MessageService,
+    private apiSrivice: apiService) { }
+  handleIfHeader1() {
+    this.dropDown1 = []
+    const headers = new HttpHeaders({
+      'auth-token': this.tokeVal || '', // Ensure a default value if authtoken is null
+      'Content-Type': 'application/json' // 'content-type' changed to 'Content-Type'
+    });
+    this.http.post<any>(this.apiSrivice.mainUrl + 'aping/fetchKeys', {}, { headers }).subscribe({
+      next: data => {
+        console.log(data)
+
+        this.apiKeysList = data.allKey
+        for (let i = 0; i < data.allKey.length; ++i) {
+          if (data.allKey[i].active === true) {
+            let obj: City = {
+              name: data.allKey[i].key,
+              code: String(i)
+            }
+            this.dropDown1?.push(obj)
+
+          }
+        }
+
+
+      },
+      error: error => {
+        console.error("There is an error", error)
+      }
+    })
+
+    this.http.post<any>(this.apiSrivice.mainUrl + 'aping/fetchLogs', {}, { headers }).subscribe({
+      next: data => {
+
+        
+        this.myAllLogsPresent = data.allLogs
+        // console.log("MY all logs ", this.myAllLogs, data)
+
+      },
+      error: error => {
+        console.error("There is an error", error)
+      }
+    })
+    console.log("MY all logs ", this.myAllLogs)
+
+
+    this.dropDown2 = [
+      { name: "Ulip Usage", code: "0" },
+      { name: "API key Timeline", code: "1" }
+    ]
+
+  }
+
+  ngOnInit() {
+    this.handleIfHeader1()
+
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+    this.basicData = {
+      labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+      datasets: [
+        {
+          label: 'Sales',
+          data: [540, 325, 702, 620],
+          backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+          borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
+          borderWidth: 1
+        }
+      ]
+    };
+
+    this.basicOptions = {
+      plugins: {
+        legend: {
+          labels: {
+            color: textColor
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: textColorSecondary
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false
+          }
+        },
+        x: {
+          ticks: {
+            color: textColorSecondary
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false
+          }
+        }
+      }
+    };
+
+
+
+  }
+}

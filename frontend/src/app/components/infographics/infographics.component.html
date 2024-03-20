@@ -1,0 +1,66 @@
+<div class="card">
+    <p-tabView>
+        <p-tabPanel header="Usage by API key">
+            <div class="usageByKeyDiv">
+                <div class="UpperFiltersusageByKey">
+                    <div class="card flex justify-content-center">
+                        <p-dropdown [options]="dropDown1" [(ngModel)]="selectedDropDown1" optionLabel="name"
+                            placeholder="Select You API key"></p-dropdown>
+                    </div>
+
+                    <div class="card flex justify-content-center">
+                        <p-dropdown (onChange)="handleOnApiUsageChange()" [options]="dropDown2" [(ngModel)]="selectedDropDown2" optionLabel="name"
+                            placeholder="Select You API key"></p-dropdown>
+                    </div>
+                    <div class="card flex justify-content-center">
+                        <p-dropdown [options]="dropDown3" [(ngModel)]="selectedDropDown3" optionLabel="name"
+                            placeholder="Select You API key"></p-dropdown>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="usageByKeyGraphDisplay">
+                <!-- <div class="card">
+                    <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+                </div> -->
+                <div class="card flex justify-content-center">
+                    <p-chart type="pie" [data]="dataPie" [options]="optionsPie"></p-chart>
+                </div>
+                <!-- <div class="card" [style]="{width:'2000px'}">
+                    <p-chart type="line" [data]="dataLine" [options]="optionsLine"></p-chart>
+                </div>                 -->
+
+                <div class="showAllCountsByKey">
+                    <div class="showCount1Key">
+                        <p>Successful Requests</p>
+                        <h2>40</h2>
+                    </div>
+                    <div class="showCount2Key">
+                        <p>Total Requests</p>
+                        <h2>50</h2>
+                    </div>
+                </div>
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Usage by Application Name">
+            <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
+                rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
+                explicabo. Nemo enim
+                ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
+                eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
+            </p>
+        </p-tabPanel>
+        <p-tabPanel header="Header III">
+            <p>
+                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
+                deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non
+                provident, similique sunt in culpa
+                qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est
+                et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo
+                minus.
+            </p>
+        </p-tabPanel>
+    </p-tabView>
+</div>

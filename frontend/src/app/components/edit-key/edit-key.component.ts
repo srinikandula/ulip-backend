@@ -209,7 +209,7 @@ export class EditKeyComponent implements OnInit {
     private apiSrivice: apiService) {
 
   }
-  api_filter_function_key(obj: ApiLogs, myParamsKey: string) {
+  api_filter_function_key(obj: ApiLogs) {
     console.log("myy params key", this.myParamsKeyLog, obj.key)
     if (obj.key === this.myParamsKeyLog) {
       return true

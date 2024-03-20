@@ -74,7 +74,15 @@ handleOnSubmitRequest(){
   this.http.post<any>(myUrl, reqObj, { headers }).subscribe({
     next: data => {
       console.log("my data is ", data)
-      const mydata = data.json
+      let mydata= []
+      if(this.selectedUlipArr === "VAHAN"){
+       mydata = data.json
+      }
+      else{
+        mydata = data.json.response.json
+
+      }
+
 
       let allKeys = Object.keys(mydata)
       let allValues = Object.values(mydata)
@@ -93,7 +101,7 @@ handleOnSubmitRequest(){
 
     },
     error: error => {
-      // console.error("There is an error", error.error)
+      
       let allKeys = Object.keys(error.error)
       let allValues = Object.values(error.error)
       for(let i = 0; i<allKeys.length; ++i){

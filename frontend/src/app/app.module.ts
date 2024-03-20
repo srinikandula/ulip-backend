@@ -36,6 +36,9 @@ import { CalendarModule } from 'primeng/calendar';
 import { SplitterModule } from 'primeng/splitter';
 import { DropdownModule } from 'primeng/dropdown';
 import { FetchulipComponent } from './components/tools/fetchulip/fetchulip.component';
+import { InfographicsComponent } from './components/infographics/infographics.component';
+import { TabViewModule } from 'primeng/tabview';
+import { ChartModule } from 'primeng/chart';
 
 // const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 //   "bgsColor": "red",
@@ -83,6 +86,7 @@ import { FetchulipComponent } from './components/tools/fetchulip/fetchulip.compo
     HomeComponent,
     EditKeyComponent,
     FetchulipComponent,
+    InfographicsComponent,
 
   ],
   imports: [
@@ -107,7 +111,9 @@ import { FetchulipComponent } from './components/tools/fetchulip/fetchulip.compo
     ConfirmDialogModule,
     CalendarModule,
     SplitterModule,
-    DropdownModule
+    DropdownModule,
+    TabViewModule,
+    ChartModule
 
   ],
   providers: [KeypageService, MessageService, ToastService, WebsocketService, ConfirmationService],

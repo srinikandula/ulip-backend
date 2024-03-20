@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
     "@types/xlsx": "^0.0.36",
+    "chart.js": "^4.4.2",
     "crockford-base32": "^2.0.0",
     "crypto-js": "^4.2.0",
     "ngx-socket-io": "^4.6.1",
