@@ -476,6 +476,7 @@ export class InfographicsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.keypage.pageNav = 3
     this.handleIfHeader1()
 
     const documentStyle = getComputedStyle(document.documentElement);

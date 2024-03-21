@@ -22,6 +22,9 @@ navigateViewLogs() {
   this.router.navigate(["home/keylogs"])
 
 }
+navigateViewAnalytics(){
+  this.router.navigate(["home/analytics"])
+}
 handleOnLeftbarToggle(){
   this.sidebarOpen = !this.sidebarOpen
   this.sideDueToClick = !this.sideDueToClick
