@@ -27,6 +27,7 @@ const fetchapi = async (req, res, next) => {
     const secKeyH = req.header("seckey")
 
     try {
+        console.log("Start fetching")
         let myKey = await ApiKeys.findOne({ where: { key: apiKey } })
         const responseIp = await fetch(process.env.ip_fetch_rul, {
             method: 'GET',
@@ -38,8 +39,9 @@ const fetchapi = async (req, res, next) => {
         })
 
         const jsonIp = await responseIp.json()
-
+       
         if (jsonIp.ip != myKey.ip && myKey.ip != "0.0.0.0") {
+            
             const urlArray = req.url.split("/")
             const mybody = req.body
             const appliName = myKey.applicationName
@@ -56,6 +58,7 @@ const fetchapi = async (req, res, next) => {
         req.applicationName = myKey.applicationName
         let mySecKey = myKey.secKey
         if (mySecKey != secKeyH) {
+            
             const urlArray = req.url.split("/")
             const mybody = req.body
             const appliName = myKey.applicationName
@@ -73,6 +76,7 @@ const fetchapi = async (req, res, next) => {
                 username: process.env.ulip_username,
                 password: process.env.ulip_password
             }
+            
 
             const response = await fetch(process.env.ulip_login_url, {
                 method: 'POST',
@@ -83,6 +87,7 @@ const fetchapi = async (req, res, next) => {
                 body: JSON.stringify(login_body)
             })
             const resp_login = await response.json()
+            
 
             if (resp_login.error === 'false') {
                 req.authorization = await resp_login.response.id

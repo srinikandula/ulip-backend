@@ -19,11 +19,20 @@ interface City {
 })
 export class InfographicsComponent implements OnInit {
   myAllLogs: ApiLogs[] = []
-  myAllLogsPresent:ApiLogs[]= []
+  myAllLogsPresent: ApiLogs[] = []
   dataPie: any;
   optionsPie: any;
+
+  dataPieP1: any;
+  optionsPieP1: any;
+
   dataLine: any;
   optionsLine: any;
+
+  dataLineAppli: any;
+  optionsLineAppli: any;
+
+  panelViewNum: Number = 0;
 
 
   api_filter_function_key(obj: ApiLogs) {
@@ -33,16 +42,19 @@ export class InfographicsComponent implements OnInit {
     }
     return false
   }
+  api_filter_function_appli(obj: ApiLogs) {
+    if (obj.applicationName === this.selectedDropDown1p1?.name) {
+      return true
+    }
+    return false
+  }
 
   handleOnApiUsageChange() {
+    this.myAllLogs = []
     if (this.selectedDropDown2?.code === "0") {
-      this.myAllLogs =  this.myAllLogsPresent.filter(this.api_filter_function_key.bind(this));
+      this.myAllLogs = this.myAllLogsPresent.filter(this.api_filter_function_key.bind(this));
       let myFilterPie: { data: string, val: string }[] = []
-      let ulipMap = new Map();
-      const headers = new HttpHeaders({
-        'auth-token': this.tokeVal || '', // Ensure a default value if authtoken is null
-        'Content-Type': 'application/json' // 'content-type' changed to 'Content-Type'
-      });
+
 
 
       let umap = new Map();
@@ -101,6 +113,159 @@ export class InfographicsComponent implements OnInit {
     else if (this.selectedDropDown2?.code === "1") {
 
 
+
+      // For third Map
+      this.myAllLogs = this.myAllLogsPresent.filter(this.api_filter_function_key.bind(this));
+      console.log("My all logs are ", this.myAllLogs)
+      const dDown3Map = new Map()
+      for (let i = 0; i < this.myAllLogs.length; ++i) {
+        const myDateData = new Date(Number(this.myAllLogs[i].time))
+        console.log("my logs is ", myDateData.getFullYear())
+        dDown3Map.set(String(myDateData.getFullYear()), true)
+      }
+      let it = 0
+      for (let [key, value] of dDown3Map) {
+        let obj = {
+          name: key,
+          code: String(it)
+        }
+        this.dropDown3 = []
+        this.dropDown3?.push(obj)
+        console.log("my key si ", this.dropDown3)
+        it++;
+      }
+      this.handleOnApiYearChange()
+
+    }
+
+
+
+  }
+
+  handleOnKeyChange() {
+    this.selectedDropDown2 = { name: '', code: '' }
+    this.selectedDropDown2p1 = { name: '', code: '' }
+  }
+
+
+  handleOnApiUsageChangep1() {
+
+    if (this.selectedDropDown2p1?.code === "0") {
+
+      this.myAllLogs = []
+      if (this.selectedDropDown2p1?.code === "0") {
+        this.myAllLogs = this.myAllLogsPresent.filter(this.api_filter_function_appli.bind(this));
+        console.log("My all logs ", this.myAllLogs)
+        let myFilterPie: { data: string, val: string }[] = []
+
+
+
+        let umap = new Map();
+        this.myAllLogs.forEach(i => {
+          if (!umap.has(i.ulip)) {
+            umap.set(i.ulip, 1)
+          }
+          else {
+            umap.set(i.ulip, umap.get(i.ulip) + 1)
+
+          }
+        });
+        let reqArr: { data: string, val: string }[] = []
+        for (let [key, value] of umap) {
+          let tempArr = {
+            data: key,
+            val: value
+          }
+          reqArr.push(tempArr)
+        }
+        myFilterPie = reqArr
+        const myLablels: string[] = []
+        const myCounts: string[] = []
+        for (let i = 0; i < myFilterPie.length; ++i) {
+          myLablels.push(myFilterPie[i].data)
+          myCounts.push(myFilterPie[i].val)
+        }
+
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color');
+
+        this.dataPieP1 = {
+          labels: myLablels,
+          datasets: [
+            {
+              data: myCounts,
+              backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500')],
+              hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
+            }
+          ]
+        };
+
+        this.optionsPieP1 = {
+          plugins: {
+            legend: {
+              labels: {
+                usePointStyle: true,
+                color: textColor
+              }
+            }
+          }
+        };
+
+
+      }
+
+
+    }
+
+
+    else if (this.selectedDropDown2p1?.code === "1") {
+
+
+
+      // For third Map
+      this.myAllLogs = []
+      this.myAllLogs = this.myAllLogsPresent.filter(this.api_filter_function_appli.bind(this));
+      console.log("My all logs are ", this.myAllLogs)
+      const dDown3Map = new Map()
+      for (let i = 0; i < this.myAllLogs.length; ++i) {
+        const myDateData = new Date(Number(this.myAllLogs[i].time))
+        console.log("my logs is ", myDateData.getFullYear())
+        dDown3Map.set(String(myDateData.getFullYear()), true)
+      }
+      let it = 0
+      for (let [key, value] of dDown3Map) {
+        let obj = {
+          name: key,
+          code: String(it)
+        }
+        this.dropDown3p1 = []
+        this.dropDown3p1?.push(obj)
+        console.log("my key si ", this.dropDown3p1)
+        it++;
+      }
+      this.handleOnApiYearChangep1()
+
+    }
+
+  }
+
+  handleOnChangePanel1() {
+    this.panelViewNum = 1
+    console.log("My panel view change ", this.panelViewNum)
+  }
+
+  handleOnApiYearChange() {
+    if (this.selectedDropDown2?.code === "1") {
+      console.log("Inside the year change")
+      const myMonthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+      let myReqArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      for (let i = 0; i < this.myAllLogs.length; ++i) {
+        let mydate = new Date(Number(this.myAllLogs[i].time))
+        if (String(mydate.getFullYear()) === this.selectedDropDown3?.name) {
+          myReqArr[(mydate.getMonth())]++
+        }
+      }
+
       const documentStyle = getComputedStyle(document.documentElement);
       const textColor = documentStyle.getPropertyValue('--text-color');
       const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
@@ -112,7 +277,7 @@ export class InfographicsComponent implements OnInit {
 
           {
             label: 'Third Dataset',
-            data: [12, 51, 62, 33, 21, 62, 45],
+            data: myReqArr,
             fill: true,
             borderColor: documentStyle.getPropertyValue('--orange-500'),
             tension: 0.4,
@@ -150,30 +315,76 @@ export class InfographicsComponent implements OnInit {
           }
         }
       };
-      // For third Map
-      this.myAllLogs = this.myAllLogsPresent.filter(this.api_filter_function_key.bind(this));
-      console.log("My all logs are ", this.myAllLogs)
-      const dDown3Map = new Map()
-      for (let i = 0; i < this.myAllLogs.length; ++i) {
-        const myDateData = new Date(Number(this.myAllLogs[i].time))
-        console.log("my logs is ", myDateData.getFullYear())
-        dDown3Map.set(String(myDateData.getFullYear()), true)
-      }
-      let it = 0
-      for (let [key, value] of dDown3Map) {
-        let obj = {
-          name: key,
-          code: String(it)
-        }
-        this.dropDown3 = []
-        this.dropDown3?.push(obj)
-        console.log("my key si ", this.dropDown3)
-        it++;
-      }
-      console.log("My drop down is ", this.dropDown3)
+
+
     }
+  }
+
+  handleOnApiYearChangep1() {
+
+    if (this.selectedDropDown2p1?.code === "1") {
+
+      const myMonthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+      let myReqArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      for (let i = 0; i < this.myAllLogs.length; ++i) {
+        let mydate = new Date(Number(this.myAllLogs[i].time))
+        if (String(mydate.getFullYear()) === this.selectedDropDown3p1?.name) {
+          myReqArr[(mydate.getMonth())]++
+        }
+      }
+
+      const documentStyle = getComputedStyle(document.documentElement);
+      const textColor = documentStyle.getPropertyValue('--text-color');
+      const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+      const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+      this.dataLineAppli = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        datasets: [
+
+          {
+            label: 'Third Dataset',
+            data: myReqArr,
+            fill: true,
+            borderColor: documentStyle.getPropertyValue('--orange-500'),
+            tension: 0.4,
+            backgroundColor: 'rgba(255,167,38,0.2)'
+          }
+        ]
+      };
+
+      this.optionsLineAppli = {
+        maintainAspectRatio: false,
+        aspectRatio: 0.6,
+        plugins: {
+          legend: {
+            labels: {
+              color: textColor
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: textColorSecondary
+            },
+            grid: {
+              color: surfaceBorder
+            }
+          },
+          y: {
+            ticks: {
+              color: textColorSecondary
+            },
+            grid: {
+              color: surfaceBorder
+            }
+          }
+        }
+      };
 
 
+    }
 
   }
 
@@ -190,12 +401,22 @@ export class InfographicsComponent implements OnInit {
   dropDown3: City[] | undefined;
   selectedDropDown3: City | undefined;
 
+  dropDown1p1: City[] | undefined;
+  selectedDropDown1p1: City | undefined;
+
+  dropDown2p1: City[] | undefined;
+  selectedDropDown2p1: City | undefined;
+
+  dropDown3p1: City[] | undefined;
+  selectedDropDown3p1: City | undefined;
+
   apiKeysList: ApiKeys[] = []
 
   constructor(private http: HttpClient, private router: Router, public keypage: KeypageService, private messageService: MessageService,
     private apiSrivice: apiService) { }
   handleIfHeader1() {
     this.dropDown1 = []
+    this.dropDown1p1 = []
     const headers = new HttpHeaders({
       'auth-token': this.tokeVal || '', // Ensure a default value if authtoken is null
       'Content-Type': 'application/json' // 'content-type' changed to 'Content-Type'
@@ -211,7 +432,12 @@ export class InfographicsComponent implements OnInit {
               name: data.allKey[i].key,
               code: String(i)
             }
+            let obj2: City = {
+              name: data.allKey[i].applicationName,
+              code: String(i)
+            }
             this.dropDown1?.push(obj)
+            this.dropDown1p1?.push(obj2)
 
           }
         }
@@ -226,7 +452,7 @@ export class InfographicsComponent implements OnInit {
     this.http.post<any>(this.apiSrivice.mainUrl + 'aping/fetchLogs', {}, { headers }).subscribe({
       next: data => {
 
-        
+
         this.myAllLogsPresent = data.allLogs
         // console.log("MY all logs ", this.myAllLogs, data)
 
@@ -239,6 +465,10 @@ export class InfographicsComponent implements OnInit {
 
 
     this.dropDown2 = [
+      { name: "Ulip Usage", code: "0" },
+      { name: "API key Timeline", code: "1" }
+    ]
+    this.dropDown2p1 = [
       { name: "Ulip Usage", code: "0" },
       { name: "API key Timeline", code: "1" }
     ]
