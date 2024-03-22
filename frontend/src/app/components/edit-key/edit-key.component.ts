@@ -12,6 +12,7 @@ import { apiService } from "../../services/api/apiservice";
 })
 export class EditKeyComponent implements OnInit {
   editKeyLogs: ApiLogs[] = []
+  ipSet: string = "";
   handleOnSaveKey() {
     const myParamsKey = this.route.snapshot.paramMap.get('apikey');
 
@@ -52,8 +53,10 @@ export class EditKeyComponent implements OnInit {
         next: data => {
           console.log(data)
           this.messageService.add({ severity: 'success', summary: 'IP changed successfully', detail: this.myIp });
+          this.ipSet = this.position === "0.0.0.0" ? "0.0.0.0" : `${this.myIp}`
           this.visibleIP = false
           this.position = '0.0.0.0'
+          console.log("My set ip is, ", this.ipSet)
         },
         error: error => {
           console.error("There is an error", error)
@@ -239,6 +242,7 @@ export class EditKeyComponent implements OnInit {
         this.apikey = data.mykey.key
         this.contactName = data.mykey.contactNo
         this.isEnabled = data.mykey.active
+        this.ipSet = data.mykey.ip
         console.log(data, "is my edit key")
       },
       error: error => {

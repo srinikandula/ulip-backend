@@ -16,6 +16,7 @@ interface MyObject {
   styleUrls: ['./fetchulip.component.css']
 })
 export class FetchulipComponent implements OnInit {
+  onLoading:boolean = false;
   refineVahan() {
     console.log("insdie teh refinement")
     for (let i = 0; i < this.outputObjCompleteArr.length; ++i) {
@@ -29,6 +30,7 @@ export class FetchulipComponent implements OnInit {
     }
   }
   handleOnSubmitRequest() {
+    this.onLoading = true
     this.outputObjArr = []
     let ind = this.selectedVersionMap.get(this.selectedVersion)
     let verNum = '0'
@@ -295,6 +297,7 @@ export class FetchulipComponent implements OnInit {
 
 
     }
+    this.onLoading = false
 
 
 
@@ -314,7 +317,9 @@ export class FetchulipComponent implements OnInit {
           tempObj.dt = allKeys[i]
           tempObj.vl = String(allValues[i]);
           this.outputObjArr.push(tempObj)
+          
         }
+        this.onLoading = false
       }
     })
 

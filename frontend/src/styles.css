@@ -12,8 +12,12 @@
 }
 
 .p-toast-message{
-    padding:2%;
+    /* padding:2%; */
+    margin: 15px;
     /* height: 20vh; */
+}
+.p-toast-summary{
+    margin: 0 10px;
 }
 
 .redBtnEffect {

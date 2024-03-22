@@ -63,6 +63,7 @@
                     <p>Response</p>
                     <div *ngIf="this.selectedUlipArr !== 'LDB'">
 
+
                         <div [style]="{display:'flex', flexDirection:'column', gap:'5px'}"
                             *ngFor="let i of outputObjCompleteArr; let index = index">
 
@@ -81,10 +82,42 @@
                                 </ng-template>
                             </p-table>
                         </div>
+                        <table id="output_table" *ngIf="this.onLoading">
+                            <tr>
+                                <th></th>
+                                <th></th>
+                            </tr>
+
+                            <tr>
+                                <td class="labels"><p-skeleton></p-skeleton></td>
+                                <td class="output_field"><p-skeleton></p-skeleton></td>
+                            </tr>
+                            <tr>
+                                <td class="labels"><p-skeleton></p-skeleton></td>
+                                <td class="output_field"><p-skeleton></p-skeleton></td>
+                            </tr>
+
+                        </table>
                     </div>
                     <div *ngIf="this.selectedUlipArr === 'LDB'" class="card">
+                        <table id="output_table" *ngIf="this.onLoading">
+                            <tr>
+                                <th></th>
+                                <th></th>
+                            </tr>
 
-                        <p-tabView>
+                            <tr>
+                                <td class="labels"><p-skeleton></p-skeleton></td>
+                                <td class="output_field"><p-skeleton></p-skeleton></td>
+                            </tr>
+                            <tr>
+                                <td class="labels"><p-skeleton></p-skeleton></td>
+                                <td class="output_field"><p-skeleton></p-skeleton></td>
+                            </tr>
+
+                        </table>
+
+                        <p-tabView *ngIf="this.onLoading === false">
                             <p-tabPanel header="eximContainerTrail">
                                 <div [style]="{display:'flex', flexDirection:'column', gap:'50px'}"
                                     *ngFor="let i of outputObjCompleteArrLDB1; let index = index">
@@ -148,6 +181,7 @@
                                 </div>
                             </p-tabPanel>
                         </p-tabView>
+
 
 
                     </div>

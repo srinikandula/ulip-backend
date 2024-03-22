@@ -40,7 +40,7 @@ import { InfographicsComponent } from './components/infographics/infographics.co
 import { TabViewModule } from 'primeng/tabview';
 import { ChartModule } from 'primeng/chart';
 import { TreeTableModule } from 'primeng/treetable';
-
+import { SkeletonModule } from 'primeng/skeleton';
 
 // const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 //   "bgsColor": "red",
@@ -117,7 +117,7 @@ import { TreeTableModule } from 'primeng/treetable';
     TabViewModule,
     ChartModule,
     TreeTableModule,
-    
+    SkeletonModule,
 
   ],
   providers: [KeypageService, MessageService, ToastService, WebsocketService, ConfirmationService],

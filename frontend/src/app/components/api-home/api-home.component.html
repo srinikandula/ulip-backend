@@ -34,13 +34,13 @@
                             <td><div [style.backgroundColor]="i.active ? '#218700' : '#595959'" class="borderColorDisableIdentifier"></div> {{i.applicationName}}</td>
                             <td>{{i.ownerName}}</td>
                             <td>{{i.contactNo}}</td>
-                            <td class="generatedApiPart" (mouseenter)="handleOnMouseEnterRow(i.active)" (click)="handleOnCopyClick(i.key)">
+                            <td class="generatedApiPart" (mouseenter)="handleOnMouseEnterRow(i.active)" (click)="handleOnCopyClick(i.key, 'Passkey')">
                                 <div class="copyBtnDiv" [style.display]="i.active ? 'flex' : 'none'">
                                     <p class="copyBtn">Click to copy</p>
                                 </div>
                                 <p class="keyVal">{{i.key.slice(0,20)}}...</p>
                             </td>
-                            <td class="generatedApiPart" (mouseenter)="handleOnMouseEnterRow(i.active)" (click)="handleOnCopyClick(i.secKey)">
+                            <td class="generatedApiPart" (mouseenter)="handleOnMouseEnterRow(i.active)" (click)="handleOnCopyClick(i.secKey, 'Secret Key')">
                                 <div class="copyBtnDiv">
                                     <p class="copyBtn" [style.display]="i.active ? 'flex' : 'none'">Click to copy</p>
                                 </div>

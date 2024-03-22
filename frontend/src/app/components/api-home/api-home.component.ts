@@ -65,8 +65,8 @@ handleOnEditKeyPressed(apikey: string) {
   }
 
 
-  handleOnCopyClick(keyVal: string) {
-    this.messageService.add({ severity: 'success', summary: 'Passkey copied', detail: keyVal })
+  handleOnCopyClick(keyVal: string, copyWord:string) {
+    this.messageService.add({ severity: 'success', summary: `${copyWord} copied`, detail: keyVal })
     navigator.clipboard.writeText(keyVal)
   }
 
