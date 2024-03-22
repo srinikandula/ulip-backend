@@ -46,16 +46,17 @@
     <div id="page_desc">
         <div id="desc_home" class="grey_font">Home</div>
         <div id="desc_page_name">View Logs</div>
-
     </div>
     <div class="card flex flex-wrap justify-content-center gap-3 searchLogs">
         <div class="card flex flex-wrap gap-3 p-fluid calenderDiv">
             <div class="flex-auto calEach">
-                <p-calendar (click)="changeFilterChecks()" [(ngModel)]="date1" [showIcon]="true" placeholder="From" inputId="buttondisplay"></p-calendar>
+                <p-calendar (click)="changeFilterChecks()" [(ngModel)]="date1" [showIcon]="true" placeholder="From"
+                    inputId="buttondisplay"></p-calendar>
             </div>
-        
+
             <div class="flex-auto calEach">
-                <p-calendar (click)="changeFilterChecks()" [(ngModel)]="date2" [showIcon]="true" placeholder="To" inputId="buttondisplay"></p-calendar>
+                <p-calendar (click)="changeFilterChecks()" [(ngModel)]="date2" [showIcon]="true" placeholder="To"
+                    inputId="buttondisplay"></p-calendar>
             </div>
         </div>
         <span class="p-input-icon-left searchLogsSpan">
@@ -92,8 +93,11 @@
 
 <div id="table_container">
 
-    <table>
-        <thead>
+    <p-table [value]="apiLogsTemp" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[5, 10, 20]">
+        <ng-template pTemplate="header">
             <tr>
                 <th>Application Name</th>
                 <th>API</th>
@@ -101,37 +105,43 @@
                 <th>Time</th>
                 <th>Response Data</th>
             </tr>
-        </thead>
-        <tbody *ngFor="let i of apiLogsTemp">
+        </ng-template>
+        <ng-template pTemplate="body" let-apiLogsTemp>
+            <!-- <tbody *ngFor="let i of apiLogsTemp"> -->
             <tr>
-                <td>{{i.applicationName}}</td>
-                <td>{{i.ulip}}</td>
+                <td>{{apiLogsTemp.applicationName}}</td>
+                <td>{{apiLogsTemp.ulip}}</td>
                 <td>
                     <div class="card flex justify-content-center reqBtnApiLogs">
                         <p-button
                             [style]="{padding:'4%', display:'flex', gap:'10px', fontSize:'0.6em', backgroundColor:'#D6223A', border:'none', borderRadius:'5px'}"
-                            (click)="showDialogReqData(i.reqData)" icon="pi pi-external-link" label="Request data">
+                            (click)="showDialogReqData(apiLogsTemp.reqData)" icon="pi pi-external-link"
+                            label="Request data">
                         </p-button>
 
                     </div>
                 </td>
                 <td class="generatedApiPart">
-                    <div class="timePartOnLogs">{{this.convertDate(i.time).getHours()}}:
-                        {{this.convertDate(i.time).getMinutes()}}: {{this.convertDate(i.time).getSeconds()}}</div>
-                    <div class="datePartOnLogs">{{this.convertDate(i.time).toString().slice(0,15)}}</div>
+                    <div class="timePartOnLogs">{{this.convertDate(apiLogsTemp.time).getHours()}}:
+                        {{this.convertDate(apiLogsTemp.time).getMinutes()}}:
+                        {{this.convertDate(apiLogsTemp.time).getSeconds()}}</div>
+                    <div class="datePartOnLogs">{{this.convertDate(apiLogsTemp.time).toString().slice(0,15)}}</div>
                 </td>
                 <td class="secKeyCreate">
                     <p-button [outlined]="true"
                         [style]="{padding:'4%', display:'flex', gap:'10px', fontSize:'0.6em', border:'none', color:'#D6223A', borderRadius:'5px'}"
-                        class="reqBtnApiLogs" (click)="showDialogReqData(i.resData)" icon="pi pi-external-link"
-                        label="Response">
+                        class="reqBtnApiLogs" (click)="showDialogReqData(apiLogsTemp.resData)"
+                        icon="pi pi-external-link" label="Response">
                     </p-button>
 
 
                 </td>
             </tr>
-        </tbody>
-    </table>
+            <!-- </tbody> -->
+        </ng-template>
+        
+        
+    </p-table>
 
     <!-- <div id="ifNoKey" *ngIf="apiHome.length === 0" (click)="handleOnCreate()">
         <div id="imageShowTableNoKey">
