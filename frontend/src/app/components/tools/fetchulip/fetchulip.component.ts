@@ -88,17 +88,12 @@ export class FetchulipComponent implements OnInit {
     this.http.post<any>(myUrl, reqObj, { headers }).subscribe({
       next: data => {
         let mydata = data.json;
-        // if(this.selectedUlipArr === "VAHAN"){
-        //  mydata = data.json
-        // }
-        // else{
-        //   mydata = data.json.response.json
-
-        // }
+        mydata = data.json
     
+
     if (this.selectedUlipArr === "VAHAN") {
       let allKeys = Object.keys(mydata)
-      
+
       let allValues = Object.values(mydata)
       let tempObjArrOutput: Array<{
         dt: string,
@@ -153,7 +148,7 @@ export class FetchulipComponent implements OnInit {
     }
     else if (this.selectedUlipArr === "SARATHI") {
       this.outputObjCompleteArr = []
-      console.log("My data is ", mydata.json.response[0].response.dldetobj[0])
+      // console.log("My data is ", mydata.json.response[0].response.dldetobj[0])
       let mydata2 = mydata.response[0].response.dldetobj[0]
 
       let allKeys = Object.keys(mydata2)
@@ -230,6 +225,156 @@ export class FetchulipComponent implements OnInit {
       }
 
     }
+    else if (this.selectedUlipArr === "FOIS") {
+      this.outputObjCompleteArr = []
+      let mydata2 = mydata.response[0].response[0]
+      let allKeys = Object.keys(mydata2)
+
+      let allValues = Object.values(mydata2)
+      let tempObjArrOutput: Array<{
+        dt: string,
+        vl: any
+      }> = []
+      let tempArray: Array<{
+        dt: string,
+        vl: any
+      }> = []
+      for (let i = 0; i < allKeys.length; ++i) {
+        let tempObj: {
+          dt: string,
+          vl: any
+        } = {
+          dt: '',
+          vl: ''
+        }
+        tempObj.dt = allKeys[i]
+
+        if (typeof allValues[i] === 'object') {
+          let objArrKeys = Object.keys(Object(allValues[i]))
+          let objArrVal = Object.values(Object(allValues[i]));
+          for (let i = 0; i < objArrKeys.length; ++i) {
+            let veryVeryTempObj = {
+              dt: objArrKeys[i],
+              vl: objArrVal[i]
+            }
+            tempObjArrOutput.push(veryVeryTempObj)
+          }
+          this.outputObjCompleteArr.push(tempObjArrOutput)
+          tempObjArrOutput = []
+        }
+        else {
+          while (i < allKeys.length && typeof allValues[i] !== 'object') {
+            let veryVeryTempObj = {
+              dt: allKeys[i],
+              vl: allValues[i]
+            }
+            tempArray.push(veryVeryTempObj)
+            i++;
+          }
+          i--;
+
+          this.outputObjCompleteArr.push(tempArray)
+          tempArray = []
+        }
+
+      }
+
+
+
+    }
+    else if (this.selectedUlipArr === "LDB") {
+      this.outputObjCompleteArrLDB1 = []
+      // console.log("My data is ", mydata.json.response[0].response.dldetobj[0])
+      let mydata2 = mydata.response[0].response.eximContainerTrail
+
+      let allKeys = Object.keys(mydata2)
+      this.tableOutputHeader = allKeys
+      let allValues = Object.values(mydata2)
+      let tempObjArrOutput: Array<{
+        dt: string,
+        vl: any
+      }> = []
+      let tempArray: Array<{
+        dt: string,
+        vl: any
+      }> = []
+      for (let i = 0; i < allKeys.length; ++i) {
+        let tempObj: {
+          dt: string,
+          vl: any
+        } = {
+          dt: '',
+          vl: ''
+        }
+        tempObj.dt = allKeys[i]
+        console.log("The type of is ", Array.isArray(allValues[i]))
+        if (typeof allValues[i] === 'object' && !Array.isArray(allValues[i])) {
+          // let tempObjVal:any = allValues[i]
+          let objArrKeys = Object.keys(Object(allValues[i]))
+          let objArrVal = Object.values(Object(allValues[i]));
+          console.log("inside teh if")
+          console.log("Objarrkeys ", allValues[i])
+          for (let i = 0; i < objArrKeys.length; ++i) {
+            let veryVeryTempObj = {
+              dt: objArrKeys[i],
+              vl: objArrVal[i]
+            }
+            tempObjArrOutput.push(veryVeryTempObj)
+          }
+          let ldbTempArrOutput: Array<Array<{
+            dt: string,
+            vl: any
+          }>> = []
+          ldbTempArrOutput.push(tempObjArrOutput)
+          this.outputObjCompleteArrLDB1.push(ldbTempArrOutput)
+          tempObjArrOutput = []
+        }
+        else if (typeof allValues[i] === 'object' && Array.isArray(allValues[i]) && allValues[i] !== null && allValues[i] !== undefined) {
+          // let tempObjVal:any = allValues[i]let objArrKeys = Object.keys(allValues[i][0] as Record<string, any>);
+          let val_arr = allValues[i] as any[]
+          for (let i = 0; i < val_arr.length; ++i) {
+            let objArrKeys = Object.keys(Object(val_arr[0]));
+            let objArrVal = Object.values(Object(val_arr[0]));
+            console.log("inside teh if")
+            console.log("Objarrkeys ", allValues[i])
+            for (let i = 0; i < objArrKeys.length; ++i) {
+              let veryVeryTempObj = {
+                dt: objArrKeys[i],
+                vl: objArrVal[i]
+              }
+              tempObjArrOutput.push(veryVeryTempObj)
+            }
+            this.outputObjCompleteArr.push(tempObjArrOutput)
+            tempObjArrOutput = []
+          }
+
+        }
+        else if (!Array.isArray(allValues[i])) {
+          console.log("Inside the else if ")
+          while (i < allKeys.length && typeof allValues[i] !== 'object') {
+            let veryVeryTempObj = {
+              dt: allKeys[i],
+              vl: allValues[i]
+            }
+            tempArray.push(veryVeryTempObj)
+            i++;
+          }
+          i--;
+          let ldbTempArr: Array<Array<{
+            dt: string,
+            vl: any
+          }>> = []
+          ldbTempArr.push(tempArray)
+
+          this.outputObjCompleteArrLDB1.push(ldbTempArr)
+          tempArray = []
+          ldbTempArr = []
+        }
+        console.log("my sarathi output ", this.outputObjCompleteArr)
+
+      }
+
+    }
 
 
     // Vahan refinement of _text
@@ -261,7 +406,7 @@ export class FetchulipComponent implements OnInit {
 
   constructor(private http: HttpClient, private router: Router, public keypage: KeypageService, private messageService: MessageService, private apiSrivice: apiService, private confirmationService: ConfirmationService) { }
   apiData: ApiKeys[] = []
-  tableOutputHeader:string[] = []
+  tableOutputHeader: string[] = []
 
   handleOnUlipClick() {
     this.versionUlip = []
@@ -305,6 +450,10 @@ export class FetchulipComponent implements OnInit {
     dt: string,
     vl: any
   }>> = [];
+  outputObjCompleteArrLDB1: Array<Array<Array<{
+    dt: string,
+    vl: any
+  }>>> = [];
 
   textInputUlip: string[] = new Array(this.takeInputObjArr.length).fill('');
 
@@ -325,9 +474,9 @@ export class FetchulipComponent implements OnInit {
       "input": [["FNR Number"], ["Station from", "Station To", "CMDT", "Wagon Type"]]
     },
     {
-      "ulip": "FASTAG",
-      "use": ["Tolls Information"],
-      "input": [["Vehicle Number"]]
+      "ulip": "LDB",
+      "use": ["Track Container"],
+      "input": [["Container Number"]]
     },
 
   ]
@@ -350,9 +499,9 @@ export class FetchulipComponent implements OnInit {
       "input": [["fnrnumber"], ["sttnfrom", "sttnto", "cmdt", "wgontype"]]
     },
     {
-      "ulip": "FASTAG",
-      "use": ["Tolls Information"],
-      "input": [["vehiclenumber"]]
+      "ulip": "LDB",
+      "use": ["Track Container"],
+      "input": [["containerNumber"]]
     },
 
   ]

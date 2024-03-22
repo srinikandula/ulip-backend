@@ -1,11 +1,11 @@
 {
     "development": {
-        "username": "mlluser",
-        "password": "M!!U$#&@",
-        "database": "ulip",
-        "host": "10.11.0.92",
+        "username": "root",
+        "password": "password",
+        "database": "mll",
+        "host": "localhost",
         "dialect": "mysql",
-        "timezone": "+05:30"
+        "timezone":"+05:30"
     },
     "test": {
         "username": "root",
@@ -21,4 +21,4 @@
         "host": "127.0.0.1",
         "dialect": "mysql"
     }
-}
+    }

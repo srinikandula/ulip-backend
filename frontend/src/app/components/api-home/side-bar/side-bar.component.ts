@@ -15,6 +15,12 @@ import {apiService} from "../../../services/api/apiservice";
 })
 export class SideBarComponent {
 
+  selectedOption: string = '';
+  onOptionChange(event: any) {
+    this.selectedOption = event.target.value;
+    console.log("This is ", this.selectedOption)
+  }
+
   items: MenuItem[] | undefined;
   applicationName: string = "";
   ownerName: string = "";

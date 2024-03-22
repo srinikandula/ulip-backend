@@ -1,43 +1,38 @@
-<header>
-    <div class="image">
-      <img src=".\Assets\Mahindra_logistics.png" alt="Mahindra Logistics Logo" />
-    </div>
-    <h1>Profile Dashboard</h1>
-    <img src="profile_photo.jpg" alt="Profile Photo" class="profile-photo" />
-  </header>
-
-  <div class="profile-container">
-    <form>
-      <div class="input_field">
-        <label for="username" class="headers">Username:</label>
-        <input type="text" id="username" name="username" class="in" required />
-      </div>
-      <hr>
-
-      <div class="input_field">
-        <label for="firstName" class="headers">First Name:</label>
-        <input type="text" id="firstName" name="firstName" class="in" required />
-      </div>
-
-      <div class="input_field">
-        <label for="lastName" class="headers">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" class="in" required />
-      </div>
-
-      <div class="input_field">
-        <label for="occupation" class="headers">Occupation:</label>
-        <input type="text" id="occupation" name="occupation" class="in" required />
-      </div>
-
-      <div class="input_field">
-        <label for="email" class="headers">Email:</label>
-        <input type="email" id="email" name="email" class="in" required />
-      </div>
-
-      <div class="input_field">
-        <label for="contactNumber" class="headers">Contact Number:</label>
-        <input type="tel" id="contactNumber" name="contactNumber" class="in" required />
-      </div>
-
-    </form>
+<div id="body_container">
+  <div id="title_container">
+      Profile Dashboard
   </div>
+
+  <div id="body_subcontainer">
+      <div id="profile_container">
+          <div id="username_container" class="input_container">
+              <p class="label_font">Username :</p>
+              <input type="text" id="username_input" class="input_field">
+          </div>
+          <div id="first_name_container" class="input_container">
+              <p class="label_font">First Name :</p>
+              <input type="text" id="first_name_input" class="input_field">
+          </div>
+          <div id="last_name_container" class="input_container">
+              <p class="label_font">Last Name :</p>
+              <input type="text" id="last_name_input" class="input_field">
+          </div>
+          <div id="occupation_container" class="input_container">
+              <p class="label_font">Occupation :</p>
+              <input type="text" id="occupation_input" class="input_field">
+          </div>
+          <div id="email_container" class="input_container">
+              <p class="label_font">E-Mail :</p>
+              <input type="text" id="email_input" class="input_field">
+          </div>
+          <div id="contact_num_container" class="input_container">
+              <p class="label_font">Contact Number :</p>
+              <input type="text" id="contact_num_input" class="input_field">
+          </div>
+
+          <div id="save_btn_container">
+              <button id="save_button">Save</button>
+          </div>
+      </div>
+  </div>
+</div>

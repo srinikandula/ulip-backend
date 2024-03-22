@@ -166,3 +166,18 @@
     border-radius: 12px;
     background-color: #444;
 }
+
+.p-radiobutton .p-radiobutton-box.p-highlight{
+    background: white;
+    /* border: #D6223A; */
+    border: 2px solid #D6223A;
+}
+.p-radiobutton .p-radiobutton-box .p-radiobutton-icon{
+    background: #D6223A;
+    border: #D6223A;
+    
+
+}
+.p-radiobutton{
+    scale: 0.8;
+}

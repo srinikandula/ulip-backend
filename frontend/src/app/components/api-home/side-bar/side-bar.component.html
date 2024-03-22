@@ -1,7 +1,7 @@
 <p-sidebar [(visible)]="keypage.createKeyBool" position="right" styleClass="w-30rem">
-    <form id="sideBarContent" >
-        <button id="closeSideBar" (click)="handleOnClickMenu()">
-            x
+    <form id="sideBarContent">
+        <!-- <button id="closeSideBar" (click)="handleOnClickMenu()">
+            <i id="cross_button" class="pi pi-times"></i>
         </button>
         <div id="upperSideBarSection">
             <div id="h2Sidebar">
@@ -12,6 +12,7 @@
             </div>
 
         </div>
+
         <div id="allInputsSideBar">
             <div class="inputDivSidebar">
                 <div class="inputDivSidePara">
@@ -65,6 +66,69 @@
                 <button class="redBtnEffect" (click)="handleOnCreateKey()" type="submit">Done</button>
             </div>
 
+        </div> -->
+
+        <div id="title_container">
+            <div id="text_container">
+                <h1>Create Keys</h1>
+                <h5>Enter the below details to create passkeys.</h5>
+            </div>
+            <div id="close_btn_container">
+                <button id="closeSideBar" (click)="handleOnClickMenu()">
+                    <i id="cross_button" class="pi pi-times"></i>
+                </button>
+            </div>
         </div>
+
+        <div id="menu_container">
+            <div class="inputs_container">
+                <div class="input_label">Application Name</div>
+                <input [(ngModel)]="applicationName" name="applicationName" type="text"
+                    placeholder="Enter Application Name">
+            </div>
+            <div class="inputs_container">
+                <div class="input_label">Owner Name</div>
+                <input [(ngModel)]="ownerName" name="ownerName" type="text" placeholder="Enter Owner Name">
+            </div>
+            <div class="inputs_container">
+                <div class="input_label">Contact Name</div>
+                <input [(ngModel)]="contactName" name="contactName" type="text" placeholder="Enter Contact Number">
+            </div>
+            <div class="inputs_container">
+                <div class="input_label">Email Address</div>
+                <input [(ngModel)]="emailAddress" name="emailAddress" type="text" placeholder="Enter Email Address">
+            </div>
+
+            <p id="ip_config_title">IP Config</p>
+            <div id="radio_options">
+                <div class="" [style]="{display:'flex', gap:'5px'}">
+
+                    <div [style]="{display:'flex', flexWrap:'wrap', gap:'17px', flexDirection:'column'}"
+                        class="flex flex-wrap gap-3 mb-5">
+                        <p-radioButton [style]="{margin:'0 5px'}" *ngFor="let option of positionOptions"
+                            [name]="option.label" [value]="option.value" [label]="option.label"
+                            [(ngModel)]="position"></p-radioButton>
+                    </div>
+                </div>
+            </div>
+            <div class="" *ngIf="this.position === 'Custom'">
+                <div class="inputs_container">
+                    <div class="input_label">Custom IP</div>
+                    <input [(ngModel)]="myIp" name="myIp" type="text"
+                        placeholder="Custom IP Address">
+                </div>
+            </div>
+
+        </div>
+
+        <div id="buttons_container">
+            <div id="submitOptionKey">
+                <button class="redBtnEffect" (click)="handleOnCreateKey()" type="submit">Done</button>
+            </div>
+            <div id="cancelOptionKey">
+                <button class="redBtnEffect" (click)="handleOnClickMenu()" type="submit">Cancel</button>
+            </div>
+        </div>
+
     </form>
 </p-sidebar>

@@ -9,56 +9,56 @@ import { KeypageService } from 'src/app/services/keypage/keypage.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-navigateFetchUlip() {
-  this.router.navigate(["home/tools/fetchulip"])
-}
+  navigateFetchUlip() {
+    this.router.navigate(["home/tools/fetchulip"])
+  }
   itemsMenuProfile: MenuItem[] = [];
-  ulipPersonName:string = ""
-  sidebarOpen:boolean = true;
-  sidebarHover:boolean = false;
+  ulipPersonName: string = ""
+  sidebarOpen: boolean = true;
+  sidebarHover: boolean = false;
   sideDueToClick: boolean = true;
-  
-navigateViewLogs() {
-  this.router.navigate(["home/keylogs"])
 
-}
-navigateViewAnalytics(){
-  this.router.navigate(["home/analytics"])
-}
-handleOnLeftbarToggle(){
-  this.sidebarOpen = !this.sidebarOpen
-  this.sideDueToClick = !this.sideDueToClick
-  
-}
-handleOnMouseOverSidebar(){
- if(!this.sidebarOpen && !this.sideDueToClick){
-    this.sidebarHover = true
-    this.sidebarOpen = true
-  }
+  navigateViewLogs() {
+    this.router.navigate(["home/keylogs"])
 
   }
-handleOnMouseOutSidebar(){
-  if(!this.sideDueToClick){
-    this.sidebarHover = false
-    this.sidebarOpen = false
+  navigateViewAnalytics() {
+    this.router.navigate(["home/analytics"])
+  }
+  handleOnLeftbarToggle() {
+    this.sidebarOpen = !this.sidebarOpen
+    this.sideDueToClick = !this.sideDueToClick
 
   }
-}
-navigateCreateKeys() {
-  this.router.navigate(["home/createkey"])
-}
+  handleOnMouseOverSidebar() {
+    if (!this.sidebarOpen && !this.sideDueToClick) {
+      this.sidebarHover = true
+      this.sidebarOpen = true
+    }
 
-  constructor(private router:Router, public keypage:KeypageService){
+  }
+  handleOnMouseOutSidebar() {
+    if (!this.sideDueToClick) {
+      this.sidebarHover = false
+      this.sidebarOpen = false
+
+    }
+  }
+  navigateCreateKeys() {
+    this.router.navigate(["home/createkey"])
+  }
+
+  constructor(private router: Router, public keypage: KeypageService) {
     this.ulipPersonName = `${localStorage.getItem('ulip-person-name')}`;
   }
 
-  handleOnLogout(){
+  handleOnLogout() {
     localStorage.removeItem("authtoken")
     this.router.navigate(['login'])
   }
   ngOnInit() {
 
-    if(!localStorage.getItem("authtoken")){
+    if (!localStorage.getItem("authtoken")) {
       this.router.navigate(['login'])
     }
 
@@ -70,22 +70,21 @@ navigateCreateKeys() {
             label: 'Logout',
             // icon: 'pi pi-refresh',
             command: () => {
-                this.handleOnLogout();
+              this.handleOnLogout();
             }
           },
           {
             label: 'Dashboard',
-            // icon: 'pi pi-times',
-            // command: () => {
-            //     this.delete();
-            // }
+            command: () => {
+              this.router.navigate(["home/profile"])
+            }
           }
         ]
       },
     ];
-    
+
   }
-  
- 
+
+
 
 }

@@ -35,7 +35,7 @@
             [style.color]="this.keypage.pageNav === 3 ? '#D3223A' : ''" (click)="navigateViewAnalytics()"
             [style.justifyContent]="sidebarOpen?'':'center'"
             >
-            <i class="fa-solid fa-clock-rotate-left"></i> <span [style.display]="sidebarOpen?'block':'none'">Analytics</span>
+            <i class="fa-solid fa-chart-line"></i> <span [style.display]="sidebarOpen?'block':'none'">Analytics</span>
         </li>
         <li id="menu_view_logs"  class="grey_font menu_items moreToolLeftBar"
             [style.borderLeftColor]="this.keypage.pageNav === 2 ? '#D6223A' : 'transparent'"
@@ -44,7 +44,7 @@
             (click)="navigateFetchUlip()"
             >
             <i class="fa-solid fa-gears"></i> <span [style.display]="sidebarOpen?'block':'none'">Tools</span>
-            <div  [style.display]="sidebarOpen?'block':'none'" id="rightAngleDisplayLeftBar"><i class="fa-solid fa-angle-right"></i></div>
+            <!-- <div  [style.display]="sidebarOpen?'block':'none'" id="rightAngleDisplayLeftBar"><i class="fa-solid fa-angle-right"></i></div> -->
             <!-- <div class="hoverToolsDiv">
                 <ul>
                     <li (click)="navigateFetchUlip()">Fetch Ulip data</li>

@@ -1,105 +1,139 @@
-body {
-    text-align: left;
-    font: normal normal bold 30px/33px Georama SemiExpanded;
-    letter-spacing: 0px;
-    color: #434141;
-    opacity: 1;
+* {
+  margin: 0;
+  padding: 0;
+}
 
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    display: flex;
-    flex-direction: column;
-    align-items: right;
-    min-width: 100vh;
+#body_container {
+  height: 100%;
+  width: 100%;
+  padding-top: 10px;
+  
+  display: flex;
+  flex-direction: column;
+}
+
+#title_container {
+  height: 10%;
+  width: 100%;
+  /* background-color: rgb(241, 163, 163); */
+  
+  display: flex;
+  align-items: center;
+  justify-content: start;
+
+  font-weight: bold;
+  font-family: "georama";
+  font-stretch: semi-expanded;
+  font-size: 26px;
+}
+
+#body_subcontainer {
+  height: 80%;
+  width: 100%;
+  padding: 20px;
+  /* background-color: rgb(156, 130, 130); */
+
+  display: flex;
+  align-items: start;
+  justify-content: start;
+}
+
+#profile_container {
+  /* height: 100%; */
+  width: 65%;
+  padding: 10px;
+  background-color: white;
+
+  /* border: 1px solid black; */
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.input_container {
+  height: 30px;
+  width: 100%;
+  
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.label_font {
+  /* color: #97999B; */
+  color: black;
+  position: relative;
+  font-weight: 550;
+  font-size: 18px;
+  font-family: "georama";
+  font-stretch: semi-expanded;
+}
+
+.input_container p {
+  /* width: 150px; */
+  width: 30%;
+}
+
+.input_field {
+  height: 30px;
+  /* width: 500px; */
+  width: 70%;
+  border-radius: 5px;
+}
+
+#save_btn_container {
+  height: 80px;
+  width: 100%;
+
+  display: flex;
+  align-items: end;
+  justify-content: end;
+}
+
+#save_button {
+  height: 50%;
+  width: 100px;
+  background-color: #D6223A;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  font-family: 'georama';
+  font-stretch: semi-expanded;
+  font-size: 14px;
+}
+
+@media only screen and (max-width: 500px) {
+  #profile_container {
+      width: 100%;
   }
-
-  header {
-    background-color: #fafafc;
-    color: #d6223a;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-
-
+  .input_container {
+      flex-direction: column;
+      gap: 0px;
   }
-
-  .image {
-    width: 12%;
-    height: 25%;
-    padding-top: 0%;
+  .input_container p {
+      width: 100%;
   }
-
-  .image img {
-    width: 100%;
-    height: 100%;
-  }
-
-  .profile-photo {
-    align-self: flex-end;
-    margin-bottom: 20px;
-    border-radius: 100%;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .profile-container {
-    flex: 1;
-    width: 100%;
-    max-width: 600px;
-    padding-right: 5px;
-
-
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    margin-left: 5%;
-  }
-
-  form {
-    display: grid;
-    grid-gap: 10px;
-    height: 100%;
-  }
-
-  label {
-    font-weight: bold;
-  }
-
-  .headers {
-    text-align: left;
-    font: normal normal bold 14px/17px Georama SemiExpanded;
-    letter-spacing: 0px;
-    color: #a8a8a8;
-    opacity: 1;
-    height: 4%;
-  }
-
-  input,
-  select {
-    width: 100%;
-    padding-left: 12px;
-    border: none;
-    border-radius: 4px;
-    box-sizing: border-box;
-    background-color: #f7f7f7;
-  }
-
   .input_field {
-    background-color: #f7f7f7;
-    padding-left: 6px;
+      width: 100%;
+  }
+  #save_btn_container {
+      height: 40px;
+  }
+  #save_button {
+      width: 70px;
+      height: 80%;
+  }
+}
 
+@media only screen and (max-width: 600px) {
+  #title_container {
+      font-size: 15px;
   }
 
-  .in {
-    text-align: left;
-    font: normal normal medium 16px/19px Georama SemiExpanded;
-    letter-spacing: 0px;
-    color: #707175;
-    opacity: 1;
+  .label_font {
+      font-size: 10px;
   }
+
+}
