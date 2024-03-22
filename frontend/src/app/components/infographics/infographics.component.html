@@ -1,74 +1,35 @@
 <div class="card">
     <p-tabView>
-        <p-tabPanel (click)="this.panelViewNum = 0" header="Usage by API key">
-            <div class="usageByKeyDiv">
-                <div class="UpperFiltersusageByKey">
-                    <div class="card flex justify-content-center">
-                        <p-dropdown (onChange)="handleOnKeyChange()" [options]="dropDown1" [(ngModel)]="selectedDropDown1" optionLabel="name"
-                            placeholder="Select You API key"></p-dropdown>
-                    </div>
-
-                    <div class="card flex justify-content-center">
-                        <p-dropdown (onChange)="handleOnApiUsageChange()" [options]="dropDown2" [(ngModel)]="selectedDropDown2" optionLabel="name"
-                            placeholder="Select You API key"></p-dropdown>
-                    </div>
-                    <div  *ngIf="selectedDropDown2?.code === '1'" class="card flex justify-content-center">
-                        <p-dropdown (onChange)="handleOnApiYearChange()" [options]="dropDown3" [(ngModel)]="selectedDropDown3" optionLabel="name"
-                            placeholder="Select Year"></p-dropdown>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="usageByKeyGraphDisplay">
-                
-                <div *ngIf="selectedDropDown2?.code === '0'" class="card flex justify-content-center">
-                    <p-chart type="pie" [data]="dataPie" [options]="optionsPie"></p-chart>
-                </div>
-                <div *ngIf="selectedDropDown2?.code === '1'" class="card" [style]="{width:'2000px'}">
-                    <p-chart type="line" [data]="dataLine" [options]="optionsLine"></p-chart>
-                </div>                
-
-                <div class="showAllCountsByKey">
-                    <div class="showCount1Key">
-                        <p>Successful Requests</p>
-                        <h2>40</h2>
-                    </div>
-                    <div class="showCount2Key">
-                        <p>Total Requests</p>
-                        <h2>50</h2>
-                    </div>
-                </div>
-            </div>
-        </p-tabPanel>
         <p-tabPanel header="Usage by Application Name">
             <div class="usageByKeyDiv">
                 <div class="UpperFiltersusageByKey">
                     <div class="card flex justify-content-center">
-                        <p-dropdown (onChange)="handleOnKeyChange()" [options]="dropDown1p1" [(ngModel)]="selectedDropDown1p1" optionLabel="name"
+                        <p-dropdown (onChange)="handleOnKeyChange()" [options]="dropDown1p1"
+                            [(ngModel)]="selectedDropDown1p1" optionLabel="name"
                             placeholder="Select You Application Name"></p-dropdown>
                     </div>
 
                     <div class="card flex justify-content-center">
-                        <p-dropdown (onChange)="handleOnApiUsageChangep1()" [options]="dropDown2p1" [(ngModel)]="selectedDropDown2p1" optionLabel="name"
-                            placeholder="Select You API key"></p-dropdown>  
+                        <p-dropdown (onChange)="handleOnApiUsageChangep1()" [options]="dropDown2p1"
+                            [(ngModel)]="selectedDropDown2p1" optionLabel="name"
+                            placeholder="Select You API key"></p-dropdown>
                     </div>
-                    <div  *ngIf="selectedDropDown2p1?.code === '1'" class="card flex justify-content-center">
-                        <p-dropdown (onChange)="handleOnApiYearChangep1()" [options]="dropDown3p1" [(ngModel)]="selectedDropDown3p1" optionLabel="name"
-                            placeholder="Select Year"></p-dropdown>
+                    <div *ngIf="selectedDropDown2p1?.code === '1'" class="card flex justify-content-center">
+                        <p-dropdown (onChange)="handleOnApiYearChangep1()" [options]="dropDown3p1"
+                            [(ngModel)]="selectedDropDown3p1" optionLabel="name" placeholder="Select Year"></p-dropdown>
                     </div>
                 </div>
 
             </div>
 
             <div class="usageByKeyGraphDisplay">
-                
+
                 <div *ngIf="selectedDropDown2p1?.code === '0'" class="card flex justify-content-center">
                     <p-chart type="pie" [data]="dataPieP1" [options]="optionsPieP1"></p-chart>
                 </div>
                 <div *ngIf="selectedDropDown2p1?.code === '1'" class="card" [style]="{width:'2000px'}">
                     <p-chart type="line" [data]="dataLineAppli" [options]="optionsLineAppli"></p-chart>
-                </div>                
+                </div>
 
                 <div class="showAllCountsByKey">
                     <div class="showCount1Key">
@@ -84,6 +45,24 @@
         </p-tabPanel>
         <p-tabPanel (click)="this.panelViewNum = 2" header="Infographics">
             <h1>Infographics</h1>
+            <div class="TotalFetchesInfo">
+               
+                <div class="ulipDataAnalysisFetchPie">
+                    <div [style]="{width:'38%'}" class="card flex justify-content-center">
+                        <p-chart type="pie" [data]="dataInfoUlip" [options]="optionsInfoUlip"></p-chart>
+                    </div>
+                    <h3>ULIP data Analysis</h3>
+                    
+                </div>
+
+                <div class="ulipDataAnalysisFetchPie">
+                    <h3>API Counts</h3>
+                    <div [style]="{width:'38%'}" class="card flex justify-content-center">
+                        <p-chart type="line" [data]="dataLineAll" [options]="optionsLineAll"></p-chart>
+                    </div>
+                    
+                </div>
+            </div>
         </p-tabPanel>
     </p-tabView>
 </div>

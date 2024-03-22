@@ -39,6 +39,8 @@ import { FetchulipComponent } from './components/tools/fetchulip/fetchulip.compo
 import { InfographicsComponent } from './components/infographics/infographics.component';
 import { TabViewModule } from 'primeng/tabview';
 import { ChartModule } from 'primeng/chart';
+import { TreeTableModule } from 'primeng/treetable';
+
 
 // const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 //   "bgsColor": "red",
@@ -113,7 +115,9 @@ import { ChartModule } from 'primeng/chart';
     SplitterModule,
     DropdownModule,
     TabViewModule,
-    ChartModule
+    ChartModule,
+    TreeTableModule,
+    
 
   ],
   providers: [KeypageService, MessageService, ToastService, WebsocketService, ConfirmationService],

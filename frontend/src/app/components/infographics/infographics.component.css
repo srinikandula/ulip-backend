@@ -51,3 +51,9 @@
     gap: 10px;
 }
 
+
+.ulipDataAnalysisFetchPie{
+    display: flex;
+    align-items: center;
+    gap: 10%;
+}

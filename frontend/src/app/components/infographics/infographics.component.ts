@@ -26,11 +26,16 @@ export class InfographicsComponent implements OnInit {
   dataPieP1: any;
   optionsPieP1: any;
 
-  dataLine: any;
-  optionsLine: any;
+ 
 
   dataLineAppli: any;
   optionsLineAppli: any;
+
+  dataLineAll: any;
+  optionsLineAll: any;
+
+  dataInfoUlip: any;
+  optionsInfoUlip: any
 
   panelViewNum: Number = 0;
 
@@ -49,98 +54,7 @@ export class InfographicsComponent implements OnInit {
     return false
   }
 
-  handleOnApiUsageChange() {
-    this.myAllLogs = []
-    if (this.selectedDropDown2?.code === "0") {
-      this.myAllLogs = this.myAllLogsPresent.filter(this.api_filter_function_key.bind(this));
-      let myFilterPie: { data: string, val: string }[] = []
-
-
-
-      let umap = new Map();
-      this.myAllLogs.forEach(i => {
-        if (!umap.has(i.ulip)) {
-          umap.set(i.ulip, 1)
-        }
-        else {
-          umap.set(i.ulip, umap.get(i.ulip) + 1)
-
-        }
-      });
-      let reqArr: { data: string, val: string }[] = []
-      for (let [key, value] of umap) {
-        let tempArr = {
-          data: key,
-          val: value
-        }
-        reqArr.push(tempArr)
-      }
-      myFilterPie = reqArr
-      const myLablels: string[] = []
-      const myCounts: string[] = []
-      for (let i = 0; i < myFilterPie.length; ++i) {
-        myLablels.push(myFilterPie[i].data)
-        myCounts.push(myFilterPie[i].val)
-      }
-
-      const documentStyle = getComputedStyle(document.documentElement);
-      const textColor = documentStyle.getPropertyValue('--text-color');
-
-      this.dataPie = {
-        labels: myLablels,
-        datasets: [
-          {
-            data: myCounts,
-            backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500')],
-            hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
-          }
-        ]
-      };
-
-      this.optionsPie = {
-        plugins: {
-          legend: {
-            labels: {
-              usePointStyle: true,
-              color: textColor
-            }
-          }
-        }
-      };
-
-
-    }
-    else if (this.selectedDropDown2?.code === "1") {
-
-
-
-      // For third Map
-      this.myAllLogs = this.myAllLogsPresent.filter(this.api_filter_function_key.bind(this));
-      console.log("My all logs are ", this.myAllLogs)
-      const dDown3Map = new Map()
-      for (let i = 0; i < this.myAllLogs.length; ++i) {
-        const myDateData = new Date(Number(this.myAllLogs[i].time))
-        console.log("my logs is ", myDateData.getFullYear())
-        dDown3Map.set(String(myDateData.getFullYear()), true)
-      }
-      let it = 0
-      for (let [key, value] of dDown3Map) {
-        let obj = {
-          name: key,
-          code: String(it)
-        }
-        this.dropDown3 = []
-        this.dropDown3?.push(obj)
-        console.log("my key si ", this.dropDown3)
-        it++;
-      }
-      this.handleOnApiYearChange()
-
-    }
-
-
-
-  }
+  
 
   handleOnKeyChange() {
     this.selectedDropDown2 = { name: '', code: '' }
@@ -254,71 +168,7 @@ export class InfographicsComponent implements OnInit {
     console.log("My panel view change ", this.panelViewNum)
   }
 
-  handleOnApiYearChange() {
-    if (this.selectedDropDown2?.code === "1") {
-      console.log("Inside the year change")
-      const myMonthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-      let myReqArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-      for (let i = 0; i < this.myAllLogs.length; ++i) {
-        let mydate = new Date(Number(this.myAllLogs[i].time))
-        if (String(mydate.getFullYear()) === this.selectedDropDown3?.name) {
-          myReqArr[(mydate.getMonth())]++
-        }
-      }
-
-      const documentStyle = getComputedStyle(document.documentElement);
-      const textColor = documentStyle.getPropertyValue('--text-color');
-      const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-      const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
-      this.dataLine = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        datasets: [
-
-          {
-            label: 'Third Dataset',
-            data: myReqArr,
-            fill: true,
-            borderColor: documentStyle.getPropertyValue('--orange-500'),
-            tension: 0.4,
-            backgroundColor: 'rgba(255,167,38,0.2)'
-          }
-        ]
-      };
-
-      this.optionsLine = {
-        maintainAspectRatio: false,
-        aspectRatio: 0.6,
-        plugins: {
-          legend: {
-            labels: {
-              color: textColor
-            }
-          }
-        },
-        scales: {
-          x: {
-            ticks: {
-              color: textColorSecondary
-            },
-            grid: {
-              color: surfaceBorder
-            }
-          },
-          y: {
-            ticks: {
-              color: textColorSecondary
-            },
-            grid: {
-              color: surfaceBorder
-            }
-          }
-        }
-      };
-
-
-    }
-  }
+  
 
   handleOnApiYearChangep1() {
 
@@ -527,6 +377,168 @@ export class InfographicsComponent implements OnInit {
         }
       }
     };
+
+    // For Infographics Section
+
+    const headers = new HttpHeaders({
+      'auth-token': this.tokeVal || '', // Ensure a default value if authtoken is null
+      'Content-Type': 'application/json' // 'content-type' changed to 'Content-Type'
+    });
+    
+    this.http.post<any>(this.apiSrivice.mainUrl + 'aping/fetchLogs', {}, { headers }).subscribe({
+      next: data => {
+
+
+        this.myAllLogsPresent = data.allLogs
+        this.myAllLogs = []
+
+        this.myAllLogs = this.myAllLogsPresent
+        console.log("my all logs init ", this.myAllLogs, this.myAllLogsPresent)
+
+        let myFilterPie: { data: string, val: string }[] = []
+        let umap = new Map();
+        this.myAllLogsPresent.forEach(i => {
+          if (!umap.has(i.ulip)) {
+            umap.set(i.ulip, 1)
+          }
+          else {
+            umap.set(i.ulip, umap.get(i.ulip) + 1)
+
+          }
+        });
+        let reqArr: { data: string, val: string }[] = []
+        for (let [key, value] of umap) {
+          let tempArr = {
+            data: key,
+            val: value
+          }
+          reqArr.push(tempArr)
+        }
+        myFilterPie = reqArr
+        console.log("My filter pie is ", myFilterPie)
+        const myLablels: string[] = []
+        const myCounts: string[] = []
+        for (let i = 0; i < myFilterPie.length; ++i) {
+          myLablels.push(myFilterPie[i].data)
+          myCounts.push(myFilterPie[i].val)
+        }
+
+
+        this.dataInfoUlip = {
+          labels: myLablels,
+          datasets: [
+            {
+              data: myCounts,
+              backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500')],
+              hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
+            }
+          ]
+        };
+
+        this.optionsInfoUlip = {
+          plugins: {
+            legend: {
+              labels: {
+                usePointStyle: true,
+                color: textColor
+              }
+            }
+          }
+        };
+
+
+      let currentTime = new Date()
+      const currentYear = currentTime.getFullYear()
+      const dDown3MapTemp = new Map()
+      for (let i = 0; i < this.myAllLogs.length; ++i) {
+        const myDateData = new Date(Number(this.myAllLogs[i].time))
+        console.log("my logs is ", myDateData.getFullYear())
+        dDown3MapTemp.set(String(myDateData.getFullYear()), true)
+      }
+      let it = 0
+      for (let [key, value] of dDown3MapTemp) {
+        let obj = {
+          name: key,
+          code: String(it)
+        }
+        this.dropDown3p1 = []
+        this.dropDown3p1?.push(obj)
+        console.log("my key si ", this.dropDown3p1)
+        it++;
+      }
+
+      const myMonthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+      let myReqArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      for (let i = 0; i < this.myAllLogsPresent.length; ++i) {
+        let mydate = new Date(Number(this.myAllLogsPresent[i].time))
+        if (String(mydate.getFullYear()) === String(currentYear)) {
+          myReqArr[(mydate.getMonth())]++
+        }
+      }
+
+      // const documentStyle = getComputedStyle(document.documentElement);
+      // const textColor = documentStyle.getPropertyValue('--text-color');
+      const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+      const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+      this.dataLineAll = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        datasets: [
+
+          {
+            label: 'Third Dataset',
+            data: myReqArr,
+            fill: true,
+            borderColor: documentStyle.getPropertyValue('--orange-500'),
+            tension: 0.4,
+            backgroundColor: 'rgba(255,167,38,0.2)'
+          }
+        ]
+      };
+
+      this.optionsLineAll = {
+        maintainAspectRatio: false,
+        aspectRatio: 0.6,
+        plugins: {
+          legend: {
+            labels: {
+              color: textColor
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: textColorSecondary
+            },
+            grid: {
+              color: surfaceBorder
+            }
+          },
+          y: {
+            ticks: {
+              color: textColorSecondary
+            },
+            grid: {
+              color: surfaceBorder
+            }
+          }
+        }
+      
+
+
+    }
+
+
+      },
+      error: error => {
+        console.error("There is an error", error)
+      }
+    })
+
+
+
+
 
 
 

@@ -7,135 +7,272 @@ import { ApiKeys } from 'src/app/ApiKeys';
 import { apiService } from 'src/app/services/api/apiservice';
 import { KeypageService } from 'src/app/services/keypage/keypage.service';
 
+interface MyObject {
+  [key: string]: any;
+}
 @Component({
   selector: 'app-fetchulip',
   templateUrl: './fetchulip.component.html',
   styleUrls: ['./fetchulip.component.css']
 })
 export class FetchulipComponent implements OnInit {
-
-handleOnSubmitRequest(){
-  this.outputObjArr = []
-  let ind = this.selectedVersionMap.get(this.selectedVersion)
-  let verNum = '0'
-  if(ind<9){
-    verNum +=String(ind+1)
-  }
-  else{
-    verNum = String(ind+1)
-  }
-  const myUrl = this.apiSrivice.mainUrl + 'aping/ulipui/'+this.selectedUlipArr+"/"+verNum;
-  let ind2 = this.selectedUlipMap.get(this.selectedUlipArr)
-  const myKeyArr = this.correctFetchArr[ind2].input[ind]
-  
-  let reqObj:any = {}
-  if(myKeyArr.length === this.textInputUlip.length){
-    for(let i = 0; i<myKeyArr.length; ++i){
-      if(myKeyArr[i] === 'dob'){
-        let mydate =new Date( this.textInputUlip[i])
-        let mydateM= mydate.getMonth()
-        let mydateMStr;
-        if(mydateM<10){
-          mydateMStr ="0"+ String(mydateM)
+  refineVahan() {
+    console.log("insdie teh refinement")
+    for (let i = 0; i < this.outputObjCompleteArr.length; ++i) {
+      if (this.outputObjCompleteArr[i].length > 0 && typeof this.outputObjCompleteArr[i][0].vl === 'object') {
+        console.log("Insidd teh if 1")
+        if (this.outputObjCompleteArr[i][0].vl._text) {
+          console.log("Insidd teh if 2")
+          this.outputObjCompleteArr[i][0].vl = this.outputObjCompleteArr[i][0].vl._text
         }
-        else{
-          mydateMStr = String(mydateM)
-        }
-
-        let mydateD= mydate.getDate()
-        let mydateDStr;
-        if(mydateD<10){
-          mydateDStr ="0"+ String(mydateD)
-        }
-        else{
-          mydateDStr = String(mydateD)
-        }
-        let mystrDate =mydate.getFullYear()+"-"+mydateMStr+"-"+mydateDStr
-        reqObj[myKeyArr[i]] = mystrDate
-        continue
       }
-      reqObj[myKeyArr[i]] = this.textInputUlip[i]
     }
   }
-  else{
-    this.messageService.add({ severity: 'error', summary: 'Submission Failed', detail: 'Plese Enter all the details' });
-    return
-  }
-  
-  
-  const headers = new HttpHeaders({
-    'auth-token': this.tokeVal || '', 
-    'Content-Type': 'application/json',
-    'api-key':"16f78afa-e306-424e-8a08-21ad21629404",
-    'seckey':"f968799f2906991647c9941bbd8c97a746cd2cc320f390a310c170e0f072bc5bf71c372060e799b75a323f57d3ccdf8b",
-    'user':`${localStorage.getItem("ulip-person-username")}`
-  });
+  handleOnSubmitRequest() {
+    this.outputObjArr = []
+    let ind = this.selectedVersionMap.get(this.selectedVersion)
+    let verNum = '0'
+    if (ind < 9) {
+      verNum += String(ind + 1)
+    }
+    else {
+      verNum = String(ind + 1)
+    }
+    const myUrl = this.apiSrivice.mainUrl + 'aping/ulipui/' + this.selectedUlipArr + "/" + verNum;
+    let ind2 = this.selectedUlipMap.get(this.selectedUlipArr)
+    const myKeyArr = this.correctFetchArr[ind2].input[ind]
 
-  this.http.post<any>(myUrl, reqObj, { headers }).subscribe({
-    next: data => {
-      console.log("my data is ", data)
-      let mydata= []
-      if(this.selectedUlipArr === "VAHAN"){
-       mydata = data.json
+    let reqObj: any = {}
+    if (myKeyArr.length === this.textInputUlip.length) {
+      for (let i = 0; i < myKeyArr.length; ++i) {
+        if (myKeyArr[i] === 'dob') {
+          let mydate = new Date(this.textInputUlip[i])
+          let mydateM = mydate.getMonth()
+          let mydateMStr;
+          if (mydateM < 10) {
+            mydateMStr = "0" + String(mydateM)
+          }
+          else {
+            mydateMStr = String(mydateM)
+          }
+
+          let mydateD = mydate.getDate()
+          let mydateDStr;
+          if (mydateD < 10) {
+            mydateDStr = "0" + String(mydateD)
+          }
+          else {
+            mydateDStr = String(mydateD)
+          }
+          let mystrDate = mydate.getFullYear() + "-" + mydateMStr + "-" + mydateDStr
+          reqObj[myKeyArr[i]] = mystrDate
+          continue
+        }
+        reqObj[myKeyArr[i]] = this.textInputUlip[i]
       }
-      else{
-        mydata = data.json.response.json
+    }
+    else {
+      this.messageService.add({ severity: 'error', summary: 'Submission Failed', detail: 'Plese Enter all the details' });
+      return
+    }
 
-      }
 
+    const headers = new HttpHeaders({
+      'auth-token': this.tokeVal || '', 
+      'Content-Type': 'application/json',
+      'api-key':"16f78afa-e306-424e-8a08-21ad21629404",
+      'seckey':"f968799f2906991647c9941bbd8c97a746cd2cc320f390a310c170e0f072bc5bf71c372060e799b75a323f57d3ccdf8b",
+      'user':`${localStorage.getItem("ulip-person-username")}`
+    });
 
+    this.http.post<any>(myUrl, reqObj, { headers }).subscribe({
+      next: data => {
+        let mydata = data.json;
+        // if(this.selectedUlipArr === "VAHAN"){
+        //  mydata = data.json
+        // }
+        // else{
+        //   mydata = data.json.response.json
+
+        // }
+    
+    if (this.selectedUlipArr === "VAHAN") {
       let allKeys = Object.keys(mydata)
-      let allValues = Object.values(mydata)
-      for(let i = 0; i<allKeys.length; ++i){
-        let tempObj:{
-          dt: string,
-          vl: string
-        } = {
-          dt: '',
-          vl: ''
-        }
-        tempObj.dt = allKeys[i]
-        tempObj.vl = String(allValues[i]);
-        this.outputObjArr.push(tempObj)
-      }
-
-    },
-    error: error => {
       
-      let allKeys = Object.keys(error.error)
-      let allValues = Object.values(error.error)
-      for(let i = 0; i<allKeys.length; ++i){
-        let tempObj:{
+      let allValues = Object.values(mydata)
+      let tempObjArrOutput: Array<{
+        dt: string,
+        vl: any
+      }> = []
+      let tempArray: Array<{
+        dt: string,
+        vl: any
+      }> = []
+      for (let i = 0; i < allKeys.length; ++i) {
+        let tempObj: {
           dt: string,
-          vl: string
+          vl: any
         } = {
           dt: '',
           vl: ''
         }
         tempObj.dt = allKeys[i]
-        tempObj.vl = String(allValues[i]);
-        this.outputObjArr.push(tempObj)
+        console.log("Insdie teh loop")
+        if (typeof allValues[i] === 'object') {
+          let objArrKeys = Object.keys(Object(allValues[i]))
+          let objArrVal = Object.values(Object(allValues[i]));
+          for (let i = 0; i < objArrKeys.length; ++i) {
+            let veryVeryTempObj = {
+              dt: objArrKeys[i],
+              vl: objArrVal[i]
+            }
+            tempObjArrOutput.push(veryVeryTempObj)
+          }
+          this.outputObjCompleteArr.push(tempObjArrOutput)
+          tempObjArrOutput = []
+        }
+        else {
+          while (i < allKeys.length && typeof allValues[i] !== 'object') {
+            let veryVeryTempObj = {
+              dt: allKeys[i],
+              vl: allValues[i]
+            }
+            tempArray.push(veryVeryTempObj)
+            i++;
+          }
+          i--;
+
+          this.outputObjCompleteArr.push(tempArray)
+          tempArray = []
+        }
+
       }
+      this.refineVahan()
+      console.log("MY complete array ", this.outputObjCompleteArr)
+
     }
-  })
+    else if (this.selectedUlipArr === "SARATHI") {
+      this.outputObjCompleteArr = []
+      console.log("My data is ", mydata.json.response[0].response.dldetobj[0])
+      let mydata2 = mydata.response[0].response.dldetobj[0]
 
-  
+      let allKeys = Object.keys(mydata2)
+      this.tableOutputHeader = allKeys
+      let allValues = Object.values(mydata2)
+      let tempObjArrOutput: Array<{
+        dt: string,
+        vl: any
+      }> = []
+      let tempArray: Array<{
+        dt: string,
+        vl: any
+      }> = []
+      for (let i = 0; i < allKeys.length; ++i) {
+        let tempObj: {
+          dt: string,
+          vl: any
+        } = {
+          dt: '',
+          vl: ''
+        }
+        tempObj.dt = allKeys[i]
+        console.log("The type of is ", Array.isArray(allValues[i]))
+        if (typeof allValues[i] === 'object' && !Array.isArray(allValues[i])) {
+          // let tempObjVal:any = allValues[i]
+          let objArrKeys = Object.keys(Object(allValues[i]))
+          let objArrVal = Object.values(Object(allValues[i]));
+          console.log("inside teh if")
+          console.log("Objarrkeys ",allValues[i])
+          for (let i = 0; i < objArrKeys.length; ++i) {
+            let veryVeryTempObj = {
+              dt: objArrKeys[i],
+              vl: objArrVal[i]
+            }
+            tempObjArrOutput.push(veryVeryTempObj)
+          }
+          this.outputObjCompleteArr.push(tempObjArrOutput)
+          tempObjArrOutput = []
+        }
+        else if (typeof allValues[i] === 'object' && Array.isArray(allValues[i]) && allValues[i] !== null && allValues[i] !== undefined) {
+          // let tempObjVal:any = allValues[i]let objArrKeys = Object.keys(allValues[i][0] as Record<string, any>);
+          let val_arr = allValues[i] as any[]
+          let objArrKeys = Object.keys(Object(val_arr[0]));
+          let objArrVal = Object.values(Object(val_arr[0]));
+          console.log("inside teh if")
+          console.log("Objarrkeys ",allValues[i])
+          for (let i = 0; i < objArrKeys.length; ++i) {
+            let veryVeryTempObj = {
+              dt: objArrKeys[i],
+              vl: objArrVal[i]
+            }
+            tempObjArrOutput.push(veryVeryTempObj)
+          }
+          this.outputObjCompleteArr.push(tempObjArrOutput)
+          tempObjArrOutput = []
+        }
+        else if(!Array.isArray(allValues[i])) {
+          console.log("Inside the else if ")
+          while (i < allKeys.length && typeof allValues[i] !== 'object') {
+            let veryVeryTempObj = {
+              dt: allKeys[i],
+              vl: allValues[i]
+            }
+            tempArray.push(veryVeryTempObj)
+            i++;
+          }
+          i--;
 
-}
-  
-  constructor(private http: HttpClient, private router: Router, public keypage: KeypageService, private messageService: MessageService, private apiSrivice: apiService, private confirmationService: ConfirmationService){}
-  apiData:ApiKeys[]= []
+          this.outputObjCompleteArr.push(tempArray)
+          tempArray = []
+        }
+        console.log("my sarathi output ", this.outputObjCompleteArr)
+
+      }
+
+    }
+
+
+    // Vahan refinement of _text
+
+
+      },
+      error: error => {
+
+        let allKeys = Object.keys(error.error)
+        let allValues = Object.values(error.error)
+        for(let i = 0; i<allKeys.length; ++i){
+          let tempObj:{
+            dt: string,
+            vl: any
+          } = {
+            dt: '',
+            vl: ''
+          }
+          tempObj.dt = allKeys[i]
+          tempObj.vl = String(allValues[i]);
+          this.outputObjArr.push(tempObj)
+        }
+      }
+    })
+
+
+
+  }
+
+  constructor(private http: HttpClient, private router: Router, public keypage: KeypageService, private messageService: MessageService, private apiSrivice: apiService, private confirmationService: ConfirmationService) { }
+  apiData: ApiKeys[] = []
+  tableOutputHeader:string[] = []
 
   handleOnUlipClick() {
     this.versionUlip = []
     let ind = this.selectedUlipMap.get(this.selectedUlipArr)
     this.selectedVersion = this.fetchArr[ind].use[0]
-     
+
     for (let i = 0; i < this.fetchArr[ind].use.length; ++i) {
       this.versionUlip.push(this.fetchArr[ind].use[i])
       this.selectedVersionMap.set(this.fetchArr[ind].use[i], i)
     }
-    this.handleOnVersionChange()   
+    this.handleOnVersionChange()
   }
   handleOnVersionChange() {
     this.takeInputObjArr = []
@@ -162,8 +299,12 @@ handleOnSubmitRequest(){
 
   outputObjArr: {
     dt: string,
-    vl: string
+    vl: any
   }[] = [];
+  outputObjCompleteArr: Array<Array<{
+    dt: string,
+    vl: any
+  }>> = [];
 
   textInputUlip: string[] = new Array(this.takeInputObjArr.length).fill('');
 
@@ -225,13 +366,10 @@ handleOnSubmitRequest(){
 
   versionUlip: string[] = []
   selectedVersion: string | undefined
-
-
-
   tokeVal: string = `${localStorage.getItem("authtoken")}`;
 
-  handleOnChangeInputs(i: any){
-    
+  handleOnChangeInputs(i: any) {
+
   }
 
   ngOnInit() {
@@ -245,8 +383,6 @@ handleOnSubmitRequest(){
       this.selectedUlipMap.set(this.fetchArr[i].ulip, i)
       this.ulipArr.push(this.fetchArr[i].ulip)
     }
-  
-    
   }
 
 }
