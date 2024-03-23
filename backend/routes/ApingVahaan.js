@@ -360,6 +360,7 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
             const mybody = req.body
             const appliName = req.applicationName
             const myKey = req.header("api-key")
+            delete json.error
             ulipUiError(urlArray, mybody, json, appliName, myKey, req)
             return res.send(json)
         }
@@ -367,7 +368,6 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
 
 
         let respBody = {
-            error: json.error,
             code: json.code,
             message: json.message
         }
@@ -390,12 +390,13 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
         const myKey = req.header("api-key")
         ulipUiError(urlArray, mybody, respBody, appliName, myKey, req)
 
+
         res.send({ success: true, json })
 
 
     } catch (error) {
         console.log(error.message)
-        res.status(500).send("Internal Server Error")
+        res.status(500).send({ code: 500, message: error.message })
     }
 
 })
@@ -441,10 +442,11 @@ router.post("/ulipui/:ulipIs/:reqIs", fetchapiui, async (req, res) => {
         console.log("reached at json ", json)
         if (json.error === "true") {
             const urlArray = req.url.split("/")
-            urlArray.splice(0,0,'')
+            urlArray.splice(0, 0, '')
             const mybody = req.body
-            const appliName = "--"
-            const myKey = "API Interface Used"
+            const appliName = "[Ulip Interface Used]"
+            const myKey = req.header("api-key")
+            delete json.error
             ulipUiError(urlArray, mybody, json, appliName, myKey, req)
             return res.send(json)
         }
@@ -452,7 +454,6 @@ router.post("/ulipui/:ulipIs/:reqIs", fetchapiui, async (req, res) => {
 
 
         let respBody = {
-            error: json.error,
             code: json.code,
             message: json.message
         }
@@ -469,18 +470,18 @@ router.post("/ulipui/:ulipIs/:reqIs", fetchapiui, async (req, res) => {
 
         }
         const urlArray = req.url.split("/")
-        urlArray.splice(0,0,'')
+        urlArray.splice(0, 0, '')
         const mybody = req.body
-        const appliName = "--"
-        const myKey = "API Interface Used"
-        ulipUiError(urlArray, mybody, respBody, appliName, myKey, req)
+        const appliName = "[Ulip Interface Used]"
+        const mkey = req.header("api-key")
+        ulipUiError(urlArray, mybody, respBody, appliName, mkey, req)
 
         res.send({ success: true, json })
 
 
     } catch (error) {
         console.log(error.message)
-        res.status(500).send("Internal Server Error")
+        res.status(500).send({ code: 500, message: error.message })
     }
 
 })

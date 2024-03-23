@@ -34,13 +34,13 @@ const fetchapiui = async(req, res, next)=>{
             urlArray.splice(0,0,'')
             const mybody = req.body
             const appliName = "--"
-            const myKey = "Ulip Interface Used"
+            const mkey = "Ulip Interface Used"
             const json = {
-                error: "true",
-                message: "Access Denied"
+                code:403,
+                message: "Forbidden"
             }
-            ulipUiError(urlArray, mybody, json, appliName, myKey, req)
-            return res.status(401).send({success:false, message:"Unauthorized"})
+            ulipUiError(urlArray, mybody, json, appliName, mkey, req)
+            return res.status(403).send({success:false, message:"Forbidden"})
         }
         const userUi = req.header("user")
         req.usn = userUi
@@ -69,9 +69,10 @@ const fetchapiui = async(req, res, next)=>{
             console.log("my url array is ", urlArray)
             const mybody = req.body
             const appliName = "--"
-            const myKey = "Ulip Interface Used"
-            ulipUiError(urlArray, mybody, resp_login, appliName, myKey, req)
-            return res.status(401).send({success:false, message:"Access Denied!"})
+            const mkey = "Ulip Interface Used"
+            delete resp_login.error
+            ulipUiError(urlArray, mybody, resp_login, appliName, mkey, req)
+            return res.status(401).send(resp_login)
         }
         
         next()

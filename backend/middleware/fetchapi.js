@@ -1,5 +1,5 @@
 const { ApiKeys } = require("../Models")
-const {ApiLogs} = require("../Models")
+const { ApiLogs } = require("../Models")
 
 // const router = express.Router()
 
@@ -25,10 +25,13 @@ const ulipUiError = async (urlArray, mybody, respBody, appliName, myKey, req) =>
 const fetchapi = async (req, res, next) => {
     const apiKey = req.header("api-key")
     const secKeyH = req.header("seckey")
-
+    
+    
     try {
-        console.log("Start fetching")
-        let myKey = await ApiKeys.findOne({ where: { key: apiKey } })
+        var myKey = await ApiKeys.findOne({ where: { key: apiKey } })
+        if (myKey === null) {
+            return res.status(401).send({ success: false, message: "Invalid API key entered" })
+        }
         const responseIp = await fetch(process.env.ip_fetch_rul, {
             method: 'GET',
             headers: {
@@ -39,45 +42,47 @@ const fetchapi = async (req, res, next) => {
         })
 
         const jsonIp = await responseIp.json()
-       
+
         if (jsonIp.ip != myKey.ip && myKey.ip != "0.0.0.0") {
-            
+
             const urlArray = req.url.split("/")
             const mybody = req.body
             const appliName = myKey.applicationName
-            const myKey = myKey.key
+            const mkey = myKey.key
             const json = {
-                error: "true",
-                message: "Access Denied"
+                code: 403,
+                message: "Forbidden"
             }
-            ulipUiError(urlArray, mybody, json, appliName, myKey, req)
+            ulipUiError(urlArray, mybody, json, appliName, mkey, req)
             return res.status(403).send({ success: false, message: "Access Denied!" })
         }
-        req.usn = myKey.username
-        const user = myKey.username
-        req.applicationName = myKey.applicationName
-        let mySecKey = myKey.secKey
+        req.usn = await myKey.username
+        const user = await myKey.username
+        req.applicationName = await myKey.applicationName
+        let mySecKey = await myKey.secKey
+        
         if (mySecKey != secKeyH) {
             
             const urlArray = req.url.split("/")
             const mybody = req.body
             const appliName = myKey.applicationName
-            const myKey = myKey.key
+            const mkey = myKey.key
             const json = {
-                error: "true",
+                code: 401,
                 message: "Access Denied"
             }
-            ulipUiError(urlArray, mybody, json, appliName, myKey, req)
-            return res.status(403).send({ success: false, message: "Access Denied!" })
+            ulipUiError(urlArray, mybody, json, appliName, mkey, req)
+            
+            return res.status(401).send({ success: false, message: "Access Denied!" })
         }
         else if (myKey.username === user) {
-
+            
             const login_body = {
                 username: process.env.ulip_username,
                 password: process.env.ulip_password
             }
             
-
+            
             const response = await fetch(process.env.ulip_login_url, {
                 method: 'POST',
                 headers: {
@@ -88,18 +93,19 @@ const fetchapi = async (req, res, next) => {
             })
             const resp_login = await response.json()
             
-
-            if (resp_login.error === 'false') {
+            
+            if (resp_login.code === 200) {
                 req.authorization = await resp_login.response.id
                 // next()
             }
             else {
-                const urlArray = req.url.split("/")
-                const mybody = req.body
-                const appliName = myKey.applicationName
-                const myKey = myKey.key
-                ulipUiError(urlArray, mybody, resp_login, appliName, myKey, req)
-                return res.status(401).send({ success: false, message: "Access Denied!" })
+                const urlArray = await req.url.split("/")
+                const mybody = await req.body
+                const appliName = req.applicationName
+                const mkey = req.header("api-key")
+                // await delete resp_login.error
+                ulipUiError(urlArray, mybody, resp_login, appliName, mkey, req)
+                return res.status(401).send(resp_login)
             }
 
             next()
@@ -109,7 +115,13 @@ const fetchapi = async (req, res, next) => {
         }
 
     } catch (error) {
-        res.status(501).send({ error: error.message })
+        // const urlArray = req.url.split("/")
+        // const mybody = req.body
+        // const appliName = req.applicationName
+        // const mkey = req.header("api-key")
+        // const myjson = { code:501, success: false, message: error.message }
+        // ulipUiError(urlArray, mybody, myjson, appliName, mkey, req)
+        res.status(501).send(myjson)
     }
 
 }
