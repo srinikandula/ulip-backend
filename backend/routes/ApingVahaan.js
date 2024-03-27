@@ -338,6 +338,7 @@ const correctVahan = (jsval) => {
 router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
 
     try {
+        console.log("a9")
         const url = `${process.env.ulip_url}/${req.params.ulipIs}/${req.params.reqIs}`
         console.log("my url is ", url)
 
@@ -352,6 +353,7 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
             },
             body: JSON.stringify(req.body)
         })
+        console.log("a10")
 
         let json = await response.json()
         console.log("reached at json ", json)
@@ -375,6 +377,9 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
         if (req.params.ulipIs === "VAHAN") {
 
             const xmlString = json.response[0].response
+            if (xmlString === "ULIPNICDC is not authorized to access Non-Transport vehicle data")
+                return res.send({ message: xmlString })
+
             var result1 = convert.xml2js(xmlString, { compact: true, spaces: 4 });
             const vhdet = result1["VehicleDetails"]
 
@@ -461,6 +466,9 @@ router.post("/ulipui/:ulipIs/:reqIs", fetchapiui, async (req, res) => {
         if (req.params.ulipIs === "VAHAN") {
 
             const xmlString = json.response[0].response
+            if (xmlString === "ULIPNICDC is not authorized to access Non-Transport vehicle data"){
+                return res.send({ message: xmlString })
+            }
             var result1 = convert.xml2js(xmlString, { compact: true, spaces: 4 });
             const vhdet = result1["VehicleDetails"]
 
