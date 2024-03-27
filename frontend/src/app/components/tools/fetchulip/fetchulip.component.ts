@@ -126,7 +126,7 @@ export class FetchulipComponent implements OnInit {
 
   }
   handleOnSubmitRequest() {
-
+    this.outputObjCompleteArr = []
     this.onLoading = true
     this.outputObjArr = []
     let ind = this.selectedVersionMap.get(this.selectedVersion)
