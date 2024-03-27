@@ -122,7 +122,6 @@ export class FetchulipComponent implements OnInit {
         this.outputObjCompleteArr.push(tempArray)
         tempArray = []
       }
-      console.log("Eway output ", this.outputObjCompleteArr)
     }
 
   }
@@ -148,7 +147,8 @@ export class FetchulipComponent implements OnInit {
       for (let i = 0; i < myKeyArr.length; ++i) {
         if (myKeyArr[i] === 'dob') {
           let mydate = new Date(this.textInputUlip[i])
-          let mydateM = mydate.getMonth()
+          let mydateM = mydate.getMonth()+1
+          console.log("my date is ", mydate, this.textInputUlip[i], mydateM)
           let mydateMStr;
           if (mydateM < 10) {
             mydateMStr = "0" + String(mydateM)
@@ -202,6 +202,7 @@ export class FetchulipComponent implements OnInit {
     console.log("my output is ", mydata, this.selectedUlipArr)
 
     if (this.selectedUlipArr === "VAHAN") {
+      console.log("Inside teh vahan")
       let allKeys = Object.keys(mydata)
       let allValues = Object.values(mydata)
 
@@ -227,10 +228,10 @@ export class FetchulipComponent implements OnInit {
         this.VahanUnfitList = []
         this.ifVahanFit = true
 
-        let rcRegnDate = Number(this.findUnixDate(mydata.json.rc_regn_upto))
-        let rcFitDate = Number(this.findUnixDate(mydata.json.rc_fit_upto))
-        let rcTaxDate = Number(this.findUnixDate(mydata.json.rc_tax_upto))
-        let rcInsuDate = Number(this.findUnixDate(mydata.json.rc_insurance_upto))
+        let rcRegnDate = Number(this.findUnixDate(mydata.rc_regn_upto))
+        let rcFitDate = Number(this.findUnixDate(mydata.rc_fit_upto))
+        let rcTaxDate = Number(this.findUnixDate(mydata.rc_tax_upto))
+        let rcInsuDate = Number(this.findUnixDate(mydata.rc_insurance_upto))
         if (rcRegnDate < todayDateUnix) {
           this.VahanUnfitList.push("RC Registration")
         }
@@ -284,7 +285,9 @@ export class FetchulipComponent implements OnInit {
 
     }
     else if (this.selectedUlipArr === "SARATHI") {
+      console.log("My req body is, ", reqObj)
       let mydata2 = mydata.response[0].response.dldetobj[0]
+      console.log("My sarthi data is, ", data)
 
       this.fetchArrObj(mydata2)
 
