@@ -109,3 +109,37 @@ th {
 #output_table {
     width: 100%;
 }
+
+
+.imgDisplayIsCorrectVahan{
+    padding: 2%;
+    text-align: center;
+}
+.imgDisplayIsCorrectVahan img{
+    width: 36%;
+    text-align: center;
+    border-radius: 178px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.imgDisplayIsCorrectVahanP{
+    text-align: center;
+    font-weight: bold;
+    font-size: 2em;
+    padding-top: 1%;
+}
+
+.imgDisplayIsWrongVahan img{
+    width: 40%;
+    text-align: center;
+}
+.imgDisplayIsWrongVahan{
+    text-align: center;
+    height: 30vh;
+}
+.WrongVahanList{
+    padding-top: 3%;
+    display: flex;
+    width: 59%;
+    font-weight: 400;
+    justify-content: center;
+}

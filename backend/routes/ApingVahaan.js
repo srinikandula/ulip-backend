@@ -467,7 +467,7 @@ router.post("/ulipui/:ulipIs/:reqIs", fetchapiui, async (req, res) => {
 
             const xmlString = json.response[0].response
             if (xmlString === "ULIPNICDC is not authorized to access Non-Transport vehicle data"){
-                return res.send({ message: xmlString })
+                return res.send(json.response[0] )
             }
             var result1 = convert.xml2js(xmlString, { compact: true, spaces: 4 });
             const vhdet = result1["VehicleDetails"]

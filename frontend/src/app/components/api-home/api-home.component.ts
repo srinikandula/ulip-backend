@@ -72,12 +72,8 @@ handleOnEditKeyPressed(apikey: string) {
 
   ngOnInit() {
     this.keypage.pageNav = 0
-
-
-
-
-
   }
+  
   handleOnLogout() {
     localStorage.removeItem("authtoken")
     this.router.navigate(['login'])

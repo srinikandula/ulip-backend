@@ -18,6 +18,8 @@ interface City {
   styleUrls: ['./infographics.component.css']
 })
 export class InfographicsComponent implements OnInit {
+  totalReq:Number = 0
+  totalSucReq:Number = 0
   myAllLogs: ApiLogs[] = []
   myAllLogsPresent: ApiLogs[] = []
   dataPie: any;
@@ -390,10 +392,18 @@ export class InfographicsComponent implements OnInit {
 
 
         this.myAllLogsPresent = data.allLogs
+        this.totalReq = data.allLogs.length
+        this.totalSucReq = 0
+        let tempcountSuc = 0;
+        for(let i = 0; i<data.allLogs.length; ++i){
+          if(Number (JSON.parse(data.allLogs[i].resData).code) === 200){
+            tempcountSuc++
+          }
+        }
+        this.totalSucReq = tempcountSuc
         this.myAllLogs = []
 
         this.myAllLogs = this.myAllLogsPresent
-        console.log("my all logs init ", this.myAllLogs, this.myAllLogsPresent)
 
         let myFilterPie: { data: string, val: string }[] = []
         let umap = new Map();
