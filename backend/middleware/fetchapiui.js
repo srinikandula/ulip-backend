@@ -33,8 +33,8 @@ const fetchapiui = async(req, res, next)=>{
             const urlArray = req.url.split("/")
             urlArray.splice(0,0,'')
             const mybody = req.body
-            const appliName = "--"
-            const mkey = "Ulip Interface Used"
+            const appliName =  "[Ulip Interface Used]"
+            const mkey = "--"
             const json = {
                 code:403,
                 message: "Forbidden"
@@ -68,8 +68,8 @@ const fetchapiui = async(req, res, next)=>{
             urlArray.splice(0,0,'')
             console.log("my url array is ", urlArray)
             const mybody = req.body
-            const appliName = "--"
-            const mkey = "Ulip Interface Used"
+            const appliName = "[Ulip Interface Used]"
+            const mkey = "--"
             delete resp_login.error
             ulipUiError(urlArray, mybody, resp_login, appliName, mkey, req)
             return res.status(401).send(resp_login)

@@ -11,5 +11,5 @@ export class AppComponent {
   constructor(private messageService: MessageService){}
  
 
-  title = 'mll';
+  title = 'Mahindra ULIP Interface';
 }

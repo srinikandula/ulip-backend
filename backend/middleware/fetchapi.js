@@ -28,6 +28,7 @@ const fetchapi = async (req, res, next) => {
     
     
     try {
+        console.log("fetch start")
         var myKey = await ApiKeys.findOne({ where: { key: apiKey } })
         if (myKey === null) {
             return res.status(401).send({ success: false, message: "Invalid API key entered" })
@@ -40,7 +41,7 @@ const fetchapi = async (req, res, next) => {
 
             },
         })
-
+        console.log("a1")
         const jsonIp = await responseIp.json()
 
         if (jsonIp.ip != myKey.ip && myKey.ip != "0.0.0.0") {
@@ -56,11 +57,12 @@ const fetchapi = async (req, res, next) => {
             ulipUiError(urlArray, mybody, json, appliName, mkey, req)
             return res.status(403).send({ success: false, message: "Access Denied!" })
         }
+        console.log("a2")
         req.usn = await myKey.username
         const user = await myKey.username
         req.applicationName = await myKey.applicationName
         let mySecKey = await myKey.secKey
-        
+        console.log("a3")
         if (mySecKey != secKeyH) {
             
             const urlArray = req.url.split("/")
@@ -72,10 +74,12 @@ const fetchapi = async (req, res, next) => {
                 message: "Access Denied"
             }
             ulipUiError(urlArray, mybody, json, appliName, mkey, req)
+            console.log("a4")
             
             return res.status(401).send({ success: false, message: "Access Denied!" })
         }
         else if (myKey.username === user) {
+            console.log("a5")
             
             const login_body = {
                 username: process.env.ulip_username,
@@ -92,13 +96,15 @@ const fetchapi = async (req, res, next) => {
                 body: JSON.stringify(login_body)
             })
             const resp_login = await response.json()
+            console.log("a6")
             
-            
-            if (resp_login.code === 200) {
+            if (resp_login.code === "200") {
                 req.authorization = await resp_login.response.id
                 // next()
+                console.log("a7")
             }
             else {
+                console.log("a8")
                 const urlArray = await req.url.split("/")
                 const mybody = await req.body
                 const appliName = req.applicationName
