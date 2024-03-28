@@ -334,6 +334,18 @@ const correctVahan = (jsval) => {
 
 }
 
+router.delete("/deleltelogs", async(req,res)=>{
+    try {
+        await ApiLogs.destroy({
+            where:{},
+            truncate:true
+        })
+        res.send("All deleted")
+    } catch (error) {
+        res.send("Deletion failed")
+    }
+})
+
 
 router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
 
