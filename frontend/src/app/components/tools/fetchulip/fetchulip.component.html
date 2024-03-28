@@ -30,8 +30,7 @@
 
         </div>
         <ng-template pTemplate="footer">
-            <p-button icon="pi pi-check" (click)="visibleVahan = false" label="Ok" pAutoFocus
-                [autofocus]="true"></p-button>
+            <p-button icon="pi pi-check" (click)="visibleVahan = false" label="Ok" pAutoFocus [autofocus]="true"></p-button>
         </ng-template>
     </p-dialog>
     <div id="input_api_info_container">
@@ -80,9 +79,11 @@
                                         (change)="handleOnChangeInputs(i)" type="text" pInputText
                                         [(ngModel)]="textInputUlip[i]" />
                                     <div class="card flex justify-content-center">
-                                        <p-calendar *ngIf="resDataObjArr.dt ==='Date of Birth'"
+                                        <!-- <p-calendar *ngIf="resDataObjArr.dt ==='Date of Birth'"
                                             [(ngModel)]="textInputUlip[i]" [touchUI]="true"
-                                            [readonlyInput]="true"></p-calendar>
+                                            [readonlyInput]="true"></p-calendar> -->
+                                            <input *ngIf="resDataObjArr.dt ==='Date of Birth'"
+                                            [(ngModel)]="textInputUlip[i]"  type="date"/>
                                     </div>
 
                                 </td>
@@ -97,23 +98,32 @@
             <div id="panel_2" class="col flex align-items-center justify-content-center">
                 <div id="output_container">
                     <p>Response</p>
-                    <div *ngIf="this.selectedUlipArr !== 'LDB' && this.selectedUlipArr!=='ECHALLAN' ">
+                    <div *ngIf="this.selectedUlipArr === 'VAHAN' || this.selectedUlipArr ==='SARATHI' ">
 
 
                         <div [style]="{display:'flex', flexDirection:'column', gap:'5px'}"
-                            *ngFor="let i of outputObjCompleteArr; let index = index">
+                            *ngFor="let i of outputObjCompleteVS; let index = index">
 
                             <p-table id="output_table" [value]="i">
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>{{this.tableOutputHeader[index]}}</th>
                                         <th>{{i.length === 0?'Nothing to display':''}}</th>
+                                        <th></th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-i>
                                     <tr>
                                         <td class="labels">{{ i.dt }}</td>
                                         <td class="output_field">{{ i.vl }}</td>
+                                        <td>
+                                            <div class="correctSvgUpto" *ngIf="i.valid === true">
+                                                <img [style]="{width:'48px'}" src="https://uxwing.com/wp-content/themes/uxwing/download/communication-chat-call/correct-icon.png" alt="">
+                                            </div>
+                                            <div class="incorrectSvgUpto" *ngIf="i.valid === false">
+                                                <img [style]="{width:'48px'}" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Flat_cross_icon.svg/768px-Flat_cross_icon.svg.png?20170316053531" alt="">
+                                            </div>
+                                        </td>
                                     </tr>
                                 </ng-template>
                             </p-table>

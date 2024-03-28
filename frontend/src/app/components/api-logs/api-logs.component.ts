@@ -131,6 +131,7 @@ showDialogResData(myresData:string) {
         console.log(data)
 
         this.apiLogs = data.allLogs
+        this.apiLogs.reverse()
         this.apiLogsTemp = this.apiLogs
 
       },

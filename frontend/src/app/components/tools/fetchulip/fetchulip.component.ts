@@ -24,7 +24,7 @@ export class FetchulipComponent implements OnInit {
     this.visibleVahan = true
   }
   onLoading: boolean = false;
-  allOutputTabs:string[] = []
+  allOutputTabs: string[] = []
   refineVahan() {
     console.log("insdie teh refinement")
     for (let i = 0; i < this.outputObjCompleteArr.length; ++i) {
@@ -146,27 +146,8 @@ export class FetchulipComponent implements OnInit {
     if (myKeyArr.length === this.textInputUlip.length) {
       for (let i = 0; i < myKeyArr.length; ++i) {
         if (myKeyArr[i] === 'dob') {
-          let mydate = new Date(this.textInputUlip[i])
-          let mydateM = mydate.getMonth()+1
-          console.log("my date is ", mydate, this.textInputUlip[i], mydateM)
-          let mydateMStr;
-          if (mydateM < 10) {
-            mydateMStr = "0" + String(mydateM)
-          }
-          else {
-            mydateMStr = String(mydateM)
-          }
-
-          let mydateD = mydate.getDate()
-          let mydateDStr;
-          if (mydateD < 10) {
-            mydateDStr = "0" + String(mydateD)
-          }
-          else {
-            mydateDStr = String(mydateD)
-          }
-          let mystrDate = mydate.getFullYear() + "-" + mydateMStr + "-" + mydateDStr
-          reqObj[myKeyArr[i]] = mystrDate
+          console.log("my date is, ", this.textInputUlip[i])
+          reqObj[myKeyArr[i]] = this.textInputUlip[i]
           continue
         }
         reqObj[myKeyArr[i]] = this.textInputUlip[i]
@@ -189,204 +170,201 @@ export class FetchulipComponent implements OnInit {
     this.http.post<any>(myUrl, reqObj, { headers }).subscribe({
       next: data => {
         let mydata = data.json;
-    // if(this.selectedUlipArr === "VAHAN"){
-    //  mydata = data.json
-    // }
-    // else{
-    //   mydata = data.json.response.json
+        // if(this.selectedUlipArr === "VAHAN"){
+        //  mydata = data.json
+        // }
+        // else{
+        //   mydata = data.json.response.json
 
-    // }
-    
-
-
-    console.log("my output is ", mydata, this.selectedUlipArr)
-
-    if (this.selectedUlipArr === "VAHAN") {
-      console.log("Inside teh vahan")
-      let allKeys = Object.keys(mydata)
-      let allValues = Object.values(mydata)
-
-      let tempObjArrOutput: Array<{
-        dt: string,
-        vl: any
-      }> = []
-      let tempArray: Array<{
-        dt: string,
-        vl: any
-      }> = []
-      for (let i = 0; i < allKeys.length; ++i) {
-        let tempObj: {
-          dt: string,
-          vl: any
-        } = {
-          dt: '',
-          vl: ''
-        }
-        tempObj.dt = allKeys[i]
-        let todayDate = new Date()
-        let todayDateUnix = Number(Math.floor(todayDate.getTime() / 1000))
-        this.VahanUnfitList = []
-        this.ifVahanFit = true
-
-        let rcRegnDate = Number(this.findUnixDate(mydata.rc_regn_upto))
-        let rcFitDate = Number(this.findUnixDate(mydata.rc_fit_upto))
-        let rcTaxDate = Number(this.findUnixDate(mydata.rc_tax_upto))
-        let rcInsuDate = Number(this.findUnixDate(mydata.rc_insurance_upto))
-        
-        if (rcRegnDate < todayDateUnix) {
-          this.VahanUnfitList.push("RC Registration")
-        }
-        if (rcFitDate < todayDateUnix) {
-          this.VahanUnfitList.push("RC Fit")
-        }
-        if (rcTaxDate < todayDateUnix) {
-          this.VahanUnfitList.push("RC Tax")
-        }
-        if (rcInsuDate < todayDateUnix) {
-          this.VahanUnfitList.push("RC Insurance")
-        }
-        if (this.VahanUnfitList.length > 0) {
-          this.ifVahanFit = false
-        }
-        this.showDialogVahan()
+        // }
 
 
 
-        if (typeof allValues[i] === 'object') {
-          let objArrKeys = Object.keys(Object(allValues[i]))
-          let objArrVal = Object.values(Object(allValues[i]));
-          for (let i = 0; i < objArrKeys.length; ++i) {
-            let veryVeryTempObj = {
-              dt: objArrKeys[i],
-              vl: objArrVal[i]
-            }
-            tempObjArrOutput.push(veryVeryTempObj)
+        console.log("my output is ", mydata, this.selectedUlipArr)
+
+        if (this.selectedUlipArr === "VAHAN") {
+          console.log("Inside teh vahan")
+          let allKeys = Object.keys(mydata)
+          let allValues = Object.values(mydata)
+
+
+          let todayDate = new Date()
+          let todayDateUnix = Number(Math.floor(todayDate.getTime() / 1000))
+          this.VahanUnfitList = []
+          this.ifVahanFit = true
+          console.log("Inside the date conversion")
+          let rcRegnDate = Number(this.findUnixDate(mydata.rc_regn_upto))
+          let rcFitDate = Number(this.findUnixDate(mydata.rc_fit_upto))
+          let rcTaxDateValStr = String(mydata.rc_tax_upto)
+          let rcTaxDateArr = rcTaxDateValStr.split("-")
+          let rcTaxDateFinStr = String(rcTaxDateArr[2]) + "-" + String(rcTaxDateArr[1]) + "-" + String(rcTaxDateArr[0])
+          let rcTaxDateVal = new Date(rcTaxDateFinStr)
+          let rcTaxDate = Number(Math.floor(rcTaxDateVal.getTime() / 1000))
+          let rcInsuDate = Number(this.findUnixDate(mydata.rc_insurance_upto))
+          let rcPuccDate = Number(this.findUnixDate(mydata.rc_pucc_upto))
+          console.log("my rc tax date ", rcTaxDate, rcTaxDateVal, todayDateUnix, mydata.rc_tax_upto, rcTaxDateFinStr)
+
+          if (rcRegnDate < todayDateUnix) {
+            this.VahanUnfitList.push("RC Registration Validity Expired")
           }
-          this.outputObjCompleteArr.push(tempObjArrOutput)
-          tempObjArrOutput = []
-        }
-        else {
-          while (i < allKeys.length && typeof allValues[i] !== 'object') {
-            let veryVeryTempObj = {
-              dt: allKeys[i],
-              vl: allValues[i]
-            }
-            tempArray.push(veryVeryTempObj)
-            i++;
+          if (rcFitDate < todayDateUnix) {
+            this.VahanUnfitList.push("RC Fit")
           }
-          i--;
-
-          this.outputObjCompleteArr.push(tempArray)
-          tempArray = []
-        }
-
-      }
-      this.refineVahan()
-      console.log("MY complete array ", this.outputObjCompleteArr)
-
-    }
-    else if (this.selectedUlipArr === "SARATHI") {
-      console.log("My req body is, ", reqObj)
-      let mydata2 = mydata.response[0].response.dldetobj[0]
-      console.log("My sarthi data is, ", data)
-
-      this.fetchArrObj(mydata2)
-
-    }
-    else if (this.selectedUlipArr === "FOIS") {
-      this.outputObjCompleteArr = []
-      let mydata2 = mydata.response[0].response[0]
-      let allKeys = Object.keys(mydata2)
-
-      let allValues = Object.values(mydata2)
-      let tempObjArrOutput: Array<{
-        dt: string,
-        vl: any
-      }> = []
-      let tempArray: Array<{
-        dt: string,
-        vl: any
-      }> = []
-      for (let i = 0; i < allKeys.length; ++i) {
-        let tempObj: {
-          dt: string,
-          vl: any
-        } = {
-          dt: '',
-          vl: ''
-        }
-        tempObj.dt = allKeys[i]
-
-        if (typeof allValues[i] === 'object') {
-          let objArrKeys = Object.keys(Object(allValues[i]))
-          let objArrVal = Object.values(Object(allValues[i]));
-          for (let i = 0; i < objArrKeys.length; ++i) {
-            let veryVeryTempObj = {
-              dt: objArrKeys[i],
-              vl: objArrVal[i]
-            }
-            tempObjArrOutput.push(veryVeryTempObj)
+          if (rcTaxDate < todayDateUnix) {
+            this.VahanUnfitList.push("RC Tax")
           }
-          this.outputObjCompleteArr.push(tempObjArrOutput)
-          tempObjArrOutput = []
-        }
-        else {
-          while (i < allKeys.length && typeof allValues[i] !== 'object') {
-            let veryVeryTempObj = {
-              dt: allKeys[i],
-              vl: allValues[i]
-            }
-            tempArray.push(veryVeryTempObj)
-            i++;
+          if (rcInsuDate < todayDateUnix) {
+            this.VahanUnfitList.push("RC Insurance")
           }
-          i--;
+          if (rcPuccDate < todayDateUnix) {
+            this.VahanUnfitList.push("RC Pollution Control")
+          }
+          if (this.VahanUnfitList.length > 0) {
+            this.ifVahanFit = false
+          }
+          this.showDialogVahan()
 
-          this.outputObjCompleteArr.push(tempArray)
-          tempArray = []
+          let outputObjCompleteVSTemp: Array<{
+            dt: string,
+            vl: any,
+            valid: any
+          }> = [];
+
+          outputObjCompleteVSTemp = [
+            { dt: 'Registration Number', vl: mydata.rc_regn_no, valid: null },
+            { dt: 'Registration Number Validity', vl: mydata.rc_regn_upto, valid: rcRegnDate > todayDateUnix },
+            { dt: 'Owner Name', vl: mydata.rc_owner_name, valid: null },
+            { dt: 'Vehicle Purchase Date', vl: mydata.rc_purchase_dt, valid: null },
+            { dt: 'Insurance Policy Number', vl: mydata.rc_insurance_policy_no, valid: null },
+            { dt: 'Insurace Policy Validity Upto', vl: mydata.rc_insurance_upto, valid: rcInsuDate > todayDateUnix },
+            { dt: 'Pollution Certificate Number', vl: mydata.rc_pucc_no, valid: null },
+            { dt: 'Pollution Validity Upto', vl: mydata.rc_pucc_upto, valid: rcPuccDate > todayDateUnix },
+            { dt: 'Fitness Certificate Validity Upto', vl: mydata.rc_fit_upto, valid: null },
+            { dt: 'Road Tax Validity Upto', vl: mydata.rc_tax_upto, valid: rcTaxDate > todayDateUnix },
+          ]
+          this.outputObjCompleteVS.push(outputObjCompleteVSTemp)
+
         }
+        else if (this.selectedUlipArr === "SARATHI") {
+          this.outputObjCompleteVS = []
+          let todayDate = new Date()
+          let todayDateUnix = Number(Math.floor(todayDate.getTime() / 1000))
 
-      }
+          let mydata2 = mydata.response[0].response.dldetobj[0]
+          console.log("Inside teh sarathig", mydata2, reqObj)
+          let outputObjCompleteVSTemp: Array<{
+            dt: string,
+            vl: any,
+            valid: any
+          }> = [];
+          let dlExpDate = new Date(mydata2.dlobj.dlNtValdtoDt)
+          let dlExpDateNum = Number(Math.floor(dlExpDate.getTime() / 1000))
+          console.log("My DL exp date is ", dlExpDate)
+          outputObjCompleteVSTemp = [
 
+            { dt: 'Driving license Number', vl: mydata2.dlobj.dlLicno, valid: null },
+            { dt: 'Driving license Validity Upto', vl: mydata2.dlobj.dlNtValdtoDt, valid: dlExpDateNum > todayDateUnix },
 
-
-    }
-    else if (this.selectedUlipArr === "LDB") {
-      
-      this.handleLDB1(mydata.response[0].response.eximContainerTrail)
-      this.handleLDB2(mydata.response[0].response.domesticContainerTrail)
-
-
-
-    }
-    else if (this.selectedUlipArr === 'EWAYBILL') {
-      let mydata2 = mydata.response[0].response
-      this.fetchArrObj(mydata2)
-
-    }
-    else if (this.selectedUlipArr === 'ECHALLAN') {
-
-      this.allOutputTabs = ['Pending_data', 'Disposed_data'];
-
-      this.outputObjCompleteArrEchallan1 =  this.handleEchallan2(mydata.response[0].response.data.Pending_data);
-      this.outputObjCompleteAllChallan.push(this.outputObjCompleteArrEchallan1)
-
-      this.outputObjCompleteArrEchallan1 = this.handleEchallan2(mydata.response[0].response.data.Disposed_data);
-      this.outputObjCompleteAllChallan.push(this.outputObjCompleteArrEchallan1)
-
-      console.log(this.outputObjCompleteAllChallan, " Is my complete challan")
-
-    }
-    this.onLoading = false
+          ]
+          this.outputObjCompleteVS.push(outputObjCompleteVSTemp)
 
 
 
-    },
+        }
+        else if (this.selectedUlipArr === "FOIS") {
+          this.outputObjCompleteArr = []
+          let mydata2 = mydata.response[0].response[0]
+          let allKeys = Object.keys(mydata2)
+
+          let allValues = Object.values(mydata2)
+          let tempObjArrOutput: Array<{
+            dt: string,
+            vl: any
+          }> = []
+          let tempArray: Array<{
+            dt: string,
+            vl: any
+          }> = []
+          for (let i = 0; i < allKeys.length; ++i) {
+            let tempObj: {
+              dt: string,
+              vl: any
+            } = {
+              dt: '',
+              vl: ''
+            }
+            tempObj.dt = allKeys[i]
+
+            if (typeof allValues[i] === 'object') {
+              let objArrKeys = Object.keys(Object(allValues[i]))
+              let objArrVal = Object.values(Object(allValues[i]));
+              for (let i = 0; i < objArrKeys.length; ++i) {
+                let veryVeryTempObj = {
+                  dt: objArrKeys[i],
+                  vl: objArrVal[i]
+                }
+                tempObjArrOutput.push(veryVeryTempObj)
+              }
+              this.outputObjCompleteArr.push(tempObjArrOutput)
+              tempObjArrOutput = []
+            }
+            else {
+              while (i < allKeys.length && typeof allValues[i] !== 'object') {
+                let veryVeryTempObj = {
+                  dt: allKeys[i],
+                  vl: allValues[i]
+                }
+                tempArray.push(veryVeryTempObj)
+                i++;
+              }
+              i--;
+
+              this.outputObjCompleteArr.push(tempArray)
+              tempArray = []
+            }
+
+          }
+
+
+
+        }
+        else if (this.selectedUlipArr === "LDB") {
+
+          this.handleLDB1(mydata.response[0].response.eximContainerTrail)
+          this.handleLDB2(mydata.response[0].response.domesticContainerTrail)
+
+
+
+        }
+        else if (this.selectedUlipArr === 'EWAYBILL') {
+          let mydata2 = mydata.response[0].response
+          this.fetchArrObj(mydata2)
+
+        }
+        else if (this.selectedUlipArr === 'ECHALLAN') {
+
+          this.allOutputTabs = ['Pending_data', 'Disposed_data'];
+
+          this.outputObjCompleteArrEchallan1 = this.handleEchallan2(mydata.response[0].response.data.Pending_data);
+          this.outputObjCompleteAllChallan.push(this.outputObjCompleteArrEchallan1)
+
+          this.outputObjCompleteArrEchallan1 = this.handleEchallan2(mydata.response[0].response.data.Disposed_data);
+          this.outputObjCompleteAllChallan.push(this.outputObjCompleteArrEchallan1)
+
+          console.log(this.outputObjCompleteAllChallan, " Is my complete challan")
+
+        }
+        this.onLoading = false
+
+
+
+      },
       error: error => {
 
         let allKeys = Object.keys(error.error)
         let allValues = Object.values(error.error)
-        for(let i = 0; i<allKeys.length; ++i){
-          let tempObj:{
+        for (let i = 0; i < allKeys.length; ++i) {
+          let tempObj: {
             dt: string,
             vl: any
           } = {
@@ -398,7 +376,7 @@ export class FetchulipComponent implements OnInit {
           this.outputObjArr.push(tempObj)
 
         }
-    this.onLoading = false
+        this.onLoading = false
       }
     })
 
@@ -453,6 +431,12 @@ export class FetchulipComponent implements OnInit {
     dt: string,
     vl: any
   }>> = [];
+
+  outputObjCompleteVS: Array<Array<{
+    dt: string,
+    vl: any,
+    valid: any,
+  }>> = [];
   outputObjCompleteArrLDB1: Array<Array<Array<{
     dt: string,
     vl: any
@@ -498,14 +482,19 @@ export class FetchulipComponent implements OnInit {
       "use": ["Track Container"],
       "input": [["Container Number"]]
     },
+    // {
+    //   "ulip": "EWAYBILL",
+    //   "use": ["e-Way Bill Details"],
+    //   "input": [["e-Way Bill Number"]]
+    // },
+    // {
+    //   "ulip": "ECHALLAN",
+    //   "use": ["e-Challan Details"],
+    //   "input": [["Vehicle Number"]]
+    // },
     {
-      "ulip": "EWAYBILL",
-      "use": ["e-Way Bill Details"],
-      "input": [["e-Way Bill Number"]]
-    },
-    {
-      "ulip": "ECHALLAN",
-      "use": ["e-Challan Details"],
+      "ulip": "FASTAG",
+      "use": ["Track Vehicle"],
       "input": [["Vehicle Number"]]
     },
 
@@ -535,15 +524,20 @@ export class FetchulipComponent implements OnInit {
       "use": ["Track Container"],
       "input": [["containerNumber"]]
     },
+    // {
+    //   "ulip": "EWAYBILL",
+    //   "use": ["e-Way Bill Details"],
+    //   "input": [["ewbNo"]]
+    // },
+    // {
+    //   "ulip": "ECHALLAN",
+    //   "use": ["e-Challan Details"],
+    //   "input": [["vehicleNumber"]]
+    // },
     {
-      "ulip": "EWAYBILL",
-      "use": ["e-Way Bill Details"],
-      "input": [["ewbNo"]]
-    },
-    {
-      "ulip": "ECHALLAN",
-      "use": ["e-Challan Details"],
-      "input": [["vehicleNumber"]]
+      "ulip": "FASTAG",
+      "use": ["Track Vehicle"],
+      "input": [["vehiclenumber"]]
     },
 
   ]
@@ -671,7 +665,7 @@ export class FetchulipComponent implements OnInit {
       }
     }
   }
-  
+
 
   handleLDB2(mydata2: any) {
     this.outputObjCompleteArrLDB2 = []

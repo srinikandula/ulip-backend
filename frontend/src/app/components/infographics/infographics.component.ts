@@ -395,10 +395,12 @@ export class InfographicsComponent implements OnInit {
         this.totalReq = data.allLogs.length
         this.totalSucReq = 0
         let tempcountSuc = 0;
+        console.log(data.allLogs, "are my logs")
         for(let i = 0; i<data.allLogs.length; ++i){
-          if(Number (JSON.parse(data.allLogs[i].resData).code) === 200){
-            tempcountSuc++
-          }
+          console.log("logis ", (data.allLogs[i]))
+          // if(data.allLogs[i].resData && JSON.parse(data.allLogs[i].resData).code && Number(JSON.parse(data.allLogs[i].resData).code) === 200){
+          //   tempcountSuc++
+          // }
         }
         this.totalSucReq = tempcountSuc
         this.myAllLogs = []
