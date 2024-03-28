@@ -46,7 +46,7 @@ router.post("/sendmailcreatekey", [
             var mailOptions = {
                 from: "service.ulipmll@gmail.com",
                 to: req.body.email,
-                subject: "Testing mail",
+                subject: "ULIP API Key",
                 html: renderedHtmlContent
 
             }

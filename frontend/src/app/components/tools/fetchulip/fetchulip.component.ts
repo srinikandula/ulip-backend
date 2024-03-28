@@ -232,6 +232,7 @@ export class FetchulipComponent implements OnInit {
         let rcFitDate = Number(this.findUnixDate(mydata.rc_fit_upto))
         let rcTaxDate = Number(this.findUnixDate(mydata.rc_tax_upto))
         let rcInsuDate = Number(this.findUnixDate(mydata.rc_insurance_upto))
+        
         if (rcRegnDate < todayDateUnix) {
           this.VahanUnfitList.push("RC Registration")
         }
