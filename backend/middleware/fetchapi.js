@@ -63,10 +63,10 @@ const fetchapi = async (req, res, next) => {
         if (myKey === null) {
             return res.status(401).send({ success: false, message: "Invalid API key entered" })
         }
-        
-        const jsonIp = requesterIP2
+        console.log("my requester IP is ", requesterIP2, typeof requesterIP2)
+        const jsonIp = String(requesterIP2)
 
-        if (jsonIp.ip != myKey.ip && myKey.ip != "0.0.0.0") {
+        if (jsonIp != myKey.ip && myKey.ip != "0.0.0.0") {
 
             const urlArray = req.url.split("/")
             const mybody = req.body
