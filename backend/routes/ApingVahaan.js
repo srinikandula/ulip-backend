@@ -332,11 +332,11 @@ const correctVahan = (jsval) => {
 
 }
 
-router.delete("/deleltelogs", async(req,res)=>{
+router.delete("/deleltelogs", async (req, res) => {
     try {
         await ApiLogs.destroy({
-            where:{},
-            truncate:true
+            where: {},
+            truncate: true
         })
         res.send("All deleted")
     } catch (error) {
@@ -390,13 +390,13 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
                 // if (xmlString === "ULIPNICDC is not authorized to access Non-Transport vehicle data")
                 //     // return res.status(501).send({code:"501" , message: xmlString })
                 //     return res.status(401).send(json.response[0] )
-    
+
                 var result1 = convert.xml2js(xmlString, { compact: true, spaces: 4 });
                 const vhdet = result1["VehicleDetails"]
-    
+
                 // res.send({ success: true, vhdet })
                 json = await correctVahan(vhdet)
-                
+
             } catch (error) {
                 const urlArray = req.url.split("/")
                 const mybody = req.body
@@ -405,18 +405,31 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
                 let tempJson = json.response[0]
                 tempJson.code = "401"
                 ulipUiError(urlArray, mybody, tempJson, appliName, myKey, req)
-                return res.status(401).send(json.response[0] )
+                return res.status(401).send(json.response[0])
             }
 
             console.log(json)
 
         }
 
+        if (req.params.ulipIs === 'SARATHI' && json.response[0].response.dldetobj[0].dlobj === null) {
+            const urlArray = req.url.split("/")
+            const mybody = req.body
+            const appliName = req.applicationName
+            const mKey = req.header("api-key")
+            let tempbodyOut = {
+                code:"404",
+                message:"No such data exist"
+            }
+            ulipUiError(urlArray, mybody, tempbodyOut, appliName, mKey, req)
+            return res.status(404).send({ code: "500", message:"No such data exist" })
+        }
+
         const urlArray = req.url.split("/")
         const mybody = req.body
         const appliName = req.applicationName
-        const myKey = req.header("api-key")
-        ulipUiError(urlArray, mybody, respBody, appliName, myKey, req)
+        const mKey = req.header("api-key")
+        ulipUiError(urlArray, mybody, respBody, appliName, mKey, req)
 
 
         res.send({ success: true, json })
@@ -492,13 +505,13 @@ router.post("/ulipui/:ulipIs/:reqIs", fetchapiui, async (req, res) => {
                 // if (xmlString === "ULIPNICDC is not authorized to access Non-Transport vehicle data")
                 //     // return res.status(501).send({code:"501" , message: xmlString })
                 //     return res.status(401).send(json.response[0] )
-    
+
                 var result1 = convert.xml2js(xmlString, { compact: true, spaces: 4 });
                 const vhdet = result1["VehicleDetails"]
-    
+
                 // res.send({ success: true, vhdet })
                 json = await correctVahan(vhdet)
-                
+
             } catch (error) {
                 const urlArray = req.url.split("/")
                 const mybody = req.body
@@ -507,12 +520,24 @@ router.post("/ulipui/:ulipIs/:reqIs", fetchapiui, async (req, res) => {
                 let tempJson = json.response[0]
                 tempJson.code = "401"
                 ulipUiError(urlArray, mybody, tempJson, appliName, myKey, req)
-                return res.status(401).send(json.response[0] )
+                return res.status(401).send(json.response[0])
             }
 
 
         }
-
+        if (req.params.ulipIs === 'SARATHI' && json.response[0].response.dldetobj[0].dlobj === null) {
+            const urlArray = req.url.split("/")
+            urlArray.splice(0, 0, '')
+            const mybody = req.body
+            const appliName = "[Ulip Interface Used]"
+            const mkey = req.header("api-key")
+            let tempbodyOut = {
+                code:"404",
+                message:"No such data exist"
+            }
+            ulipUiError(urlArray, mybody, tempbodyOut, appliName, mkey, req)
+            return res.status(404).send({ code: "500", message:"No such data exist" })
+        }
         const urlArray = req.url.split("/")
         urlArray.splice(0, 0, '')
         const mybody = req.body

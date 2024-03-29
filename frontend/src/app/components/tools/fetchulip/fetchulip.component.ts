@@ -129,6 +129,7 @@ export class FetchulipComponent implements OnInit {
     this.outputObjCompleteArr = []
     this.onLoading = true
     this.outputObjArr = []
+    this.outputObjCompleteVS = []
     let ind = this.selectedVersionMap.get(this.selectedVersion)
     let verNum = '0'
     if (ind < 9) {
@@ -177,10 +178,7 @@ export class FetchulipComponent implements OnInit {
         //   mydata = data.json.response.json
 
         // }
-
-
-
-        console.log("my output is ", mydata, this.selectedUlipArr)
+        
 
         if (this.selectedUlipArr === "VAHAN") {
           console.log("Inside teh vahan")
@@ -251,12 +249,15 @@ export class FetchulipComponent implements OnInit {
           let todayDateUnix = Number(Math.floor(todayDate.getTime() / 1000))
 
           let mydata2 = mydata.response[0].response.dldetobj[0]
-          console.log("Inside teh sarathig", mydata2, reqObj)
           let outputObjCompleteVSTemp: Array<{
             dt: string,
             vl: any,
             valid: any
           }> = [];
+          console.log("my data2 is ", mydata2)
+          if(mydata2.dlobj === null){
+            console.log("it's an errro")
+          }
           let dlExpDate = new Date(mydata2.dlobj.dlNtValdtoDt)
           let dlExpDateNum = Number(Math.floor(dlExpDate.getTime() / 1000))
           console.log("My DL exp date is ", dlExpDate)
@@ -360,22 +361,28 @@ export class FetchulipComponent implements OnInit {
 
       },
       error: error => {
-
+        console.log("the error has occured")
         let allKeys = Object.keys(error.error)
         let allValues = Object.values(error.error)
+        console.log("The error is ", error.error)
+        this.outputObjArr = []
+        this.outputObjCompleteVS = []
         for (let i = 0; i < allKeys.length; ++i) {
           let tempObj: {
             dt: string,
-            vl: any
+            vl: any,
+            valid:any
           } = {
             dt: '',
-            vl: ''
+            vl: '',
+            valid:null
           }
           tempObj.dt = allKeys[i]
           tempObj.vl = String(allValues[i]);
           this.outputObjArr.push(tempObj)
 
         }
+        this.outputObjCompleteVS.push(this.outputObjArr)
         this.onLoading = false
       }
     })
@@ -425,7 +432,8 @@ export class FetchulipComponent implements OnInit {
 
   outputObjArr: {
     dt: string,
-    vl: any
+    vl: any,
+    valid:null
   }[] = [];
   outputObjCompleteArr: Array<Array<{
     dt: string,
