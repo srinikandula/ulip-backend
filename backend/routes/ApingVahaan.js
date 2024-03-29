@@ -315,8 +315,6 @@ router.post("/fetchLogs", fetchuser,
 
 
 const correctVahan = (jsval) => {
-    console.log("insdie the correct vahan", jsval)
-    // jsval = jsval.json
     let tempJs = {}
     let jsKey = Object.keys(jsval)
     let jsValAll = Object.values(jsval)
@@ -390,7 +388,8 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
 
             const xmlString = json.response[0].response
             if (xmlString === "ULIPNICDC is not authorized to access Non-Transport vehicle data")
-                return res.send({ message: xmlString })
+                // return res.status(501).send({code:"501" , message: xmlString })
+                return res.status(401).send(json.response[0] )
 
             var result1 = convert.xml2js(xmlString, { compact: true, spaces: 4 });
             const vhdet = result1["VehicleDetails"]
@@ -413,7 +412,7 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
 
     } catch (error) {
         console.log(error.message)
-        res.status(500).send({ code: 500, message: error.message })
+        res.status(500).send({ code: "500", message: error.message })
     }
 
 })
@@ -479,7 +478,7 @@ router.post("/ulipui/:ulipIs/:reqIs", fetchapiui, async (req, res) => {
 
             const xmlString = json.response[0].response
             if (xmlString === "ULIPNICDC is not authorized to access Non-Transport vehicle data"){
-                return res.send(json.response[0] )
+                return res.status(401).send(json.response[0] )
             }
             var result1 = convert.xml2js(xmlString, { compact: true, spaces: 4 });
             const vhdet = result1["VehicleDetails"]
