@@ -18,7 +18,6 @@
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
     "generate-api-key": "^1.0.2",
-    "ipify2": "^1.1.3",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.9.0",
     "nodemailer": "^6.9.12",

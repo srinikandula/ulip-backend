@@ -1,10 +1,5 @@
 const { ApiKeys } = require("../Models")
 const { ApiLogs } = require("../Models")
-const ipify = require('ipify2')
-// const requestIp = require('request-ip');
-// var get_ip = require('ipware')().get_ip;
-// const router = express.Router()
-
 
 const ulipUiError = async (urlArray, mybody, respBody, appliName, myKey, req) => {
 
@@ -60,33 +55,16 @@ const fetchapi = async (req, res, next) => {
 
 
     try {
-        // // const clientIp = await requestIp.getClientIp(req);
-        // var ip_info = get_ip(req);
-
-        // console.log(ip_info);
-
-        // ipify.ipv4().then(ipv4 => console.log(" Requrster ip is ",ipv4)).catch(err => console.log(err));
-        const requesterIP = req.ip || req.connection.remoteAddress;
-        console.log('Requester IP:', requesterIP);
         
 
-        const requesterIP2 = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-        console.log('Requester IP2:', requesterIP2);
+        const requesterIP2 = await req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
         var myKey = await ApiKeys.findOne({ where: { key: apiKey } })
         if (myKey === null) {
             return res.status(401).send({ success: false, message: "Invalid API key entered" })
         }
-        const responseIp = await fetch(process.env.ip_fetch_rul, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': "application/json",
-
-            },
-        })
-        console.log("a1")
-        const jsonIp = await responseIp.json()
+        
+        const jsonIp = requesterIP2
 
         if (jsonIp.ip != myKey.ip && myKey.ip != "0.0.0.0") {
 
