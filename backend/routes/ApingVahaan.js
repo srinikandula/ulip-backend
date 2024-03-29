@@ -487,19 +487,32 @@ router.post("/ulipui/:ulipIs/:reqIs", fetchapiui, async (req, res) => {
         }
 
         if (req.params.ulipIs === "VAHAN") {
-
-            const xmlString = json.response[0].response
-            if (xmlString === "ULIPNICDC is not authorized to access Non-Transport vehicle data"){
+            try {
+                const xmlString = json.response[0].response
+                // if (xmlString === "ULIPNICDC is not authorized to access Non-Transport vehicle data")
+                //     // return res.status(501).send({code:"501" , message: xmlString })
+                //     return res.status(401).send(json.response[0] )
+    
+                var result1 = convert.xml2js(xmlString, { compact: true, spaces: 4 });
+                const vhdet = result1["VehicleDetails"]
+    
+                // res.send({ success: true, vhdet })
+                json = await correctVahan(vhdet)
+                
+            } catch (error) {
+                const urlArray = req.url.split("/")
+                const mybody = req.body
+                const appliName = req.applicationName
+                const myKey = req.header("api-key")
+                let tempJson = json.response[0]
+                tempJson.code = "401"
+                ulipUiError(urlArray, mybody, tempJson, appliName, myKey, req)
                 return res.status(401).send(json.response[0] )
             }
-            var result1 = convert.xml2js(xmlString, { compact: true, spaces: 4 });
-            const vhdet = result1["VehicleDetails"]
 
-            // res.send({ success: true, vhdet })
-            json = await correctVahan(vhdet)
-            console.log(json)
 
         }
+
         const urlArray = req.url.split("/")
         urlArray.splice(0, 0, '')
         const mybody = req.body
