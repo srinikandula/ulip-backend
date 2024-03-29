@@ -1,5 +1,6 @@
 const { ApiKeys } = require("../Models")
 const { ApiLogs } = require("../Models")
+const ipify = require('ipify2')
 // const requestIp = require('request-ip');
 // var get_ip = require('ipware')().get_ip;
 // const router = express.Router()
@@ -34,7 +35,7 @@ const fetchapi = async (req, res, next) => {
         
         // console.log(ip_info);
 
-        console.log("Requester ip is ",req.ip)
+        ipify.ipv4().then(ipv4 => console.log(" Requrster ip is ",ipv4)).catch(err => console.log(err));
         var myKey = await ApiKeys.findOne({ where: { key: apiKey } })
         if (myKey === null) {
             return res.status(401).send({ success: false, message: "Invalid API key entered" })
