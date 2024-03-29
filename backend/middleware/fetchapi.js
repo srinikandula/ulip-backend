@@ -24,6 +24,36 @@ const ulipUiError = async (urlArray, mybody, respBody, appliName, myKey, req) =>
     const apiLogIs = await ApiLogs.create(newApiLog)
 }
 
+
+function getPublicIPAddress(req, callback) {
+    const options = {
+        hostname: 'api.ipify.org',
+        port: 80,
+        path: '/',
+        method: 'GET'
+    };
+
+    const request = http.request(options, (response) => {
+        let data = '';
+
+        // A chunk of data has been received.
+        response.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received.
+        response.on('end', () => {
+            callback(null, data);
+        });
+    });
+
+    request.on('error', (error) => {
+        callback(error, null);
+    });
+
+    request.end();
+}
+
 const fetchapi = async (req, res, next) => {
     const apiKey = req.header("api-key")
     const secKeyH = req.header("seckey")
@@ -32,10 +62,17 @@ const fetchapi = async (req, res, next) => {
     try {
         // // const clientIp = await requestIp.getClientIp(req);
         // var ip_info = get_ip(req);
-        
+
         // console.log(ip_info);
 
-        ipify.ipv4().then(ipv4 => console.log(" Requrster ip is ",ipv4)).catch(err => console.log(err));
+        // ipify.ipv4().then(ipv4 => console.log(" Requrster ip is ",ipv4)).catch(err => console.log(err));
+        const requesterIP = req.ip || req.connection.remoteAddress;
+        console.log('Requester IP:', requesterIP);
+        
+
+        const requesterIP2 = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        console.log('Requester IP2:', requesterIP2);
+
         var myKey = await ApiKeys.findOne({ where: { key: apiKey } })
         if (myKey === null) {
             return res.status(401).send({ success: false, message: "Invalid API key entered" })
