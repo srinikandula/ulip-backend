@@ -5,7 +5,6 @@ const db = require("./Models")
 const http = require("http");
 const { Server } = require("socket.io");
 
-
 app.use(cors())
 app.use(express.json())
 

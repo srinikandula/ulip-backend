@@ -1,6 +1,7 @@
 const { ApiKeys } = require("../Models")
 const { ApiLogs } = require("../Models")
-
+// const requestIp = require('request-ip');
+// var get_ip = require('ipware')().get_ip;
 // const router = express.Router()
 
 
@@ -25,10 +26,15 @@ const ulipUiError = async (urlArray, mybody, respBody, appliName, myKey, req) =>
 const fetchapi = async (req, res, next) => {
     const apiKey = req.header("api-key")
     const secKeyH = req.header("seckey")
-    
-    
+
+
     try {
-        console.log("fetch start")
+        // // const clientIp = await requestIp.getClientIp(req);
+        // var ip_info = get_ip(req);
+        
+        // console.log(ip_info);
+
+        console.log("Requester ip is ",req.ip)
         var myKey = await ApiKeys.findOne({ where: { key: apiKey } })
         if (myKey === null) {
             return res.status(401).send({ success: false, message: "Invalid API key entered" })
@@ -64,7 +70,7 @@ const fetchapi = async (req, res, next) => {
         let mySecKey = await myKey.secKey
         console.log("a3")
         if (mySecKey != secKeyH) {
-            
+
             const urlArray = req.url.split("/")
             const mybody = req.body
             const appliName = myKey.applicationName
@@ -75,18 +81,18 @@ const fetchapi = async (req, res, next) => {
             }
             ulipUiError(urlArray, mybody, json, appliName, mkey, req)
             console.log("a4")
-            
+
             return res.status(401).send({ success: false, message: "Access Denied!" })
         }
         else if (myKey.username === user) {
             console.log("a5")
-            
+
             const login_body = {
                 username: process.env.ulip_username,
                 password: process.env.ulip_password
             }
-            
-            
+
+
             const response = await fetch(process.env.ulip_login_url, {
                 method: 'POST',
                 headers: {
@@ -97,7 +103,7 @@ const fetchapi = async (req, res, next) => {
             })
             const resp_login = await response.json()
             console.log("a6")
-            
+
             if (resp_login.code === "200") {
                 req.authorization = await resp_login.response.id
                 // next()

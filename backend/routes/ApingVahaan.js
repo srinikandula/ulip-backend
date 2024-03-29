@@ -422,7 +422,7 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
                 message:"No such data exist"
             }
             ulipUiError(urlArray, mybody, tempbodyOut, appliName, mKey, req)
-            return res.status(404).send({ code: "500", message:"No such data exist" })
+            return res.status(404).send({ code: "404", message:"No such data exist" })
         }
 
         const urlArray = req.url.split("/")
@@ -536,7 +536,7 @@ router.post("/ulipui/:ulipIs/:reqIs", fetchapiui, async (req, res) => {
                 message:"No such data exist"
             }
             ulipUiError(urlArray, mybody, tempbodyOut, appliName, mkey, req)
-            return res.status(404).send({ code: "500", message:"No such data exist" })
+            return res.status(404).send({ code: "404", message:"No such data exist" })
         }
         const urlArray = req.url.split("/")
         urlArray.splice(0, 0, '')

@@ -42,7 +42,7 @@ export class EditKeyComponent implements OnInit {
       'auth-token': this.tokeVal || '', // Ensure a default value if authtoken is null
       'Content-Type': 'application/json' // 'content-type' changed to 'Content-Type'
     });
-    this.http.get("http://api.ipify.org/?format=json").subscribe((res: any) => {
+    this.http.get("https://api.ipify.org/?format=json").subscribe((res: any) => {
       if (this.position === "Current") {
         this.myIp = res.ip
       }
