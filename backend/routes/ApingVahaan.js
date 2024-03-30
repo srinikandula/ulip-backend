@@ -366,7 +366,7 @@ router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
         console.log("a10")
 
         let json = await response.json()
-        console.log("reached at json ", json)
+        
         if (json.error === "true") {
             const urlArray = req.url.split("/")
             const mybody = req.body

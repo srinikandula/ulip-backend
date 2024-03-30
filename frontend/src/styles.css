@@ -210,3 +210,9 @@
 #input_table .p-datatable-thead {
     display: none;
 }
+
+.p-progressbar .p-progressbar-value {
+    
+    background: #D6223A;
+}
+

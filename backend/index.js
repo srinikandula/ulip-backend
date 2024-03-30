@@ -28,7 +28,6 @@ const driverRouter = require("./routes/Driver")
 const vehicleRouter = require("./routes/Vehicle")
 const userRouter = require("./routes/User")
 const apingRouter = require("./routes/ApingVahaan")
-// const apingSaarthiRouter = require("./routes/ApingSaarthi")
 
 app.use("/driver", driverRouter)
 app.use("/user", userRouter)

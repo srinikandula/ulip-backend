@@ -3,13 +3,18 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { KeypageService } from 'src/app/services/keypage/keypage.service';
-import { MenuItem } from 'primeng/api';
 import { ApiLogs } from 'src/app/ApiLogs';
 import * as XLSX from 'xlsx';
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { Observable, filter } from 'rxjs';
 import { WebsocketService } from 'src/app/services/websocket/websocket.service';
-import {apiService} from "../../services/api/apiservice";
+import { apiService } from "../../services/api/apiservice";
+
+import {FormGroup, FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {JsonPipe} from '@angular/common';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {provideNativeDateAdapter} from '@angular/material/core';
+
+
 
 @Component({
   selector: 'app-api-logs',
@@ -18,71 +23,87 @@ import {apiService} from "../../services/api/apiservice";
 })
 export class ApiLogsComponent implements OnInit {
 
+  range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
+
+
   date1: Date | undefined;
 
   date2: Date | undefined;
 
   date3: Date | undefined;
+picker: any;
 
-  
 
-  getApiLog(){
-    
+
+  getApiLog() {
+
 
   }
 
-visibleReq: boolean = false;
-visibleRes: boolean = false;
-// reqDataObjKey: any;
-reqDataObj: any;
-reqDataObjArr:{
-  dt:string,
-  vl:string
-}[]= [];
+  visibleReq: boolean = false;
+  visibleRes: boolean = false;
+  // reqDataObjKey: any;
+  reqDataObj: any;
+  reqDataObjArr: {
+    dt: string,
+    vl: string
+  }[] = [];
 
-resDataObj: any;
-resDataObjArr:{
-  dt:string,
-  vl:string
-}[]= [];
+  previousCalList: string[] = [
+    "Last 7 days",
+    "Last 14 days",
+    "Last 30 days",
+    "Last 3 Months",
+    "Last 12 Months",
+    "All time"
+  ]
+
+  resDataObj: any;
+  resDataObjArr: {
+    dt: string,
+    vl: string
+  }[] = [];
 
 
-myTempReqArr:any;
+  myTempReqArr: any;
 
-showDialogReqData(myreqData:string) {
-  this.reqDataObjArr = []
-  this.visibleReq = true
-  this.reqDataObj = JSON.parse(myreqData)
-  for (let i = 0; i < Object.keys(this.reqDataObj).length; i++) {
-    
-    let obj = {
-      dt: Object.keys(this.reqDataObj)[i],
-      vl: `${Object.values(this.reqDataObj)[i]}`,
+  showDialogReqData(myreqData: string) {
+    this.reqDataObjArr = []
+    this.visibleReq = true
+    this.reqDataObj = JSON.parse(myreqData)
+    for (let i = 0; i < Object.keys(this.reqDataObj).length; i++) {
+
+      let obj = {
+        dt: Object.keys(this.reqDataObj)[i],
+        vl: `${Object.values(this.reqDataObj)[i]}`,
+      }
+
+      this.reqDataObjArr.push(obj)
     }
+    console.log(this.reqDataObjArr)
 
-    this.reqDataObjArr.push(obj)
   }
-  console.log(this.reqDataObjArr)
-  
-}
 
 
-showDialogResData(myresData:string) {
-  this.resDataObjArr = []
-  this.visibleRes = true
-  this.resDataObj = JSON.parse(myresData)
-  for (let i = 0; i < Object.keys(this.resDataObj).length; i++) {
-    
-    let obj = {
-      dt: Object.keys(this.resDataObj)[i],
-      vl: `${Object.values(this.resDataObj)[i]}`,
+  showDialogResData(myresData: string) {
+    this.resDataObjArr = []
+    this.visibleRes = true
+    this.resDataObj = JSON.parse(myresData)
+    for (let i = 0; i < Object.keys(this.resDataObj).length; i++) {
+
+      let obj = {
+        dt: Object.keys(this.resDataObj)[i],
+        vl: `${Object.values(this.resDataObj)[i]}`,
+      }
+
+      this.resDataObjArr.push(obj)
     }
+    console.log(this.resDataObjArr)
 
-    this.resDataObjArr.push(obj)
   }
-  console.log(this.resDataObjArr)
-  
-}
   getColumns(data: any[]): string[] {
     const columns: string[] = [];
     data.forEach(row => {
@@ -106,7 +127,7 @@ showDialogResData(myresData:string) {
   }
 
   apiLogs: ApiLogs[] = [];
-  apiLogsTemp:ApiLogs[] = [];
+  apiLogsTemp: ApiLogs[] = [];
   tokeVal: string = `${localStorage.getItem("authtoken")}`;
   filterSearchvalue: string = "";
   apiMenuFilter: Boolean = false
@@ -115,7 +136,7 @@ showDialogResData(myresData:string) {
   }
 
   constructor(private http: HttpClient, private router: Router, public keypage: KeypageService, private messageService: MessageService, public websocketservice: WebsocketService,
-              private apiSrivice: apiService) {
+    private apiSrivice: apiService) {
 
 
     const headers = new HttpHeaders({
@@ -151,7 +172,7 @@ showDialogResData(myresData:string) {
     { name: 'Application Name', key: 'R' }
   ];
 
-  convertDate(str: string){
+  convertDate(str: string) {
 
     const t = new Date(Number(str))
     return t
@@ -165,26 +186,26 @@ showDialogResData(myresData:string) {
     //   console.log(data)
     // })
 
-    
+
 
   }
 
-  api_filter_function_a(obj: ApiLogs){
+  api_filter_function_a(obj: ApiLogs) {
     let tempstr = obj.ulip.toLowerCase()
     return tempstr.includes(this.filterSearchvalue.toLowerCase())
   }
-  api_filter_function_r(obj: ApiLogs){
+  api_filter_function_r(obj: ApiLogs) {
     let tempstr = obj.applicationName.toLowerCase()
     return tempstr.includes(this.filterSearchvalue.toLowerCase())
   }
-  api_filter_function_m(obj: ApiLogs){
+  api_filter_function_m(obj: ApiLogs) {
     const resDataJson = JSON.parse(obj.resData)
-    return resDataJson.error === "true"?false:true
+    return resDataJson.error === "true" ? false : true
   }
-  funcDateSort(a: ApiLogs){
-    
+  funcDateSort(a: ApiLogs) {
+
     let t1 = Number(a.time)
-    if(t1<=Number(this.date2?.getTime()) && t1>=Number(this.date1?.getTime())){
+    if (t1 <= Number(this.date2?.getTime()) && t1 >= Number(this.date1?.getTime())) {
       return true;
     }
     // return t1.getTime()
@@ -192,67 +213,67 @@ showDialogResData(myresData:string) {
 
   }
 
-  
-  
-  changeFilterChecks(){
+
+
+  changeFilterChecks() {
     console.log("dates are ", this.date1?.getTime(), " ", this.date2)
     let cateMapFilter = new Map();
 
-    for(let i = 0; i<this.selectedCategories.length; ++i){
-      if(this.selectedCategories[i].key === 'A'){
+    for (let i = 0; i < this.selectedCategories.length; ++i) {
+      if (this.selectedCategories[i].key === 'A') {
         // this.apiLogsTemp = this.apiLogs.filter(this.api_filter_function_a.bind(this));
         // break;
         cateMapFilter.set("A", true)
       }
-      if(this.selectedCategories[i].key === 'M'){
+      if (this.selectedCategories[i].key === 'M') {
         // this.apiLogsTemp = this.apiLogs.filter(this.api_filter_function_a.bind(this));
         // break;
         cateMapFilter.set("M", true)
       }
-      if(this.selectedCategories[i].key === 'P'){
+      if (this.selectedCategories[i].key === 'P') {
         // this.apiLogsTemp = this.apiLogs.filter(this.api_filter_function_a.bind(this));
         // break;
         cateMapFilter.set("P", true)
       }
-      if(this.selectedCategories[i].key === 'R'){
+      if (this.selectedCategories[i].key === 'R') {
         // this.apiLogsTemp = this.apiLogs.filter(this.api_filter_function_a.bind(this));
         // break;
         cateMapFilter.set("R", true)
       }
 
-      
+
     }
 
-    if(cateMapFilter.has("A") && !cateMapFilter.has("R")){
+    if (cateMapFilter.has("A") && !cateMapFilter.has("R")) {
       this.apiLogsTemp = this.apiLogs.filter(this.api_filter_function_a.bind(this));
     }
-    else if(!cateMapFilter.has("A") && cateMapFilter.has("R")){
+    else if (!cateMapFilter.has("A") && cateMapFilter.has("R")) {
       // this.apiLogsTemp = this.apiLogsTemp.concat(this.apiLogs.filter(this.api_filter_function_r.bind(this)))
       this.apiLogsTemp = this.apiLogs.filter(this.api_filter_function_r.bind(this));
-       
+
 
     }
-    else if(cateMapFilter.has("A") && cateMapFilter.has("R")){
+    else if (cateMapFilter.has("A") && cateMapFilter.has("R")) {
       this.apiLogsTemp = this.apiLogs.filter(this.api_filter_function_a.bind(this));
       this.apiLogsTemp = this.apiLogsTemp.concat(this.apiLogs.filter(this.api_filter_function_r.bind(this)))
     }
-    else if(!cateMapFilter.has("A") && !cateMapFilter.has("R")){
-      this.apiLogsTemp  = this.apiLogs
+    else if (!cateMapFilter.has("A") && !cateMapFilter.has("R")) {
+      this.apiLogsTemp = this.apiLogs
     }
-    
 
-    
+
+
     this.apiLogsTemp = this.apiLogsTemp.filter((value, index, self) => {
       return self.indexOf(value) === index;
     });
 
-    if(cateMapFilter.has("M")){
+    if (cateMapFilter.has("M")) {
       this.apiLogsTemp = this.apiLogsTemp.filter(this.api_filter_function_m.bind(this));
     }
-    if(cateMapFilter.has("P")){
+    if (cateMapFilter.has("P")) {
       this.apiLogsTemp = this.apiLogsTemp.filter(this.funcDateSort.bind(this));
     }
 
-    
+
   }
 }

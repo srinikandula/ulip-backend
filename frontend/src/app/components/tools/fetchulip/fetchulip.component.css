@@ -72,7 +72,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 0px;
+    gap: 12px;
     
 }
 
@@ -104,7 +104,7 @@ th {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 0px;
+    gap: 12px;
 }
 #output_table {
     width: 100%;
@@ -152,4 +152,28 @@ th {
     -webkit-box-shadow: 0px 0px 113px 24px rgba(255,0,0,0.6);
     -moz-box-shadow: 0px 0px 113px 24px rgba(255, 0, 0, 0.6);
     box-shadow: 0px 0px 95px -3px rgba(255,0,0,0.6);
+}
+
+input[type="date"] {
+    /* border: 5px solid green; */
+    width: 100%;
+    height: 40px;
+    border-radius: 6px;
+    border: 1px solid #D1D5DB;
+    color: #6D5763;
+    outline: none;
+    transition: border 0.08s, outline 0.08s;
+
+}
+
+input[type="date"]:hover {
+    border-color: #3B82F6;
+}
+
+input[type="date"]:focus {
+    outline: 3px solid #BFDBFE;
+}
+
+input {
+    width: 100%;
 }

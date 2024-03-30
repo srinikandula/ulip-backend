@@ -25,7 +25,6 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
-// import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { WebsocketService } from './services/websocket/websocket.service';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { EditKeyComponent } from './components/edit-key/edit-key.component';
@@ -41,6 +40,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { ChartModule } from 'primeng/chart';
 import { TreeTableModule } from 'primeng/treetable';
 import { SkeletonModule } from 'primeng/skeleton';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 // const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 //   "bgsColor": "red",
@@ -118,6 +118,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     ChartModule,
     TreeTableModule,
     SkeletonModule,
+    ProgressBarModule,
 
   ],
   providers: [KeypageService, MessageService, ToastService, WebsocketService, ConfirmationService],

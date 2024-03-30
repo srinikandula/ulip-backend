@@ -1,4 +1,15 @@
 <div class="card">
+    <div class="card_container">
+    <div class="showAllCountsByKey">
+        <div class="showCount1Key">
+            <p>Successful Requests</p>
+            <h2>{{this.totalSucReq}}</h2>
+        </div>
+        <div class="showCount2Key">
+            <p>Total Requests</p>
+            <h2>{{this.totalReq}}</h2>
+        </div>
+    </div></div>
     <p-tabView>
         <p-tabPanel header="Usage by Application Name">
             <div class="usageByKeyDiv">
@@ -31,16 +42,7 @@
                     <p-chart type="line" [data]="dataLineAppli" [options]="optionsLineAppli"></p-chart>
                 </div>
 
-                <div class="showAllCountsByKey">
-                    <div class="showCount1Key">
-                        <p>Successful Requests</p>
-                        <h2>{{this.totalSucReq}}</h2>
-                    </div>
-                    <div class="showCount2Key">
-                        <p>Total Requests</p>
-                        <h2>{{this.totalReq}}</h2>
-                    </div>
-                </div>
+                
             </div>
         </p-tabPanel>
         <p-tabPanel (click)="this.panelViewNum = 2" header="Infographics">

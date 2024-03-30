@@ -1,3 +1,4 @@
+
 .grey_font {
     color: #97999B;
     position: relative;
@@ -36,7 +37,6 @@
 #mahindra_logo {
     width: 70%;
     margin: 10%;
-    /* visibility: hidden; */
 }
 
 
@@ -47,9 +47,11 @@
     font-weight: bold;
 }
 
-/* #left_container_menu {
-    background-color: green;
-} */
+#left_container_menu {
+    /* background-color: green; */
+    height: 100%;
+    overflow: auto;
+}
 
 .menu_items {
     padding: 7%;
@@ -62,13 +64,38 @@
     border-left: 7px solid black;
     border-radius: 4px;
     border-color: transparent;
+    color: #696969;
 }
 
-/* #branding {
+.menu_items span{
+    position: absolute;
+    margin-left: 20%;
+}
+
+#bottom_text_div {
     width: 100%;
     height: 10%;
-    background-color: green;
-} */
+    /* background-color: red; */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#bottom_text_div #first{
+    color: #393B3F;
+    font-size: 12px;
+    font-size: 0.75em;
+    font-weight: bold;
+}
+#bottom_text_div #second{
+    color: #393B3F;
+    font-size: 0.7em;
+    font-style: italic;
+    font-size: normal;
+
+}
 
 
 #right_container_div {
@@ -104,7 +131,7 @@
     border: none;
     text-align: left;
     cursor: pointer;
-    width: 20%;
+    /* width: 20%; */
 }
 
 #person_id_profile {
@@ -156,6 +183,7 @@
 
 
 
+
 @media only screen and (max-width: 600px) {
 
     #mahindra_logo {
@@ -164,6 +192,10 @@
     
     .grey_font {
         font-size: 10px;
+    }
+    #Icon_awesome-key {
+        height: 10px;
+        width: 10px;
     }
     #toggle_menu {
         font-size: 10px;
@@ -178,6 +210,12 @@
     #profile_btn_container {
         height: 24px;
         width: 24px;
+    }
+    #bottom_text_div #first {
+        font-size: 0.5em;
+    }
+    #bottom_text_div #second {
+        font-size: 0.4em;
     }
 }
 

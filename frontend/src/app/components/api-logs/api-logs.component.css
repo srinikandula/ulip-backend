@@ -1,3 +1,4 @@
+
 body, html {
     height: 100vh;
     margin: 0;
@@ -31,6 +32,12 @@ body, html {
     font-size: 25px;
     font-weight: bold;
 }
+
+
+p-calendar {
+    /* border: 2px solid black; */
+}
+
 
 
 #content_table {
@@ -101,6 +108,7 @@ tbody {
 }
 
 
+
 .keyVal:hover{
     text-decoration:underline;
     cursor: pointer;
@@ -138,6 +146,10 @@ tbody {
         display: flex;
         transform: translateY(0px);
     }
+    .timePartOnLogs{
+        opacity: 1;
+        transform: translateY(-3px);
+    } 
 }
 .secKeyCreate button{
     padding: 5%;
@@ -287,6 +299,44 @@ tbody {
 #filterByH{
     padding: 5%;
 }
+
+p-table {
+    /* border: 1px solid black; */
+    font-family: "georama";
+    font-stretch: semi-expanded;
+}
+
+p-table th {
+    background-color: #C2CBD9;
+    text-align: left;
+    /* border: 1px solid black; */
+}
+p-table td {
+    text-align: left;
+    /* border: 1px solid black; */
+}
+
+p-calendar {
+    /* width: 210px; */
+}
+input::placeholder {
+    /* font-family: "georama"; */
+}
+
+p-calendar {
+    .p-datepicker-trigger {
+        background-color: #D6223A;
+    }
+    /* .p-icon {
+        display: none;
+        background-image: url("C:/Users/hp/Downloads/calendar.svg");
+        background-image: none;
+    }
+    .p-icon path {
+        fill: black;
+    } */
+}
+
 #downloadLogs{
     position: fixed;
     width: 11%;
@@ -343,13 +393,6 @@ tbody {
     transform: translateY(5px);
     transition: all ease-out 0.1s;
 }
-.generatedApiPart:hover{
-    .timePartOnLogs{
-        opacity: 1;
-        transform: translateY(-3px);
-    }    
-}
-
 
 @media only screen and (max-width: 600px) {
     .grey_font {
@@ -373,7 +416,7 @@ tbody {
 }
 .reqBtnApiLogs{
     display: flex;
-    justify-content: center;
+    justify-content: start;
 }
 
 .calenderDiv{
@@ -390,4 +433,22 @@ tbody {
 #table_container{
     height: 72svh;
     overflow-y: auto;
+}
+.ulOfCalender{
+        padding: 0;
+        justify-content: left;
+        width: 100%;
+        gap: 30px;
+        cursor: pointer;
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
+}
+.ulOfCalender li{
+    padding: 5%;
+    list-style: none;
+    width: 147px;
 }

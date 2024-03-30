@@ -1,3 +1,4 @@
+
 <p-dialog [(visible)]="visibleReq" [modal]="true" [style]="{ width: '50vw',  }" [draggable]="false" [resizable]="false">
     <p class="m-0" [style]="{padding:'3%'}">
         <p-table [value]="reqDataObjArr" [tableStyle]="{ 'min-width': '50rem' }">
@@ -50,26 +51,43 @@
     <div class="card flex flex-wrap justify-content-center gap-3 searchLogs">
         <div class="card flex flex-wrap gap-3 p-fluid calenderDiv">
             <div class="flex-auto calEach">
-                <p-calendar (click)="changeFilterChecks()" [(ngModel)]="date1" [showIcon]="true" placeholder="From"
+                <p-calendar (click)="changeFilterChecks()" [(ngModel)]="date1" [showIcon]="true" placeholder="From" dateFormat="dd/mm/yy"
                     inputId="buttondisplay"></p-calendar>
+                    <!-- <p-calendar [(ngModel)]="date1" selectionMode="range" [showIcon]="true" [readonlyInput]="true" placeholder="Enter Date Range"></p-calendar> -->
             </div>
 
             <div class="flex-auto calEach">
-                <p-calendar (click)="changeFilterChecks()" [(ngModel)]="date2" [showIcon]="true" placeholder="To"
+                <p-calendar (click)="changeFilterChecks()" [(ngModel)]="date2" [showIcon]="true" placeholder="To" dateFormat="dd/mm/yy"
                     inputId="buttondisplay"></p-calendar>
             </div>
         </div>
         <span class="p-input-icon-left searchLogsSpan">
             <input placeholder="Search in table" type="text" pInputText [(ngModel)]="filterSearchvalue"
                 name="filterSearchvalue" />
-            <button (click)="changeFilterChecks()"><i class="fa-solid fa-magnifying-glass "></i></button>
+            <button (click)="changeFilterChecks()">
+                <!-- <i class="fa-solid fa-magnifying-glass "></i> -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 19 19">
+                    <g id="search-normal" transform="translate(-428 -188)">
+                      <path id="Vector" d="M15.042,7.521A7.521,7.521,0,1,1,7.521,0,7.521,7.521,0,0,1,15.042,7.521Z" transform="translate(429.583 189.583)" fill="none" stroke="#292d32" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+                      <path id="Vector-2" data-name="Vector" d="M1.583,1.583,0,0" transform="translate(443.833 203.833)" fill="none" stroke="#292d32" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+                      <path id="Vector-3" data-name="Vector" d="M0,0H19V19H0Z" transform="translate(428 188)" fill="none" opacity="0"/>
+                    </g>
+                </svg>
+            </button>
         </span>
 
         <div class="card flex justify-content-center filterDiv">
             <div class="filterBtnDiv">
-                <button (click)="handleOnToggleApiMenu()">
-                    <i *ngIf="!apiMenuFilter" class="fa-solid fa-filter"></i>
-                    <i *ngIf="apiMenuFilter" class="fa-solid fa-xmark"></i>
+                <button (click)="handleOnToggleApiMenu()" style="height: 40px; width: 40px;">
+                    <!-- <i *ngIf="!apiMenuFilter" class="fa-solid fa-filter"></i>
+                    <i *ngIf="apiMenuFilter" class="fa-solid fa-xmark"></i> -->
+                    <svg id="filter" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 26 26">
+                        <g id="filter-2" data-name="filter">
+                          <path id="Vector" d="M13.5,2.2V4.624a4.319,4.319,0,0,1-1,2.532L8.2,11.341a3.762,3.762,0,0,0-1,2.532v4.734a2.531,2.531,0,0,1-.9,1.872l-1.4.991A2.038,2.038,0,0,1,1.8,19.6V13.763A4.516,4.516,0,0,0,1,11.451L0,10.295,5.82,0H11.5A2.115,2.115,0,0,1,13.5,2.2Z" transform="translate(9.1 2.1)" fill="#fff"/>
+                          <path id="Vector-2" data-name="Vector" d="M7.9,0,2.72,8.31.9,6.4a3.315,3.315,0,0,1-.9-2V2.1A2.03,2.03,0,0,1,2,0Z" transform="translate(3.4 2.1)" fill="#fff" opacity="0.5"/>
+                          <path id="Vector-3" data-name="Vector" d="M0,0H26V26H0Z" fill="none" opacity="0"/>
+                        </g>
+                    </svg>
                 </button>
             </div>
 
@@ -94,7 +112,7 @@
 <div id="table_container">
 
     <p-table [value]="apiLogsTemp" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
-        [tableStyle]="{ 'min-width': '50rem' }"
+        [tableStyle]="{ 'min-width': '50rem', fontFamily: 'georama', fontStretch: 'semi-expanded' }"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [rowsPerPageOptions]="[5, 10, 20]">
         <ng-template pTemplate="header">
@@ -112,29 +130,30 @@
                 <td>{{apiLogsTemp.applicationName}}</td>
                 <td>{{apiLogsTemp.ulip}}</td>
                 <td>
-                    <div class="card flex justify-content-center reqBtnApiLogs">
-                        <p-button
-                            [style]="{padding:'4%', display:'flex', gap:'10px', fontSize:'0.6em', backgroundColor:'#D6223A', border:'none', borderRadius:'5px'}"
-                            (click)="showDialogReqData(apiLogsTemp.reqData)" icon="pi pi-external-link"
-                            label="Request data">
+                    <div class="card flex justify-content-center reqBtnApiLogs" style="display: flex; justify-content: start;">
+                        <p-button [outlined]="true"
+                        [style]="{padding:'4%', width:'120px', display:'flex', gap:'10px', fontSize:'0.8em', border:'none', color:'#D6223A', borderRadius:'5px'}"
+                        class="reqBtnApiLogs" (click)="showDialogReqData(apiLogsTemp.reqData)"
+                        icon="pi pi-external-link" label="Request data">
                         </p-button>
 
                     </div>
                 </td>
                 <td class="generatedApiPart">
-                    <div class="timePartOnLogs">{{this.convertDate(apiLogsTemp.time).getHours()}}:
+                    <div class="timePartOnLogs">
+                        {{this.convertDate(apiLogsTemp.time).getHours() % 12}}:
                         {{this.convertDate(apiLogsTemp.time).getMinutes()}}:
-                        {{this.convertDate(apiLogsTemp.time).getSeconds()}}</div>
-                    <div class="datePartOnLogs">{{this.convertDate(apiLogsTemp.time).toString().slice(0,15)}}</div>
+                        {{this.convertDate(apiLogsTemp.time).getSeconds()}}
+                        {{ this.convertDate(apiLogsTemp.time).getHours() % 12 === 0 ? 'AM' : 'PM' }}
+                    </div>
+                    <div class="datePartOnLogs" style="height: 100%; width: 100%;">{{this.convertDate(apiLogsTemp.time).toString().slice(0,15)}}</div>
                 </td>
-                <td class="secKeyCreate">
+                <td class="secKeyCreate" >
                     <p-button [outlined]="true"
-                        [style]="{padding:'4%', display:'flex', gap:'10px', fontSize:'0.6em', border:'none', color:'#D6223A', borderRadius:'5px'}"
+                        [style]="{padding:'4%', display:'flex', gap:'10px', fontSize:'0.8em', border:'none', color:'#D6223A', borderRadius:'5px'}"
                         class="reqBtnApiLogs" (click)="showDialogReqData(apiLogsTemp.resData)"
                         icon="pi pi-external-link" label="Response">
                     </p-button>
-
-
                 </td>
             </tr>
             <!-- </tbody> -->
