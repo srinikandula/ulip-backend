@@ -7,8 +7,11 @@
 
 * {
     box-sizing: border-box;
-    margin: 0;
+    /* margin: 0; */
     /* padding: 0; */
+}
+body, html{
+    height: 100%;
 }
 
 .p-toast-message {
@@ -216,3 +219,15 @@
     background: #D6223A;
 }
 
+.calEach .p-ripple{
+    border-radius: 0;
+}
+
+.calEach .p-datepicker table td.p-datepicker-today > span{
+    background-color: transparent;
+}
+
+.calEach .p-datepicker table td > span.p-highlight {
+    color: #fff;
+    background: #D6223A;
+}

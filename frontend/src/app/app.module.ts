@@ -42,6 +42,7 @@ import { TreeTableModule } from 'primeng/treetable';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ProgressBarModule } from 'primeng/progressbar';
 
+
 // const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 //   "bgsColor": "red",
 //   "bgsOpacity": 0.5,

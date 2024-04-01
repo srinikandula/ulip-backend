@@ -9,10 +9,7 @@ import { WebsocketService } from 'src/app/services/websocket/websocket.service';
 import { apiService } from "../../services/api/apiservice";
 
 import {FormGroup, FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {JsonPipe} from '@angular/common';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {provideNativeDateAdapter} from '@angular/material/core';
+
 
 
 
@@ -22,13 +19,6 @@ import {provideNativeDateAdapter} from '@angular/material/core';
   styleUrls: ['./api-logs.component.css']
 })
 export class ApiLogsComponent implements OnInit {
-
-  range = new FormGroup({
-    start: new FormControl<Date | null>(null),
-    end: new FormControl<Date | null>(null),
-  });
-
-
   date1: Date | undefined;
 
   date2: Date | undefined;
