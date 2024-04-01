@@ -41,7 +41,7 @@ import { ChartModule } from 'primeng/chart';
 import { TreeTableModule } from 'primeng/treetable';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ProgressBarModule } from 'primeng/progressbar';
-
+import { SliderModule } from 'primeng/slider';
 
 // const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 //   "bgsColor": "red",
@@ -120,7 +120,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
     TreeTableModule,
     SkeletonModule,
     ProgressBarModule,
-
+    SliderModule
   ],
   providers: [KeypageService, MessageService, ToastService, WebsocketService, ConfirmationService],
   bootstrap: [AppComponent]

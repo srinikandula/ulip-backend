@@ -18,6 +18,8 @@ interface City {
   styleUrls: ['./infographics.component.css']
 })
 export class InfographicsComponent implements OnInit {
+  sidebarVisible2: boolean = false;
+  valueTimeline!: number;
   totalReq:Number = 0
   totalSucReq:Number = 0
   myAllLogs: ApiLogs[] = []
@@ -195,7 +197,7 @@ export class InfographicsComponent implements OnInit {
         datasets: [
 
           {
-            label: 'Third Dataset',
+            label: 'Timeline',
             data: myReqArr,
             fill: true,
             borderColor: documentStyle.getPropertyValue('--orange-500'),
@@ -498,7 +500,7 @@ export class InfographicsComponent implements OnInit {
         datasets: [
 
           {
-            label: 'Third Dataset',
+            label: 'Timeline',
             data: myReqArr,
             fill: true,
             borderColor: documentStyle.getPropertyValue('--orange-500'),

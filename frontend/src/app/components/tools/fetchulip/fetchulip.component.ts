@@ -237,7 +237,7 @@ export class FetchulipComponent implements OnInit {
             { dt: 'Insurace Policy Validity Upto', vl: mydata.rc_insurance_upto, valid: rcInsuDate > todayDateUnix },
             { dt: 'Pollution Certificate Number', vl: mydata.rc_pucc_no, valid: null },
             { dt: 'Pollution Validity Upto', vl: mydata.rc_pucc_upto, valid: rcPuccDate > todayDateUnix },
-            { dt: 'Fitness Certificate Validity Upto', vl: mydata.rc_fit_upto, valid: null },
+            { dt: 'Fitness Certificate Validity Upto', vl: mydata.rc_fit_upto, valid: rcFitDate>todayDateUnix },
             { dt: 'Road Tax Validity Upto', vl: mydata.rc_tax_upto, valid: rcTaxDate > todayDateUnix },
           ]
           this.outputObjCompleteVS.push(outputObjCompleteVSTemp)

@@ -12,6 +12,14 @@
     </div></div>
     <p-tabView>
         <p-tabPanel header="Usage by Application Name">
+            <p-sidebar [(visible)]="sidebarVisible2" position="right">
+                <div class="rSideBar">
+                    <h2>Timeline configuration</h2>
+                    <div class="card flex justify-content-center psliderInfoDiv">
+                        <p-slider [(ngModel)]="valueTimeline" [step]="20"></p-slider>
+                    </div>
+                </div>
+            </p-sidebar>
             <div class="usageByKeyDiv">
                 <div class="UpperFiltersusageByKey">
                     <div class="card flex justify-content-center">
@@ -28,6 +36,9 @@
                     <div *ngIf="selectedDropDown2p1?.code === '1'" class="card flex justify-content-center">
                         <p-dropdown (onChange)="handleOnApiYearChangep1()" [options]="dropDown3p1"
                             [(ngModel)]="selectedDropDown3p1" optionLabel="name" placeholder="Select Year"></p-dropdown>
+                    </div>
+                    <div *ngIf="selectedDropDown2p1?.code === '1'" class="card flex justify-content-center">
+                        <p-button (click)="sidebarVisible2 = true" [style]="{backgroundColor:'#D6223A', color:'white', border:'none', display:'flex', gap:'5px'}"><i class="fa-solid fa-gears"></i> <span>Configure</span></p-button>
                     </div>
                 </div>
 
