@@ -20,6 +20,9 @@ interface City {
 export class InfographicsComponent implements OnInit {
   sidebarVisible2: boolean = false;
   valueTimeline!: number;
+
+  timeLineTimes:string[] = ['Last 7 Days', 'Last 30 Days', 'Last 6 Months', "Last 12 Months", 'Last 2 Years']
+
   totalReq:Number = 0
   totalSucReq:Number = 0
   myAllLogs: ApiLogs[] = []

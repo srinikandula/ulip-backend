@@ -8,5 +8,5 @@ export class ApiKeys{
     "email":string
     "ip":string
     "active":boolean
-
+    "ulipAccess":string
 }

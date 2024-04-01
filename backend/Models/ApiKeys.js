@@ -38,6 +38,10 @@ module.exports = (Sequelize, DataTypes) => {
         active:{
             type:DataTypes.BOOLEAN,
             defaultValue:true
+        },
+        ulipAccess:{
+            type:DataTypes.STRING,
+            defaultValue:'0000000000000000000000000000000'
         }
         
         

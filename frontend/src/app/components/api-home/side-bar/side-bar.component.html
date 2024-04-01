@@ -118,6 +118,12 @@
                         placeholder="Custom IP Address">
                 </div>
             </div>
+            <p id="ip_config_title">ULIP Access</p>
+            <div class="allUlipAccessDiv">
+                <div class="card flex justify-content-center">
+                    <p-multiSelect (onChange)="handleOnUlipChange($event)" placeholder="Select ULIP APIs" [options]="ulipAccess" [(ngModel)]="this.selectedUlipAccess" optionLabel="name"></p-multiSelect>
+                </div>
+            </div>
 
         </div>
 

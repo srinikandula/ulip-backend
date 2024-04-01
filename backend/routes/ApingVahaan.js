@@ -345,6 +345,16 @@ router.delete("/deleltelogs", async (req, res) => {
 })
 
 
+router.delete("/dropkey", async (req, res) => {
+    try {
+        await ApiKeys.drop()
+        res.send("All deleted")
+    } catch (error) {
+        res.send("Deletion failed")
+    }
+})
+
+
 router.post("/ulip/v1.0.0/:ulipIs/:reqIs", fetchapi, async (req, res) => {
 
     try {

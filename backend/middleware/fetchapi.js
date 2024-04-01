@@ -49,17 +49,23 @@ function getPublicIPAddress(req, callback) {
     request.end();
 }
 
+const myUlipArray = ['VAHAN', 'SARATHI', 'FASTAG', 'FOIS', 'LDB', 'ICEGATE', 'EWAYBILL', 'ECHALLAN', 'DGFT', 'PCS', 'ACMES', 'KALE', 'AAICLAS', 'DIGILOCKER', 'FCI', 'GATISHAKTI']
+
 const fetchapi = async (req, res, next) => {
     const apiKey = req.header("api-key")
     const secKeyH = req.header("seckey")
 
 
     try {
-        
+
 
         const requesterIP2 = await req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
         var myKey = await ApiKeys.findOne({ where: { key: apiKey } })
+        req.usn = await myKey.username
+        const user = await myKey.username
+        req.applicationName = await myKey.applicationName
+        let mySecKey = await myKey.secKey
         if (myKey === null) {
             return res.status(401).send({ success: false, message: "Invalid API key entered" })
         }
@@ -79,11 +85,40 @@ const fetchapi = async (req, res, next) => {
             ulipUiError(urlArray, mybody, json, appliName, mkey, req)
             return res.status(403).send({ success: false, message: "Access Denied!" })
         }
+        // Ulip access
+        let indOfUlipAccess = -1
+        for (let i = 0; i < myUlipArray.length; ++i) {
+            if (myUlipArray[i] === req.params.ulipIs) {
+                indOfUlipAccess = i;
+                if (myKey.ulipAccess[i] === '0') {
+                    const urlArray = req.url.split("/")
+                    const mybody = req.body
+                    const appliName = myKey.applicationName
+                    const mkey = myKey.key
+                    const json = {
+                        code: "403",
+                        message: `${req.params.ulipIs} is not granted to the user`
+                    }
+                    ulipUiError(urlArray, mybody, json, appliName, mkey, req)
+                    return res.status(403).send({ success: false, message: "ULIP service is not authorized" })
+                }
+                break;
+            }
+        }
+        if (indOfUlipAccess === -1) {
+            const urlArray = req.url.split("/")
+            const mybody = req.body
+            const appliName = myKey.applicationName
+            const mkey = myKey.key
+            const json = {
+                code: "400",
+                message: `Invalid ULIP call`
+            }
+            ulipUiError(urlArray, mybody, json, appliName, mkey, req)
+            return res.status(400).send({ success: false, message: "Invalid ULIP call" })
+        }
         console.log("a2")
-        req.usn = await myKey.username
-        const user = await myKey.username
-        req.applicationName = await myKey.applicationName
-        let mySecKey = await myKey.secKey
+       
         console.log("a3")
         if (mySecKey != secKeyH) {
 
