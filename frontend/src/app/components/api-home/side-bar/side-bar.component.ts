@@ -100,6 +100,7 @@ handleOnUlipChange(e:any) {
     this.keypage.createKeyBool = false
   }
   handleOnCreateKey() {
+    this.keypage.createKeyBool = false
     const apiKey = self.crypto.randomUUID();
     let mySelectedString: string = '0000000000000000000000000000000'
     console.log("my selected is ", this.selectedUlipAccessUnOf)
