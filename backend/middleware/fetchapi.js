@@ -20,34 +20,6 @@ const ulipUiError = async (urlArray, mybody, respBody, appliName, myKey, req) =>
 }
 
 
-function getPublicIPAddress(req, callback) {
-    const options = {
-        hostname: 'api.ipify.org',
-        port: 80,
-        path: '/',
-        method: 'GET'
-    };
-
-    const request = http.request(options, (response) => {
-        let data = '';
-
-        // A chunk of data has been received.
-        response.on('data', (chunk) => {
-            data += chunk;
-        });
-
-        // The whole response has been received.
-        response.on('end', () => {
-            callback(null, data);
-        });
-    });
-
-    request.on('error', (error) => {
-        callback(error, null);
-    });
-
-    request.end();
-}
 
 const myUlipArray = ['VAHAN', 'SARATHI', 'FASTAG', 'FOIS', 'LDB', 'ICEGATE', 'EWAYBILL', 'ECHALLAN', 'DGFT', 'PCS', 'ACMES', 'KALE', 'AAICLAS', 'DIGILOCKER', 'FCI', 'GATISHAKTI']
 
@@ -114,7 +86,7 @@ const fetchapi = async (req, res, next) => {
                 code: "400",
                 message: `Invalid ULIP call`
             }
-            ulipUiError(urlArray, mybody, json, appliName, mkey, req)
+            // ulipUiError(urlArray, mybody, json, appliName, mkey, req)
             return res.status(400).send({ success: false, message: "Invalid ULIP call" })
         }
         console.log("a2")

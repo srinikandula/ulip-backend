@@ -33,7 +33,8 @@ router.post("/sendmailcreatekey", [
             // Replace placeholders with provided parameters
             const renderedHtmlContent = htmlTemplate.replace('{apiKey}', req.body.apiKey)
                 .replace('{applicationName}', req.body.applicationName)
-                .replace('{ownerName}', req.body.ownerName);
+                .replace('{ownerName}', req.body.ownerName)
+                .replace('{seckey}', req.body.secretkey)
 
 
             var transporter = nodemailer.createTransport({
@@ -247,10 +248,9 @@ router.put("/toggle-api-key", fetchuser, [
     })
 
 router.put("/updatekey", fetchuser, [
-    body("passKey", "Empty API key passed").isLength({ min: 1 }),
+    body("apiKey", "Empty API key passed").isLength({ min: 1 }),
     body("applicationName", "Application Name must have some value").isLength({ min: 1 }),
     body("ownerName", "Owner Name must have some value").isLength({ min: 1 }),
-    body("email", "Must be a email").isEmail(),
     body("contactNo", "Contact Number should be greater than 8 characters").isLength({ min: 8 }),
 ]
 
@@ -260,12 +260,13 @@ router.put("/updatekey", fetchuser, [
             return res.status(400).json({ errors: errors.array() })
         }
         try {
-            const { passKey, applicationName, ownerName, apiKey, contactNo } = req.body
+            const { passKey, applicationName, ownerName, apiKey, contactNo, ulipAccess } = req.body
             const apiKeyIs = await ApiKeys.update({
                 applicationName: applicationName,
                 ownerName: ownerName,
                 contactNo: contactNo,
-                apiKey: apiKey
+                apiKey: apiKey,
+                ulipAccess:ulipAccess
             }, { returning: true, where: { key: passKey } })
             res.send({ success: true, apiKeyIs })
 

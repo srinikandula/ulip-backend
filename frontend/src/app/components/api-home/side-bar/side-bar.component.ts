@@ -6,6 +6,7 @@ import { ApiKeys } from 'src/app/ApiKeys';
 import { KeypageService } from 'src/app/services/keypage/keypage.service';
 import { MenuItem } from 'primeng/api';
 import { apiService } from "../../../services/api/apiservice";
+import { FormControl, FormGroup } from '@angular/forms';
 
 
 interface selectInterface {
@@ -18,30 +19,14 @@ interface selectInterface {
   styleUrls: ['./side-bar.component.css']
 })
 export class SideBarComponent implements OnInit {
-handleOnUlipChange(e:any) {
-  // console.log("changed")
-  this.selectedUlipAccessUnOf = e.value
-  // console.log(this.selectedUlipAccessUnOf)
-}
-  ulipAccess: selectInterface[] = [
-    { name: 'VAHAN', code: '01' },
-    { name: 'SARATHI', code: '02' },
-    { name: 'FASTAG', code: '03' },
-    { name: 'FOIS', code: '04' },
-    { name: 'LDB', code: '05' },
-    { name: 'ICEGATE', code: '06' },
-    { name: 'EWAYBILL', code: '07' },
-    { name: 'ECHALLAN', code: '08' },
-    { name: 'DGFT', code: '09' },
-    { name: 'PCS', code: '10' },
-    { name: 'ACMES', code: '11' },
-    { name: 'AACS', code: '12' },
-    { name: 'AAICLAS', code: '13' },
-    { name: 'DIGILOCKER', code: '14' },
-    { name: 'FCI', code: '15' },
-    { name: 'GATISHAKTI', code: '16' }
-
-  ];
+  formGroup!: FormGroup;
+  handleOnUlipChange(e: any) {
+    // console.log("changed")
+    this.selectedUlipAccessUnOf = e.value
+    console.log(this.selectedUlipAccessUnOf)
+    
+  }
+  ulipAccess!: selectInterface[];
 
   selectedUlipAccess!: selectInterface[];
   selectedUlipAccessUnOf: selectInterface[] = [];
@@ -75,14 +60,35 @@ handleOnUlipChange(e:any) {
       value: "Current"
     }
   ];
+
   tokeVal: string = `${localStorage.getItem("authtoken")}`;
 
 
 
   constructor(private http: HttpClient, private router: Router, public keypage: KeypageService, private messageService: MessageService, private apiSrivice: apiService) { }
   ngOnInit() {
+    this.ulipAccess = [
+      { name: 'VAHAN', code: '01' },
+      { name: 'SARATHI', code: '02' },
+      { name: 'FASTAG', code: '03' },
+      { name: 'FOIS', code: '04' },
+      { name: 'LDB', code: '05' },
+      { name: 'ICEGATE', code: '06' },
+      { name: 'EWAYBILL', code: '07' },
+      { name: 'ECHALLAN', code: '08' },
+      { name: 'DGFT', code: '09' },
+      { name: 'PCS', code: '10' },
+      { name: 'ACMES', code: '11' },
+      { name: 'AACS', code: '12' },
+      { name: 'AAICLAS', code: '13' },
+      { name: 'DIGILOCKER', code: '14' },
+      { name: 'FCI', code: '15' },
+      { name: 'GATISHAKTI', code: '16' }
+  
+    ]
+    
 
-    // this.ulipAccess = ;
+    // this.selectedUlipAccess = 
 
   }
   @Output() keyCardAdd: EventEmitter<ApiKeys> = new EventEmitter();
@@ -105,11 +111,11 @@ handleOnUlipChange(e:any) {
     let mySelectedString: string = '0000000000000000000000000000000'
     console.log("my selected is ", this.selectedUlipAccessUnOf)
     for (let i = 0; i < this.selectedUlipAccessUnOf.length; ++i) {
+
       let newStringArray = mySelectedString.split("");
-
-      newStringArray[Number(this.selectedUlipAccessUnOf[i].code)-1] = '1';
-
+      newStringArray[Number(this.selectedUlipAccessUnOf[i].code) - 1] = '1';
       mySelectedString = newStringArray.join("");
+
     }
     console.log("my selected string are: ", mySelectedString)
     const headers = new HttpHeaders({
@@ -128,7 +134,7 @@ handleOnUlipChange(e:any) {
         "applicationName": this.applicationName,
         "email": this.emailAddress,
         "ip": this.position === "0.0.0.0" ? "0.0.0.0" : `${this.myIp}`,
-        "ulipAccess":mySelectedString
+        "ulipAccess": mySelectedString
       }, { headers }).subscribe({
         next: data => {
           // console.log(data)
@@ -141,7 +147,7 @@ handleOnUlipChange(e:any) {
             email: this.emailAddress,
             ip: this.position === "0.0.0.0" ? "0.0.0.0" : `${this.myIp}`,
             secKey: data.keyIs.secKey,
-            ulipAccess:mySelectedString,
+            ulipAccess: mySelectedString,
             updatedAt: "",
             active: true
           }
@@ -154,7 +160,8 @@ handleOnUlipChange(e:any) {
             "apiKey": apiKey,
             "ownerName": this.ownerName,
             "applicationName": this.applicationName,
-            "email": this.emailAddress
+            "email": this.emailAddress,
+            "secretkey": data.keyIs.secKey
           }, { headers }).subscribe({
             next: data => {
 

@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService, ConfirmEventType } from 'primeng/api';
 import { ApiLogs } from 'src/app/ApiLogs';
 import { apiService } from "../../services/api/apiservice";
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+
 
 @Component({
   selector: 'app-edit-key',
@@ -11,8 +13,39 @@ import { apiService } from "../../services/api/apiservice";
   styleUrls: ['./edit-key.component.css']
 })
 export class EditKeyComponent implements OnInit {
+handleOnUlipWChange() {
+  let mytempSelect:string = "0000000000000000000000000000000"
+  
+  for (let i = 0; i < this.selectedItems.length; ++i) {
+    let newStringArray = mytempSelect.split("");
+    newStringArray[Number(this.selectedItems[i].item_id) - 1] = '1';
+    mytempSelect = newStringArray.join("");
+  }
+  this.mySelectedString = mytempSelect
+}
+  dropdownList: any = [];
+  selectedItems: any = [];
+  dropdownSettings = {};
+  mySelectedString: string = '0000000000000000000000000000000'
+  onItemSelect(item: any) {
+    console.log(item, this.selectedItems);
+  }
+  onSelectAll(items: any) {
+    console.log(items);
+  }
+
   editKeyLogs: ApiLogs[] = []
   ipSet: string = "";
+  handleFitUlipWlist(){
+    console.log(this.mySelectedString, " is my selected string ")
+    let myTempArr:any = []
+    for(let i = 0; i<this.mySelectedString.length; ++i){
+      if(this.mySelectedString[i] === '1'){
+        myTempArr.push(this.dropdownList[i])
+      }
+    }
+    this.selectedItems = myTempArr
+  }
   handleOnSaveKey() {
     const myParamsKey = this.route.snapshot.paramMap.get('apikey');
 
@@ -21,7 +54,7 @@ export class EditKeyComponent implements OnInit {
       'Content-Type': 'application/json' // 'content-type' changed to 'Content-Type'
     });
 
-    const body = { "passKey": myParamsKey, "applicationName": this.applicationName, "ownerName": this.ownerName, "apiKey": this.apikey, "contactNo": this.contactName };
+    const body = { "passKey": myParamsKey, "applicationName": this.applicationName, "ownerName": this.ownerName, "apiKey": this.apikey, "contactNo": this.contactName, "ulipAccess":this.mySelectedString };
 
 
     this.http.put<any>(this.apiSrivice.mainUrl + 'aping/updatekey', body, { headers }).subscribe({
@@ -139,13 +172,13 @@ export class EditKeyComponent implements OnInit {
           'auth-token': this.tokeVal || '', // Ensure a default value if authtoken is null
           'Content-Type': 'application/json' // 'content-type' changed to 'Content-Type'
         });
-        const body = { "apiKey": myParamsKey};
-        const options = { 
-          headers: headers, 
+        const body = { "apiKey": myParamsKey };
+        const options = {
+          headers: headers,
           body: { "apiKey": myParamsKey }
         };
         console.log("The link is ", this.apiSrivice.mainUrl + 'aping/deletemykey', body)
-        this.http.delete<any>(this.apiSrivice.mainUrl + 'aping/deletemykey', {body:body, headers: headers }).subscribe({
+        this.http.delete<any>(this.apiSrivice.mainUrl + 'aping/deletemykey', { body: body, headers: headers }).subscribe({
           next: data => {
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'API key deleted' });
             this.router.navigate(['home/createkey'])
@@ -156,7 +189,7 @@ export class EditKeyComponent implements OnInit {
           }
         })
 
-        
+
       },
       reject: () => {
         this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
@@ -237,13 +270,15 @@ export class EditKeyComponent implements OnInit {
 
     this.http.post<any>(this.apiSrivice.mainUrl + 'aping/fetchmykey', body, { headers }).subscribe({
       next: data => {
+        this.mySelectedString = data.mykey.ulipAccess
         this.applicationName = data.mykey.applicationName
         this.ownerName = data.mykey.ownerName
         this.apikey = data.mykey.key
         this.contactName = data.mykey.contactNo
         this.isEnabled = data.mykey.active
         this.ipSet = data.mykey.ip
-        console.log(data, "is my edit key")
+        this.handleFitUlipWlist()
+        console.log(data, "is my edit key", this.mySelectedString)
       },
       error: error => {
         console.error("There is an error", error)
@@ -284,6 +319,36 @@ export class EditKeyComponent implements OnInit {
         console.error("There is an error", error)
       }
     })
+    this.dropdownList = [
+      { item_id: "01", item_text: 'VAHAN' },
+      { item_id: "02", item_text: 'SARATHI' },
+      { item_id: "03", item_text: 'FASTAG' },
+      { item_id: "04", item_text: 'FOIS' },
+      { item_id: "05", item_text: 'LDB' },
+      { item_id: "06", item_text: 'ICEGATE' },
+      { item_id: '07', item_text: 'EWAYBILL' },
+      { item_id: "08", item_text: 'ECHALLAN' },
+      { item_id: "09", item_text: 'DGFT' },
+      { item_id: "10", item_text: 'PCS' },
+      { item_id: "11", item_text: 'ACMES' },
+      { item_id: "12", item_text: 'AACS' },
+      { item_id: "13", item_text: 'AAICLAS' },
+      { item_id: "14", item_text: 'DIGILOCKER' },
+      { item_id: "15", item_text: 'FCI' },
+      { item_id: "16", item_text: 'GATISHAKTI' },
+    ];
+    this.selectedItems = [
+      
+    ];
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
 
 
 

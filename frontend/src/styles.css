@@ -236,3 +236,18 @@ body, html{
     /* top: 50%; */
     top: -100%;
 }
+
+.multiselect-dropdown[_ngcontent-ng-c1411523848] .dropdown-btn[_ngcontent-ng-c1411523848] .selected-item-container[_ngcontent-ng-c1411523848] .selected-item[_ngcontent-ng-c1411523848] {
+    border: 1px solid #D6223A !important;
+    background: #D6223A !important;
+    
+}
+
+.multiselect-item-checkbox[_ngcontent-ng-c1411523848] input[type=checkbox][_ngcontent-ng-c1411523848]:checked+div:before {
+    background: #D6223A !important;
+    border: 2px solid #D6223A;
+}
+
+.multiselect-item-checkbox[_ngcontent-ng-c1411523848] input[type=checkbox]+div[_ngcontent-ng-c1411523848]:before {
+    border: 2px solid #D6223A !important;
+}

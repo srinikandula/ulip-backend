@@ -22,6 +22,7 @@
     "chart.js": "^4.4.2",
     "crockford-base32": "^2.0.0",
     "crypto-js": "^4.2.0",
+    "ng-multiselect-dropdown": "^1.0.0",
     "ngx-ui-loader": "^13.0.0",
     "primeflex": "^3.3.1",
     "primeicons": "^6.0.1",

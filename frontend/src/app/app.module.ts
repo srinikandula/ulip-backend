@@ -43,6 +43,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SliderModule } from 'primeng/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 
 // const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -123,7 +124,9 @@ import { MultiSelectModule } from 'primeng/multiselect';
     SkeletonModule,
     ProgressBarModule,
     SliderModule,
-    MultiSelectModule
+    MultiSelectModule,
+    NgMultiSelectDropDownModule.forRoot()
+
   ],
   providers: [KeypageService, MessageService, ToastService, WebsocketService, ConfirmationService],
   bootstrap: [AppComponent]

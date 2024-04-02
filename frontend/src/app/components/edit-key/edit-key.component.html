@@ -102,12 +102,27 @@
                                 disabled="{{!setEdit}}" [style]="{height:'4vh', padding:'3%'}" type="text" pInputText
                                 [(ngModel)]="contactName" /></td>
                     </tr>
+                    <tr>
+                        <td class="first"><b>Whitelisted ULIPs</b></td>
+                        <td class="second">
+                            <ng-multiselect-dropdown 
+                                [placeholder]="'No API Whitelisted'" 
+                                [settings]="dropdownSettings"
+                                [data]="dropdownList" 
+                                [(ngModel)]="selectedItems" 
+                                (onSelect)="onItemSelect($event)"
+                                (click)="handleOnUlipWChange()"
+                                (onSelectAll)="onSelectAll($event)">
+                            </ng-multiselect-dropdown>
+
+                        </td>
+                    </tr>
                     <tr *ngIf="isEnabled">
                         <td class="first"><b>Enabled</b></td>
                         <td class="second"><input disabled="true" [style]="{height:'4vh', padding:'3%'}" type="text"
                                 pInputText [(ngModel)]="isEnabled" /></td>
                     </tr>
-                    <tr >
+                    <tr>
                         <td class="first"><b>IP</b></td>
                         <td class="second"><input disabled="true" [style]="{height:'4vh', padding:'3%'}" type="text"
                                 pInputText [(ngModel)]="ipSet" /></td>
@@ -140,12 +155,13 @@
                     </table>
                 </div>
             </div>
-            
+
         </div>
-        
+
     </div>
     <div id="deleteBtnKey">
-        <p-button  (click)="confirmDelete($event)" [style]="{margin: 'auto',display:'flex', width:'70%',padding:'1%' }" label="Delete Key" severity="danger"></p-button>
+        <p-button (click)="confirmDelete($event)" [style]="{margin: 'auto',display:'flex', width:'70%',padding:'1%' }"
+            label="Delete Key" severity="danger"></p-button>
     </div>
 
 
