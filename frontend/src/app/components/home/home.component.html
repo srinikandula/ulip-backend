@@ -1,3 +1,4 @@
+
 <div id="big_container">
     <div id="left_container" (mouseover)="handleOnMouseOverSidebar()" (mouseout)="handleOnMouseOutSidebar()" [style.width]="!this.sidebarOpen?'6%':'17%'" [style.position]="this.sidebarHover?'absolute':'sticky'">
         <!-- <img id="mahindra_logo" src="https://companieslogo.com/img/orig/MAHLOG.NS_BIG-b9ce0293.png?t=1604232065"
@@ -21,6 +22,7 @@
                 [style.justifyContent]="sidebarOpen?'':'center'"
                 >
                 <!-- <i class="fa-solid fa-plus"></i>  -->
+                <div id="red_bar" [style.backgroundColor]="keypage.pageNav === 0 ? '#D3223A' : ''"></div>
                 <svg id="Icon_awesome-key" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
                     <path data-name="Icon awesome-key" d="M24,8.25a8.254,8.254,0,0,1-9.789,8.106l-1.126,1.266a1.125,1.125,0,0,1-.841.378H10.5v1.875A1.125,1.125,0,0,1,9.375,21H7.5v1.875A1.125,1.125,0,0,1,6.375,24H1.125A1.125,1.125,0,0,1,0,22.875V19.216a1.125,1.125,0,0,1,.329-.8l7.584-7.584A8.251,8.251,0,1,1,24,8.25ZM15.75,6A2.25,2.25,0,1,0,18,3.75,2.25,2.25,0,0,0,15.75,6Z" 
                     [style.fill]="this.keypage.pageNav === 0 ? '#D3223A' : '#696969'"/>
@@ -33,13 +35,16 @@
                 [style.color]="this.keypage.pageNav === 1 ? '#D3223A' : ''" (click)="navigateViewLogs()"
                 [style.justifyContent]="sidebarOpen?'':'center'"
                 >
-                <i class="fa-solid fa-clock-rotate-left"></i> <span [style.display]="sidebarOpen?'block':'none'">View Logs</span>
+                <div id="red_bar" [style.backgroundColor]="keypage.pageNav === 1 ? '#D3223A' : ''"></div>
+                <i class="fa-solid fa-clock-rotate-left"></i> 
+                <span [style.display]="sidebarOpen?'block':'none'">View Logs</span>
             </li>
             <li id="menu_view_logs" class="grey_font menu_items"
                 [style.borderLeftColor]="this.keypage.pageNav === 3 ? '#D6223A' : 'transparent'"
                 [style.color]="this.keypage.pageNav === 3 ? '#D3223A' : ''" (click)="navigateViewAnalytics()"
                 [style.justifyContent]="sidebarOpen?'':'center'"
                 >
+                <div id="red_bar" [style.backgroundColor]="keypage.pageNav === 3 ? '#D3223A' : ''"></div>
                 <i class="fa-solid fa-chart-line"></i> <span [style.display]="sidebarOpen?'block':'none'">Analytics</span>
             </li>
             <li id="menu_view_logs"  class="grey_font menu_items moreToolLeftBar"
@@ -48,6 +53,7 @@
                 [style.justifyContent]="sidebarOpen?'':'center'"
                 (click)="navigateFetchUlip()"
                 >
+                <div id="red_bar" [style.backgroundColor]="keypage.pageNav === 2 ? '#D3223A' : ''"></div>
                 <i class="fa-solid fa-gears"></i> <span [style.display]="sidebarOpen?'block':'none'">Tools</span>
                 <!-- <div  [style.display]="sidebarOpen?'block':'none'" id="rightAngleDisplayLeftBar"><i class="fa-solid fa-angle-right"></i></div> -->
                 <!-- <div class="hoverToolsDiv">

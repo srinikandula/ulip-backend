@@ -1,3 +1,5 @@
+
+
 body, html {
     height: 100vh;
     margin: 0;
@@ -94,12 +96,13 @@ td {
 	color: black;
     height: 9vh;
     
-    text-align: center;
+    text-align: start;
+    padding-left: 15px;
 }
 
 thead {
 	th {
-		background-color: #DDE2EA;
+		background-color: #c2cbd9;
 	}
 }
 
@@ -147,15 +150,25 @@ tbody {
     }
 }
 .secKeyCreate button{
-    padding: 5%;
-    border-radius: 40px;
-    width: 40px;
-    height: 40px;
+    /* padding: 5%;
     border: 1px solid #e4e4e4;
-    cursor: pointer;
     position: relative;
     background-color: transparent;
-    z-index: 2;
+    z-index: 2; */
+    margin-left: -20px;
+    background-color: transparent;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    cursor: pointer;
+    border: none;
+    
+}
+.secKeyCreate button:hover {
+    /* background-color: red; */
+    rect {
+        fill: #d6223a;
+    } 
 }
 
 .secKeyCreate{

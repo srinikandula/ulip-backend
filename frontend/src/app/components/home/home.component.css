@@ -1,4 +1,5 @@
 
+
 .grey_font {
     color: #97999B;
     position: relative;
@@ -61,10 +62,21 @@
     display: flex;
     gap: 10px;
     align-items: center;
-    border-left: 7px solid black;
+    /* border-left: 7px solid black; */
     border-radius: 4px;
     border-color: transparent;
     color: #696969;
+}
+
+#red_bar {
+    height: 100%;
+    width: 5px;
+    /* background-color: #D6223A; */
+    /* height: 20px; */
+    position: absolute;
+    left: 0px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .menu_items span{

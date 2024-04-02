@@ -1,3 +1,4 @@
+
 <app-side-bar (keyCardAdd)="addKeyCard($event)"></app-side-bar>
 <div class="allBlur" *ngIf="keypage.createKeyBool"></div>
 
@@ -26,12 +27,13 @@
                             <th>Contact Number</th>
                             <th>Passkey</th>
                             <th>Secret Key</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody *ngFor="let i of apiHome">                        
                         <tr (mouseenter)="handleOnMouseEnterRow(i.active)" (mouseout)="handleOnMouseOutRow()" class="myHomeRow" [style.backgroundColor]="i.active ? '#fff' : '#cecece'">
-                            <td><div [style.backgroundColor]="i.active ? '#218700' : '#595959'" class="borderColorDisableIdentifier"></div> {{i.applicationName}}</td>
+                            <!-- <td><div [style.backgroundColor]="i.active ? '#218700' : '#595959'" class="borderColorDisableIdentifier"></div> {{i.applicationName}}</td> -->
+                            <td>{{i.applicationName}}</td>
                             <td>{{i.ownerName}}</td>
                             <td>{{i.contactNo}}</td>
                             <td class="generatedApiPart" (mouseenter)="handleOnMouseEnterRow(i.active)" (click)="handleOnCopyClick(i.key, 'Passkey')">
@@ -48,8 +50,14 @@
                             </td>
                             <td class="secKeyCreate genSecKeyTd">
                                 <div class="timePartOnLogs genSecKeyBtn">Edit Key</div>
-                                <button (click)="handleOnEditKeyPressed(i.key)"><i
-                                        class="fa-solid fa-play"></i>
+                                <button (click)="handleOnEditKeyPressed(i.key)">
+                                    <!-- <i class="fa-solid fa-play"></i> -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
+                                        <g id="Group_17387" data-name="Group 17387" transform="translate(-2669 -504)">
+                                          <rect id="Rectangle_8040" data-name="Rectangle 8040" width="48" height="48" rx="7" transform="translate(2669 504)" fill="#707070"/>
+                                          <path id="Icon_material-edit" data-name="Icon material-edit" d="M4.5,21.434v4.457H8.957L22.1,12.747,17.644,8.29ZM25.547,9.3a1.183,1.183,0,0,0,0-1.676L22.766,4.844a1.183,1.183,0,0,0-1.676,0L18.915,7.019l4.457,4.457Z" transform="translate(2677.371 512.504)" fill="#fff"/>
+                                        </g>
+                                      </svg>
                                 </button>
                             </td>
                         </tr>
