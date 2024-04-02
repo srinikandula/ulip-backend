@@ -66,11 +66,10 @@
             </table>
             <div id="ifNoKey" *ngIf="apiHome.length === 0" (click)="handleOnCreate()">
                 <div id="imageShowTableNoKey">
-                    <div id="imageHoverNoKey"></div>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/6_key_copy.svg/640px-6_key_copy.svg.png"
-                        alt="">
+                    
+                   
                 </div>
-                <p>No keys to Display</p>
+                <p>No Data Found</p>
 
             </div>
             <div class="disableShowDiv" [style.scale]="this.isKeyEnable?'0':'1'" >

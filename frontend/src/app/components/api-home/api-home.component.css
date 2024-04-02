@@ -221,7 +221,7 @@ tbody {
 }
 #ifNoKey p{
     color: #333;
-    font-size: 2em;
+    font-size: 3em;
 }
 #imageHoverNoKey{
     position: absolute;

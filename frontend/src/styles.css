@@ -251,3 +251,8 @@ body, html{
 .multiselect-item-checkbox[_ngcontent-ng-c1411523848] input[type=checkbox]+div[_ngcontent-ng-c1411523848]:before {
     border: 2px solid #D6223A !important;
 }
+
+.p-multiselect-item{
+    display: flex;
+    gap: 6%;
+}

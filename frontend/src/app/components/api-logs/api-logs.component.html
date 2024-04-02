@@ -160,6 +160,10 @@
         
         
     </p-table>
+    <div id="ifNoKey" *ngIf="apiLogsTemp.length === 0" >
+        <p>No Data Found</p>
+
+    </div>
 
     <!-- <div id="ifNoKey" *ngIf="apiHome.length === 0" (click)="handleOnCreate()">
         <div id="imageShowTableNoKey">
