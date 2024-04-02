@@ -6,6 +6,10 @@
             <h2>{{this.totalSucReq}}</h2>
         </div>
         <div class="showCount2Key">
+            <p>Unsuccessfull requests</p>
+            <h2>{{this.totalUnsucReq}}</h2>
+        </div>
+        <div class="showCount2Key">
             <p>Total Requests</p>
             <h2>{{this.totalReq}}</h2>
         </div>
@@ -25,13 +29,13 @@
                     <div class="card flex justify-content-center">
                         <p-dropdown (onChange)="handleOnKeyChange()" [options]="dropDown1p1"
                             [(ngModel)]="selectedDropDown1p1" optionLabel="name"
-                            placeholder="Select You Application Name"></p-dropdown>
+                            placeholder="Select Application Name"></p-dropdown>
                     </div>
 
                     <div class="card flex justify-content-center">
                         <p-dropdown (onChange)="handleOnApiUsageChangep1()" [options]="dropDown2p1"
                             [(ngModel)]="selectedDropDown2p1" optionLabel="name"
-                            placeholder="Select You API key"></p-dropdown>
+                            placeholder="Select Graph"></p-dropdown>
                     </div>
                     <div *ngIf="selectedDropDown2p1?.code === '1'" class="card flex justify-content-center">
                         <p-dropdown (onChange)="handleOnApiYearChangep1()" [options]="dropDown3p1"

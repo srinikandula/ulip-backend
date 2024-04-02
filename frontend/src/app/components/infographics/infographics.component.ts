@@ -25,6 +25,7 @@ export class InfographicsComponent implements OnInit {
 
   totalReq:Number = 0
   totalSucReq:Number = 0
+  totalUnsucReq:Number= 0
   myAllLogs: ApiLogs[] = []
   myAllLogsPresent: ApiLogs[] = []
   dataPie: any;
@@ -408,6 +409,7 @@ export class InfographicsComponent implements OnInit {
           }
         }
         this.totalSucReq = tempcountSuc
+        this.totalUnsucReq = Number(this.totalReq)-tempcountSuc
         this.myAllLogs = []
 
         this.myAllLogs = this.myAllLogsPresent
