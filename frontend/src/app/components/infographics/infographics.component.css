@@ -2,9 +2,10 @@
     display: flex;
     gap: 50px;
 }
-.card_container{
-  
-    width:55%;
+
+.card_container {
+
+    width: 55%;
 }
 
 .usageByKeyGraphDisplay {
@@ -17,8 +18,8 @@
 .showCount1Key {
     justify-content: center;
     align-items: center;
-display:flex;
-flex-direction: row;
+    display: flex;
+    flex-direction: row;
     height: 120px;
     width: 180px;
 
@@ -42,8 +43,8 @@ flex-direction: row;
 }
 
 .showCount2Key {
-  display:flex;
-  flex-direction:row;
+    display: flex;
+    flex-direction: row;
     height: 120px;
     width: 180px;
     justify-content: center;
@@ -59,46 +60,72 @@ flex-direction: row;
     gap: 10px;
     margin-bottom: 7%;
 }
-.container{
-    width:75%;
-    
-}
-.container-div{
-    width:100%;
+
+.showCount3Key {
+    display: flex;
+    flex-direction: row;
+    height: 120px;
+    width: 180px;
     justify-content: center;
- display: flex;
-    
+    align-items: center;
+
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+    background: linear-gradient(-120deg, #D62121, #C72C2C, #3a1111);
+    background-blend-mode: multiply, multiply;
+
+    padding: 5%;
+    gap: 10px;
+    margin-bottom: 7%;
 }
-.TotalFetchesInfo{
-    gap:50px;
-    display:flex;
-    flex-direction: column;
-    
+
+.container {
+    width: 75%;
 
 }
-.ulipDataAnalysisFetchPie{
+
+.container-div {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+
+}
+
+.TotalFetchesInfo {
+    gap: 50px;
+    display: flex;
+    flex-direction: column;
+
+
+}
+
+.ulipDataAnalysisFetchPie {
     display: flex;
     align-items: center;
     justify-content: right;
-  
+
     gap: 11%;
 }
-.ulipDataAnalysisFetchPie1{
+
+.ulipDataAnalysisFetchPie1 {
     display: flex;
     align-items: center;
     justify-content: left;
-   
+
     gap: 9%;
 
 }
 
-.showCount1Key h2{
+.showCount1Key h2 {
     font-size: 2.5em;
 }
-.showCount2Key h2{
+
+.showCount2Key h2 {
     font-size: 2.5em;
 }
-.psliderInfoDiv{
+
+.psliderInfoDiv {
     padding: 5%;
     height: 80svh;
 }
