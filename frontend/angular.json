@@ -58,7 +58,7 @@
               ]
             },
             "production": {
-              "outputPath": "prod_build/dist",
+              "outputPath": "dist/mll",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
