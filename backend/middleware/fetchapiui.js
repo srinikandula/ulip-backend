@@ -1,5 +1,6 @@
 const { ApiKeys } = require("../Models")
 const {ApiLogs} = require("../Models")
+const fetch = require ('node-fetch')
 
 
 const ulipUiError = async (urlArray, mybody, respBody, appliName, myKey, req) => {
@@ -28,8 +29,11 @@ const fetchapiui = async(req, res, next)=>{
         const apiKey = req.header("api-key")
         const secKeyH= req.header("seckey")
         if(apiKey === "16f78afa-e306-424e-8a08-21ad21629404" && secKeyH === "f968799f2906991647c9941bbd8c97a746cd2cc320f390a310c170e0f072bc5bf71c372060e799b75a323f57d3ccdf8b"){
-            
+            console.log("ifffffffffffffffffffffffffff")
+
         }else{
+            console.log("i==============",req)
+
             const urlArray = req.url.split("/")
             urlArray.splice(0,0,'')
             const mybody = req.body
@@ -49,17 +53,27 @@ const fetchapiui = async(req, res, next)=>{
             username:process.env.ulip_username,
             password:process.env.ulip_password
         }
+
+        console.log("--------login_body",login_body)
+        console.log("--------process.env.ulip_login_url",process.env.ulip_login_url)
+
         
         const response = await fetch(process.env.ulip_login_url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': "application/json",
+                'Accept': 'application/json',
             },
             body: JSON.stringify(login_body)
-        })
+        });
+    
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        console.log("----------------response",response)
+
         const resp_login = await response.json()
-        
+        console.log("----------------resp_login",resp_login)
         if(resp_login.error === 'false'){
             req.authorization = await resp_login.response.id
         }
@@ -79,6 +93,7 @@ const fetchapiui = async(req, res, next)=>{
         
 
     } catch (error) {
+        console.log('----------------',error)
         res.status(501).send({error:error.message})
     }
     
