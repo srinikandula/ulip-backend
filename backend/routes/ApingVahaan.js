@@ -14,6 +14,7 @@ var nodemailer = require("nodemailer");
 const fs = require("fs")
 const { body, validationResult } = require('express-validator');
 const fetchapiui = require("../middleware/fetchapiui");
+ const fetch = require ('node-fetch')
 
 router.post("/sendmailcreatekey", [
     body("email", "Must be a email").isEmail(),

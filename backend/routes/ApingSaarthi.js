@@ -7,6 +7,7 @@ var bcrypt = require('bcryptjs');
 const JWT_SECRET = 'saltcode';
 var fetchuser = require("../middleware/fetchuser")
 var fetchapi = require("../middleware/fetchapi")
+const fetch = require ('node-fetch')
 
 router.post("/ulip/v1.0.0/SARATHI/01",fetchuser, fetchapi, async(req,res)=>{
 
