@@ -175,6 +175,7 @@ export class SideBarComponent implements OnInit {
               this.messageService.add({ severity: 'error', summary: 'Failed', detail: "Mail Send failure" })
             }
           })
+          this.applicationName = ''
 
         },
         error: error => {
@@ -195,6 +196,14 @@ export class SideBarComponent implements OnInit {
 
   }
 
-
+  validateNumber(event: KeyboardEvent) {
+    const input = event.key;
+    if (/[0-9]/.test(input)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
 
 }
