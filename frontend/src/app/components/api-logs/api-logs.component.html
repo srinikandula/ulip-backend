@@ -61,9 +61,8 @@
             </div>
         </div>
         <span class="p-input-icon-left searchLogsSpan">
-            <input placeholder="Search in table" type="text" pInputText [(ngModel)]="filterSearchvalue"
-                name="filterSearchvalue" />
-            <button (click)="changeFilterChecks()">
+            <input placeholder="Search in table" type="text" [(ngModel)]="filterSearchvalue" #filterValue name="filterSearchvalue" />
+            <button (click)="filterBy(filterValue)">
                 <!-- <i class="fa-solid fa-magnifying-glass "></i> -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 19 19">
                     <g id="search-normal" transform="translate(-428 -188)">
