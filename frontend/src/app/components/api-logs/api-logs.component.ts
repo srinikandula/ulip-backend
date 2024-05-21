@@ -19,9 +19,9 @@ import {FormGroup, FormControl, FormsModule, ReactiveFormsModule} from '@angular
   styleUrls: ['./api-logs.component.css']
 })
 export class ApiLogsComponent implements OnInit {
-  date1: Date | undefined;
+  date1 = new Date()
 
-  date2: Date | undefined;
+  date2 = new Date();
 
   date3: Date | undefined;
 picker: any;
@@ -266,4 +266,14 @@ picker: any;
 
 
   }
+
+  filterBy(nameInput: HTMLInputElement) {
+    const filterValue = nameInput.value.trim();
+    if (filterValue) {
+      this.apiLogsTemp = this.apiLogs.filter(p => p.ulip.toLowerCase().includes(filterValue.toLowerCase()));
+    } else {
+      this.apiLogsTemp = this.apiLogs;
+    }
+  }
+
 }
