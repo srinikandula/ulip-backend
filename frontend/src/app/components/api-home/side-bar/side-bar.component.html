@@ -92,7 +92,8 @@
             </div>
             <div class="inputs_container">
                 <div class="input_label">Contact Number</div>
-                <input [(ngModel)]="contactName" name="contactName" type="text" placeholder="Enter Contact Number">
+                <input [(ngModel)]="contactName" name="contactNumber" type="text" placeholder="Enter Contact Number"
+                       (keypress)="validateNumber($event)" maxlength="10" minlength="10">
             </div>
             <div class="inputs_container">
                 <div class="input_label">Email Address</div>
