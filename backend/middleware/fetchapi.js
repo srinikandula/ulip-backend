@@ -1,5 +1,7 @@
 const { ApiKeys } = require("../Models")
 const { ApiLogs } = require("../Models")
+const fetch = require ('node-fetch')
+// const https = require('https');
 
 const ulipUiError = async (urlArray, mybody, respBody, appliName, myKey, req) => {
 
@@ -122,7 +124,9 @@ const fetchapi = async (req, res, next) => {
                     'Content-Type': 'application/json',
                     'Accept': "application/json",
                 },
-                body: JSON.stringify(login_body)
+                body: JSON.stringify(login_body),
+                // agent: new https.Agent({ rejectUnauthorized: false }) // Add this line to disable SSL certificate verification
+
             })
             const resp_login = await response.json()
             console.log("a6")
@@ -154,9 +158,10 @@ const fetchapi = async (req, res, next) => {
         // const mybody = req.body
         // const appliName = req.applicationName
         // const mkey = req.header("api-key")
-        // const myjson = { code:501, success: false, message: error.message }
+        //  const myjson = { code:501, success: false, message: error.message }
+        console.log("-------catch error",error)
         // ulipUiError(urlArray, mybody, myjson, appliName, mkey, req)
-        res.status(501).send(myjson)
+        res.status(501).send({error:error.message})
     }
 
 }
