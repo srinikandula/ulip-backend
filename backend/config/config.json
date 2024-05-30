@@ -1,9 +1,9 @@
 {
     "development": {
-        "username": "mlluser",
-        "password": "M!!U$#&@",
+        "username": "logioneuser",
+        "password": "One@2023",
         "database": "ulip",
-        "host": "10.11.0.92",
+        "host": "10.70.84.4",
         "dialect": "mysql",
         "timezone":"+05:30"
     },

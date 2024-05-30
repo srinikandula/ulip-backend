@@ -171,6 +171,7 @@ export class FetchulipComponent implements OnInit {
     this.http.post<any>(myUrl, reqObj, { headers }).subscribe({
       next: data => {
         let mydata = data.json;
+        console.log(mydata, '=================')
         // if(this.selectedUlipArr === "VAHAN"){
         //  mydata = data.json
         // }
@@ -336,6 +337,13 @@ export class FetchulipComponent implements OnInit {
 
 
 
+        } else if (this.selectedUlipArr === "FASTAG") {
+
+          this.fastagFun(mydata.response)
+          // this.handleLDB2(mydata.response[0].response.domesticContainerTrail)
+
+
+
         }
         else if (this.selectedUlipArr === 'EWAYBILL') {
           let mydata2 = mydata.response[0].response
@@ -422,7 +430,7 @@ export class FetchulipComponent implements OnInit {
     }
   }
   // textInputUlip: string = ''
-
+fastagListData: any = [];
   value: string = "";
   takeInputObj: any;
   takeInputObjArr: {
@@ -866,7 +874,108 @@ export class FetchulipComponent implements OnInit {
   //     }
   //   }
   // }
+  fastagFun(mydata2: any): void {
+    this.fastagListData = mydata2;
+    // this.fastagListData = []
+    // console.log("My data is ", mydata.json.response[0].response.dldetobj[0])
+    // let mydata2 = mydata.response[0].response.eximContainerTrail
+    console.log(mydata2,'==========================', this.fastagListData);
+    let allKeys = Object.keys(mydata2)
+    this.tableOutputHeader = allKeys
+    let allValues = Object.values(mydata2)
+    console.log(allKeys, '===========================================================================================================================', allValues)
+    let tempObjArrOutput: Array<{
+      dt: string,
+      vl: any
+    }> = []
+    let tempArray: Array<{
+      dt: string,
+      vl: any
+    }> = []
+    for (let i = 0; i < allKeys.length; ++i) {
+      let tempObj: {
+        dt: string,
+        vl: any
+      } = {
+        dt: '',
+        vl: ''
+      }
+      tempObj.dt = allKeys[i]
+      console.log(tempObj, 'tempObjtempObjtempObjtempObjtempObjtempObjtempObjtempObjtempObjtempObjtempObjtempObjtempObjtempObjtempObjtempObjtempObjtempObjtempObjtempObjtempObj')
 
+      if (typeof allValues[i] === 'object' && !Array.isArray(allValues[i])) {
+        // let tempObjVal:any = allValues[i]
+        let objArrKeys = Object.keys(Object(allValues[i]))
+        let objArrVal = Object.values(Object(allValues[i]));
+        console.log("inside teh if")
+        console.log("Objarrkeys ", allValues[i])
+        for (let i = 0; i < objArrKeys.length; ++i) {
+          let veryVeryTempObj = {
+            dt: objArrKeys[i],
+            vl: objArrVal[i]
+          }
+          tempObjArrOutput.push(veryVeryTempObj)
+        }
+        let ldbTempArrOutput: Array<Array<{
+          dt: string,
+          vl: any
+        }>> = []
+        if (!Array.isArray(this.fastagListData)) {
+          this.fastagListData = []; // Initialize fastagListData as an empty array
+        }
+
+  // Push elements into fastagListData
+        this.fastagListData.push(ldbTempArrOutput);
+        tempObjArrOutput = []
+      }
+      else if (typeof allValues[i] === 'object' && Array.isArray(allValues[i]) && allValues[i] !== null && allValues[i] !== undefined) {
+        // let tempObjVal:any = allValues[i]let objArrKeys = Object.keys(allValues[i][0] as Record<string, any>);
+        let val_arr = allValues[i] as any[]
+        let tempObjArrOutputArr: Array<Array<{
+          dt: string,
+          vl: any
+        }>> = []
+        for (let i = 0; i < val_arr.length; ++i) {
+          let objArrKeys = Object.keys(Object(val_arr[i]));
+          let objArrVal = Object.values(Object(val_arr[i]));
+          console.log("inside teh if")
+          console.log("Objarrkeys ", allValues[i])
+          for (let i = 0; i < objArrKeys.length; ++i) {
+            let veryVeryTempObj = {
+              dt: objArrKeys[i],
+              vl: objArrVal[i]
+            }
+            tempObjArrOutput.push(veryVeryTempObj)
+          }
+          tempObjArrOutputArr.push(tempObjArrOutput)
+          tempObjArrOutput = []
+        }
+        this.fastagListData.push(tempObjArrOutputArr)
+        tempObjArrOutputArr = []
+
+      }
+      else if (!Array.isArray(allValues[i])) {
+        while (i < allKeys.length && typeof allValues[i] !== 'object') {
+          let veryVeryTempObj = {
+            dt: allKeys[i],
+            vl: allValues[i]
+          }
+          tempArray.push(veryVeryTempObj)
+          i++;
+        }
+        i--;
+        let ldbTempArr: Array<Array<{
+          dt: string,
+          vl: any
+        }>> = []
+        ldbTempArr.push(tempArray)
+
+        this.fastagListData.push(ldbTempArr)
+        tempArray = []
+        ldbTempArr = []
+      }
+    }
+  }
   handleEchallan2(mydata2: any) {
     let outputObjCompleteChallanLet: Array<Array<Array<{
       dt: string,
