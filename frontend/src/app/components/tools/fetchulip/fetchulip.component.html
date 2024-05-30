@@ -187,6 +187,60 @@
                             </p-tabView>
                         </div>
                     </div>
+                    <div *ngIf="selectedUlipArr === 'FASTAG' && fastagListData[0]" class="card">
+                            <div class="upperProgressBar" *ngIf="this.onLoading">
+                                <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+                            </div>
+<!--                        <div [style]="{display:'flex', flexDirection:'column', gap:'5px'}"-->
+<!--                             *ngFor="let i of fastagListData; let index = index">-->
+<!--                        </div>-->
+<!--                        {{fastagListData[0].response.result | json}}-&#45;&#45;&#45;&#45;-->
+<!--                        <p>Result: {{ fastagListData[0]?.response.result }}</p>-->
+<!--                        <p>Response Code: {{ fastagListData[0]?.response.respCode }}</p>-->
+
+                        <div >
+                            <table>
+                                <tbody>
+                                <ng-container *ngFor="let item of fastagListData[0].response | keyvalue">
+                                    <tr *ngIf="item.key !== 'vehicle'">
+                                        <td>{{ item.key }}</td>
+                                        <td>{{ item.value }}</td>
+                                    </tr>
+                                </ng-container>
+                                <!-- Handle the vehicle property separately -->
+                                <tr *ngIf="fastagListData[0].response?.vehicle">
+                                    <td>Vehicle </td>
+                                    <td>{{ fastagListData[0].response?.vehicle.errCode }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <table *ngIf="fastagListData[0]?.response?.vehicle?.vehltxnList?.txn">
+                                <thead>
+                                <tr>
+                                    <th>Reader Read Time</th>
+                                    <th>Seq No</th>
+                                    <th>Lane Direction</th>
+                                    <th>Toll Plaza Geocode</th>
+                                    <th>Toll Plaza Name</th>
+                                    <th>Vehicle Type</th>
+                                    <th>Vehicle Reg No</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let txn of fastagListData[0]?.response?.vehicle?.vehltxnList?.txn">
+                                    <td>{{ txn.readerReadTime }}</td>
+                                    <td>{{ txn.seqNo }}</td>
+                                    <td>{{ txn.laneDirection }}</td>
+                                    <td>{{ txn.tollPlazaGeocode }}</td>
+                                    <td>{{ txn.tollPlazaName }}</td>
+                                    <td>{{ txn.vehicleType }}</td>
+                                    <td>{{ txn.vehicleRegNo }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <div *ngIf="this.selectedUlipArr === 'LDB'" class="card">
                         <table id="output_table" *ngIf="this.onLoading">
 
