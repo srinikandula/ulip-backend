@@ -40,6 +40,7 @@ app.get('/', (req, res) => res.send('This is ulip-backend'))
 db.sequelize.sync().then(()=>{
     app.listen(5000, ()=>{
         console.log(`App is working at port 5000`)
-    })
+        console.log(`Node.js version: ${process.version}`);    
+      })
 
 })
