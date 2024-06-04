@@ -187,6 +187,78 @@
                             </p-tabView>
                         </div>
                     </div>
+
+                    <div *ngIf="selectedUlipArr === 'FOIS'" class="card">
+                        <div class="upperProgressBar" *ngIf="this.onLoading">
+                            <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+                        </div>
+                        <div>
+                            <table>
+                                <tbody>
+                                <ng-container *ngFor="let item of foisListData[0] | keyvalue">
+                                    <tr>
+                                        <td>{{ item.key }}</td>
+                                        <td>{{ item.value }}</td>
+                                    </tr>
+                                </ng-container>
+                                <tr>
+                                    <td>error</td>
+                                    <td>{{ foisListData.error }}</td>
+                                </tr>
+                                <tr>
+                                    <td>code</td>
+                                    <td>{{ foisListData.code }}</td>
+                                </tr>
+                                <tr>
+                                    <td>message</td>
+                                    <td>{{ foisListData.message }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <div >
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>New FNR</th>
+                                    <th>ETA Dstn</th>
+                                    <th>Cmdt</th>
+                                    <th>Current Status</th>
+                                    <th>Last Report Status</th>
+                                    <th>Loco Number</th>
+                                    <th>Last Report Location</th>
+                                    <th>Longitude</th>
+                                    <th>FNR Number</th>
+                                    <th>Latitude</th>
+                                    <th>Station From</th>
+                                    <th>Station To</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let response of foisListData?.response[0]?.response">
+                                    <td>{{ response.newFnr }}</td>
+                                    <td>{{ response.etaDstn }}</td>
+                                    <td>{{ response.cmdt }}</td>
+                                    <td>{{ response.currentStatus }}</td>
+                                    <td>{{ response.lastRepStts }}</td>
+                                    <td>{{ response.locoNumb }}</td>
+                                    <td>{{ response.lastRepLocn }}</td>
+                                    <td>{{ response.lgtd }}</td>
+                                    <td>{{ response.fnrNo }}</td>
+                                    <td>{{ response.lttd }}</td>
+                                    <td>{{ response.stationFrom }}</td>
+                                    <td>{{ response.stationTo }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+<!--                        {{foisListData[0]?.response[0].response | json}}-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; {{foisListData.response[0].response | json}}-->
+
+                    </div>
+
+
                     <div *ngIf="selectedUlipArr === 'FASTAG' && fastagListData[0]" class="card">
                             <div class="upperProgressBar" *ngIf="this.onLoading">
                                 <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
