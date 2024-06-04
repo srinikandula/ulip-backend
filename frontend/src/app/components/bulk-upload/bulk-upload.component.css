@@ -1,0 +1,67 @@
+.text-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.centered {
+    font-family: sans-serif;
+    font-size: 1.3em;
+    text-align:center;
+}
+
+.dropzone {
+    height: 500px;
+    display: table;
+    width: 100%;
+    background-color: #eee;
+    border: dotted 3px #AA9;
+    border-radius: 5px;
+}
+
+input[type="file"]{
+    display:none;
+}
+.textLink{
+    background-color: #f45e61;
+    color:#fff;
+    padding:10px;
+    border-radius:5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.textLink::before{
+    content: "\f093";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: #fff;
+    font-size: large;
+    margin-right: 10px;
+}
+.custom-download-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 20px 0;
+    transition: background-color 0.3s;
+}
+
+.custom-download-btn:hover {
+    background-color: #218838;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: #09f;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

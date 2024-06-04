@@ -25,6 +25,9 @@ export class HomeComponent implements OnInit {
   navigateViewAnalytics() {
     this.router.navigate(["home/analytics"])
   }
+  navigateToBulkUpload() {
+    this.router.navigate(["home/bulkUpload"])
+  }
   handleOnLeftbarToggle() {
     this.sidebarOpen = !this.sidebarOpen
     this.sideDueToClick = !this.sideDueToClick
