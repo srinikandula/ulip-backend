@@ -22,10 +22,10 @@
 </div>
 <div class="dropzone" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
     <div class="text-wrapper">
-        <div class="centered">
+        <div class="centered" [ngClass]="{'enabled': selectedId, 'disabled': !selectedId}">
             <input type="file" name="file" id="file" (change)="handleFileInput($event)" multiple>
             <label for="file"><span class="textLink">Select your file</span> or Drop it here!</label>
-        </div>
+          </div>
     </div>
 </div>
 

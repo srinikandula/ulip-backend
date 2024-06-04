@@ -7,7 +7,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { ApiHomeComponent } from './components/api-home/api-home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http"
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http"
 import { NgxUiLoaderModule, NgxUiLoaderConfig } from "ngx-ui-loader";
 import { SideBarComponent } from './components/api-home/side-bar/side-bar.component';
 import { SidebarModule } from 'primeng/sidebar';
@@ -46,6 +46,9 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { BulkUploadComponent } from './components/bulk-upload/bulk-upload.component';
 import { DragdropfileDirective } from './directive/dragdropfile.directive';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { LoadingInterceptor } from './loading.interceptor';
+
 
 
 // const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -97,6 +100,7 @@ import { DragdropfileDirective } from './directive/dragdropfile.directive';
     InfographicsComponent,
     BulkUploadComponent,
     DragdropfileDirective,
+    SpinnerComponent,
 
   ],
   imports: [
@@ -132,7 +136,9 @@ import { DragdropfileDirective } from './directive/dragdropfile.directive';
     NgMultiSelectDropDownModule.forRoot()
 
   ],
-  providers: [KeypageService, MessageService, ToastService, WebsocketService, ConfirmationService],
+  providers: [KeypageService, MessageService, ToastService, WebsocketService, ConfirmationService, {
+    provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

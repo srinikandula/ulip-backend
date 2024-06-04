@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {apiService} from "../../services/api/apiservice";
+import swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-bulk-upload',
@@ -117,12 +118,19 @@ export class BulkUploadComponent implements OnInit{
       'user': `${localStorage.getItem("ulip-person-username")}`
     });
 
-    this.http.post<any>(myUrl, formData, { headers, responseType: 'blob' as 'json' }).subscribe(response => {
+    this.http.post<any>(myUrl, formData, { headers, responseType: 'blob' as 'json' }).subscribe((response) => {
       console.log(response, '------------------------------------');
       this.downloadFile(response);
+      swal.fire('Success', 'Successfully Download responese', 'success' );
     }, error => {
       console.error('Error downloading file', error);
-      // alert('Error downloading file: ' + error.message);
+      if(error.status==400){
+      swal.fire('Error', 'The uploaded file must contain a column named "vehiclenumber"', 'error' );
+      }else{
+        swal.fire('Error',error.message , 'error' );
+
+      }
+
     });
 
     // this._snackBar.open("Successfully upload!", 'Close', {
