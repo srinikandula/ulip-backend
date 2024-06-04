@@ -65,3 +65,12 @@ input[type="file"]{
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
+.enabled {
+    pointer-events: auto;
+    opacity: 1;
+  }
+  
+  .disabled {
+    pointer-events: none;
+    opacity: 0.3;
+  }
