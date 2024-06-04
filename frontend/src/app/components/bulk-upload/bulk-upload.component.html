@@ -1,0 +1,31 @@
+<div style="display: flex; align-items: center; justify-content: space-between; margin: 10px 0">
+    <div style="width: 220px;" xmlns="http://www.w3.org/1999/html">
+        <ng-multiselect-dropdown
+                class="cut-multi-select"
+                [placeholder]="'Select'"
+                [data]="dropdownList"
+                [(ngModel)]="selectedPdiStatus"
+                [settings]="dropdownSettingsForPdi"
+                (onSelect)="onItemSelectForPdi($event)"
+                (onSelectAll)="onSelectAllForPdi($event)"
+                [required]='requiredFieldForPdi'
+                [ngClass]='setClassForPdi()'
+                name='countrySelect1'>
+        </ng-multiselect-dropdown>
+    </div>
+    <div style="width: 220px;" *ngIf="selectedId === 'SARATHI'">
+        <button (click)="downloadTemplateForSatathi()" class="custom-download-btn">DownLoad Template</button>
+    </div>
+    <div style="width: 220px;" *ngIf="selectedId === 'VAHAN'">
+        <button (click)="downloadTemplateForVahan()" class="custom-download-btn">DownLoad Template</button>
+    </div>
+</div>
+<div class="dropzone" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
+    <div class="text-wrapper">
+        <div class="centered">
+            <input type="file" name="file" id="file" (change)="handleFileInput($event)" multiple>
+            <label for="file"><span class="textLink">Select your file</span> or Drop it here!</label>
+        </div>
+    </div>
+</div>
+

@@ -44,6 +44,8 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { SliderModule } from 'primeng/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { BulkUploadComponent } from './components/bulk-upload/bulk-upload.component';
+import { DragdropfileDirective } from './directive/dragdropfile.directive';
 
 
 // const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -93,6 +95,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     EditKeyComponent,
     FetchulipComponent,
     InfographicsComponent,
+    BulkUploadComponent,
+    DragdropfileDirective,
 
   ],
   imports: [

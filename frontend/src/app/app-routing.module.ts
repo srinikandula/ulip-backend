@@ -9,6 +9,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { FetchulipComponent } from './components/tools/fetchulip/fetchulip.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { InfographicsComponent } from './components/infographics/infographics.component';
+import {BulkUploadComponent} from "./components/bulk-upload/bulk-upload.component";
 
 
 const routes: Routes = [
@@ -38,6 +39,10 @@ const routes: Routes = [
     {
       path: 'analytics',
       component: InfographicsComponent
+    },
+    {
+      path: 'bulkUpload',
+      component: BulkUploadComponent
     }
 
     ]
