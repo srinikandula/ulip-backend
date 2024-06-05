@@ -638,7 +638,7 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'), fetchapiui, async (
                                 'Authorization': `Bearer ${req.authorization}`,
                             },
                             body: JSON.stringify({ vehiclenumber: vehicleNumber }),
-                            agent: new https.Agent({ rejectUnauthorized: false })
+                            // agent: new https.Agent({ rejectUnauthorized: false })
                         });
     
                         const json = await response.json();
@@ -675,8 +675,8 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'), fetchapiui, async (
                                 const parser = new xml2js.Parser({ explicitArray: false });
                                 const parsedData = await parser.parseStringPromise(json.response[0].response);
                                 const vehicleDetails = parsedData.VehicleDetails;
-    
-                                const rc_tax_upto = vehicleDetails.rc_tax_upto ? new Date(vehicleDetails.rc_tax_upto) : null;
+                                let tax_conv = vehicleDetails.rc_tax_upto ? parseDate(vehicleDetails.rc_tax_upto) : null;
+                                const rc_tax_upto = vehicleDetails.rc_tax_upto ? new Date(tax_conv) : null;
                                 const rc_fit_upto = vehicleDetails.rc_fit_upto ? new Date(vehicleDetails.rc_fit_upto) : null;
                                 const rc_pucc_upto = vehicleDetails.rc_pucc_upto ? new Date(vehicleDetails.rc_pucc_upto) : null;
                                 const rc_insurance_upto = vehicleDetails.rc_insurance_upto ? new Date(vehicleDetails.rc_insurance_upto) : null;
