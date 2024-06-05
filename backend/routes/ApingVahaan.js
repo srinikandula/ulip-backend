@@ -604,169 +604,198 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'), fetchapiui, async (
             return res.status(400).send({ code: 400, message: 'No file uploaded' });
         }
 
-        const workbook = xlsx.readFile(req.file.path);
-        const sheetName = workbook.SheetNames[0];
-        const sheet = workbook.Sheets[sheetName];
-        const data = xlsx.utils.sheet_to_json(sheet);
-        // Check if the file is empty
-        if (!data.length) {
-            fs.unlinkSync(req.file.path);
-            return res.status(400).send({ code: 400, message: 'The uploaded file is empty' });
-        }
-        let responses = [];
-        const currentDate = new Date();
-        if (req.params.ulipIs === "VAHAN") {
-
-            // Check if the 'vehiclenumber' column exists
-            if (!data[0].hasOwnProperty('vehiclenumber')) {
-                 fs.unlinkSync(req.file.path);
-                return res.status(400).send({ code: 400, message: 'The uploaded file must contain a column named "vehiclenumber"' });
+            const workbook = xlsx.readFile(req.file.path);
+            const sheetName = workbook.SheetNames[0];
+            const sheet = workbook.Sheets[sheetName];
+            const data = xlsx.utils.sheet_to_json(sheet);
+    
+            // Check if the file is empty
+            if (!data.length) {
+                fs.unlinkSync(req.file.path);
+                return res.status(400).send({ code: 400, message: 'The uploaded file is empty' });
             }
-            for (const row of data) {
-                const vehicleNumber = row.vehiclenumber;
-                const url = `${process.env.ulip_url}/${req.params.ulipIs}/${req.params.reqIs}`;
-
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': "application/json",
-                        'Authorization': `Bearer ${req.authorization}`,
-                    },
-                    body: JSON.stringify({ vehiclenumber: vehicleNumber }),
-                    // agent: new https.Agent({ rejectUnauthorized: false })
+    
+            let responses = [];
+            const currentDate = new Date();
+    
+            if (req.params.ulipIs === "VAHAN") {
+                // Check if the 'vehiclenumber' column exists
+                if (!data[0].hasOwnProperty('vehiclenumber')) {
+                    fs.unlinkSync(req.file.path);
+                    return res.status(400).send({ message: 'The uploaded file must contain a column named "vehiclenumber"' });
+                }
+    
+                for (const row of data) {
+                    const vehicleNumber = row.vehiclenumber;
+                    const url = `${process.env.ulip_url}/${req.params.ulipIs}/${req.params.reqIs}`;
+    
+                    try {
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': "application/json",
+                                'Authorization': `Bearer ${req.authorization}`,
+                            },
+                            body: JSON.stringify({ vehiclenumber: vehicleNumber }),
+                            agent: new https.Agent({ rejectUnauthorized: false })
+                        });
+    
+                        const json = await response.json();
+                        if (json.error === 'true' && json.code === '400') {
+                            responses.push({
+                                vehiclenumber: vehicleNumber,
+                                OwnerName: 'Invalid vehicle Number Format',
+                                VehiclePurchaseDate: 'Invalid vehicle Number Format',
+                                InsurancePolicyNumbe: 'Invalid vehicle Number Format',
+                                InsuracePolicyValidityUpto: 'Invalid vehicle Number Format',
+                                PollutionCertificateNumber: 'Invalid vehicle Number Format',
+                                PollutionValidityUpto: 'Invalid vehicle Number Format',
+                                RegistrationNumberValidity: 'Invalid vehicle Number Format',
+                                FitnessCertificateValidityUpto: 'Invalid vehicle Number Format',
+                                RoadTaxValidityUpto: 'Invalid vehicle Number Format',
+                                Valid: 'Invalid vehicle Number Format'
+                            });
+                        } else if (json.response[0].response === 'Vehicle Details not Found') {
+                            responses.push({
+                                vehiclenumber: vehicleNumber,
+                                OwnerName: 'OwnerName Not Found',
+                                VehiclePurchaseDate: 'Vehicle Purchase Date Not Found',
+                                InsurancePolicyNumbe: 'InsurancePolicyNumbe Not Found',
+                                InsuracePolicyValidityUpto: 'InsuracePolicyValidityUpto Not Found',
+                                PollutionCertificateNumber: 'PollutionCertificateNumber Not Found',
+                                PollutionValidityUpto: 'PollutionValidityUpto Not Found',
+                                RegistrationNumberValidity: 'RegistrationNumberValidity Not Found',
+                                FitnessCertificateValidityUpto: 'FitnessCertificateValidityUpto Not Found',
+                                RoadTaxValidityUpto: 'RoadTaxValidityUpto Not Found',
+                                Valid: 'Vehicle Data Not Found'
+                            });
+                        } else {
+                            try {
+                                const parser = new xml2js.Parser({ explicitArray: false });
+                                const parsedData = await parser.parseStringPromise(json.response[0].response);
+                                const vehicleDetails = parsedData.VehicleDetails;
+    
+                                const rc_tax_upto = vehicleDetails.rc_tax_upto ? new Date(vehicleDetails.rc_tax_upto) : null;
+                                const rc_fit_upto = vehicleDetails.rc_fit_upto ? new Date(vehicleDetails.rc_fit_upto) : null;
+                                const rc_pucc_upto = vehicleDetails.rc_pucc_upto ? new Date(vehicleDetails.rc_pucc_upto) : null;
+                                const rc_insurance_upto = vehicleDetails.rc_insurance_upto ? new Date(vehicleDetails.rc_insurance_upto) : null;
+                                const rc_regn_upto = vehicleDetails.rc_regn_upto ? new Date(vehicleDetails.rc_regn_upto) : null;
+    
+                                const valid = (rc_tax_upto && rc_fit_upto && rc_pucc_upto && rc_insurance_upto && rc_regn_upto &&
+                                    rc_tax_upto > currentDate && rc_fit_upto > currentDate && rc_pucc_upto > currentDate &&
+                                    rc_insurance_upto > currentDate && rc_regn_upto > currentDate) ? "Fit To Go" : "Not Fit To Go";
+    
+                                responses.push({
+                                    vehiclenumber: vehicleNumber,
+                                    OwnerName: vehicleDetails.rc_owner_name || 'OwnerName Not Found',
+                                    VehiclePurchaseDate: vehicleDetails.rc_purchase_dt || 'Vehicle Purchase Date Not Found',
+                                    InsurancePolicyNumbe: vehicleDetails.rc_insurance_policy_no || 'InsurancePolicyNumbe Not Found',
+                                    InsuracePolicyValidityUpto: vehicleDetails.rc_insurance_upto || 'InsuracePolicyValidityUpto Not Found',
+                                    PollutionCertificateNumber: vehicleDetails.rc_pucc_no || 'PollutionCertificateNumber Not Found',
+                                    PollutionValidityUpto: vehicleDetails.rc_pucc_upto || 'PollutionValidityUpto Not Found',
+                                    RegistrationNumberValidity: vehicleDetails.rc_regn_upto || 'RegistrationNumberValidity Not Found',
+                                    FitnessCertificateValidityUpto: vehicleDetails.rc_fit_upto || 'FitnessCertificateValidityUpto Not Found',
+                                    RoadTaxValidityUpto: vehicleDetails.rc_tax_upto || 'RoadTaxValidityUpto Not Found',
+                                    Valid: valid || 'Vehicle Data Not Found'
+                                });
+                            } catch (parseError) {
+                                console.error(`Error parsing XML for vehicle number ${vehicleNumber}:`, parseError);
+                                console.log("Response content:", json.response[0].response);
+                                responses.push({
+                                    vehiclenumber: vehicleNumber,
+                                    OwnerName: 'Error parsing data',
+                                    VehiclePurchaseDate: 'Error parsing data',
+                                    InsurancePolicyNumbe: 'Error parsing data',
+                                    InsuracePolicyValidityUpto: 'Error parsing data',
+                                    PollutionCertificateNumber: 'Error parsing data',
+                                    PollutionValidityUpto: 'Error parsing data',
+                                    RegistrationNumberValidity: 'Error parsing data',
+                                    FitnessCertificateValidityUpto: 'Error parsing data',
+                                    RoadTaxValidityUpto: 'Error parsing data',
+                                    Valid: 'Error parsing data'
+                                });
+                            }
+                        }
+                    } catch (fetchError) {
+                        console.error(`Error fetching data for vehicle number ${vehicleNumber}:`, fetchError);
+                        responses.push({
+                            vehiclenumber: vehicleNumber,
+                            OwnerName: 'Error fetching data',
+                            VehiclePurchaseDate: 'Error fetching data',
+                            InsurancePolicyNumbe: 'Error fetching data',
+                            InsuracePolicyValidityUpto: 'Error fetching data',
+                            PollutionCertificateNumber: 'Error fetching data',
+                            PollutionValidityUpto: 'Error fetching data',
+                            RegistrationNumberValidity: 'Error fetching data',
+                            FitnessCertificateValidityUpto: 'Error fetching data',
+                            RoadTaxValidityUpto: 'Error fetching data',
+                            Valid: 'Error fetching data'
+                        });
+                    }
+                }
+    
+                const newWorkbook = XLSXStyle.utils.book_new();
+                let extractedData1 = [[
+                    { v: 'vehiclenumber' },
+                    { v: 'OwnerName' },
+                    { v: 'VehiclePurchaseDate' },
+                    { v: 'InsurancePolicyNumbe' },
+                    { v: 'InsuracePolicyValidityUpto' },
+                    { v: 'PollutionCertificateNumber' },
+                    { v: 'PollutionValidityUpto' },
+                    { v: 'RegistrationNumberValidity' },
+                    { v: 'FitnessCertificateValidityUpto' },
+                    { v: 'RoadTaxValidityUpto' },
+                    { v: 'Valid' },
+                ]];
+    
+                responses.forEach((item_1) => {
+                    let obj = {
+                        'vehiclenumber': item_1.vehiclenumber,
+                        'OwnerName': item_1.OwnerName,
+                        'VehiclePurchaseDate': item_1.VehiclePurchaseDate,
+                        'InsurancePolicyNumbe': item_1.InsurancePolicyNumbe,
+                        'InsuracePolicyValidityUpto': item_1.InsuracePolicyValidityUpto,
+                        'PollutionCertificateNumber': item_1.PollutionCertificateNumber,
+                        'PollutionValidityUpto': item_1.PollutionValidityUpto,
+                        'RegistrationNumberValidity': item_1.RegistrationNumberValidity,
+                        'FitnessCertificateValidityUpto': item_1.FitnessCertificateValidityUpto,
+                        'RoadTaxValidityUpto': item_1.RoadTaxValidityUpto,
+                        'Valid': item_1.Valid
+                    };
+    
+                    const row = [];
+                    for (const key in obj) {
+                        let setObj = { v: obj[key], t: "s" };
+                        if (obj['Valid'] === 'Fit To Go') {
+                            setObj.s = { fill: { fgColor: { rgb: '66FF66' } } }; // Highlight cells with green background
+                        } else if (obj['Valid'] === 'Not Fit To Go') {
+                            setObj.s = { fill: { fgColor: { rgb: 'FFCCCC' } } }; // Highlight cells with red background
+                        } else if (obj['Valid'] === 'Vehicle Data Not Found') {
+                            setObj.s = { fill: { fgColor: { rgb: 'ADD8E6' } } }; // Highlight cells with blue background
+                        } else if (obj['Valid'] === 'Invalid vehicle Number Format') {
+                            setObj.s = { fill: { fgColor: { rgb: 'FFFF00' } } }; // Highlight cells with yellow background
+                        }
+                        row.push(setObj);
+                    }
+                    extractedData1.push(row);
                 });
-
-                const json = await response.json();
-                if (json.error === 'true' && json.code === '400') {
-                    responses.push({
-                        vehiclenumber: vehicleNumber,
-                        OwnerName: 'InValid vehicle Number Format',
-                        VehiclePurchaseDate: 'InValid vehicle Number Format',
-                        InsurancePolicyNumbe: 'InValid vehicle Number Format',
-                        InsuracePolicyValidityUpto: 'InValid vehicle Number Format',
-                        PollutionCertificateNumber: 'InValid vehicle Number Format',
-                        PollutionValidityUpto: 'InValid vehicle Number Format',
-                        RegistrationNumberValidity: 'InValid vehicle Number Format',
-                        FitnessCertificateValidityUpto: 'InValid vehicle Number Format',
-                        RoadTaxValidityUpto: 'InValid vehicle Number Format',
-                        Valid: 'InValid vehicle Number Format'
-                    });
-                }
-                else if (json.response[0].response === 'Vehicle Details not Found') {
-                    responses.push({
-                        vehiclenumber: vehicleNumber,
-                        OwnerName: 'OwnerName Not Found',
-                        VehiclePurchaseDate: 'Vehicle Purchase Date Not Found',
-                        InsurancePolicyNumbe: 'InsurancePolicyNumbe Not Found',
-                        InsuracePolicyValidityUpto: 'InsuracePolicyValidityUpto Not Found',
-                        PollutionCertificateNumber: 'PollutionCertificateNumber Not Found',
-                        PollutionValidityUpto: 'PollutionValidityUpto Not Found',
-                        RegistrationNumberValidity: 'RegistrationNumberValidity Not Found',
-                        FitnessCertificateValidityUpto: 'FitnessCertificateValidityUpto Not Found',
-                        RoadTaxValidityUpto: 'RoadTaxValidityUpto Not Found',
-                        Valid: 'Vehicle Data Not Found'
-                    });
-
-                } else {
-                    const parser = new xml2js.Parser({ explicitArray: false });
-                    const parsedData = await parser.parseStringPromise(json.response[0].response);
-                    const vehicleDetails = parsedData.VehicleDetails;
-                    let tax_conv = vehicleDetails.rc_tax_upto ? parseDate(vehicleDetails.rc_tax_upto) : null;
-                    const rc_tax_upto = vehicleDetails.rc_tax_upto ? new Date(tax_conv) : null;
-                    const rc_fit_upto = vehicleDetails.rc_fit_upto ? new Date(vehicleDetails.rc_fit_upto) : null;
-                    const rc_pucc_upto = vehicleDetails.rc_pucc_upto ? new Date(vehicleDetails.rc_pucc_upto) : null;
-                    const rc_insurance_upto = vehicleDetails.rc_insurance_upto ? new Date(vehicleDetails.rc_insurance_upto) : null;
-                    const rc_regn_upto = vehicleDetails.rc_regn_upto ? new Date(vehicleDetails.rc_regn_upto) : null;
-
-                    const valid = (rc_tax_upto && rc_fit_upto && rc_pucc_upto && rc_insurance_upto && rc_regn_upto &&
-                        rc_tax_upto > currentDate && rc_fit_upto > currentDate && rc_pucc_upto > currentDate &&
-                        rc_insurance_upto > currentDate && rc_regn_upto > currentDate) ? "Fit To Go" : "Not Fit To Go";
-                    responses.push({
-                        vehiclenumber: vehicleNumber,
-                        OwnerName: vehicleDetails.rc_owner_name || 'OwnerName Not Found',
-                        VehiclePurchaseDate: vehicleDetails.rc_purchase_dt || 'Vehicle Purchase Date Not Found',
-                        InsurancePolicyNumbe: vehicleDetails.rc_insurance_policy_no || 'InsurancePolicyNumbe Not Found',
-                        InsuracePolicyValidityUpto: vehicleDetails.rc_insurance_upto || 'InsuracePolicyValidityUpto Not Found',
-                        PollutionCertificateNumber: vehicleDetails.rc_pucc_no || 'PollutionCertificateNumber Not Found',
-                        PollutionValidityUpto: vehicleDetails.rc_pucc_upto || 'PollutionValidityUpto Not Found',
-                        RegistrationNumberValidity: vehicleDetails.rc_regn_upto || 'RegistrationNumberValidity Not Found',
-                        FitnessCertificateValidityUpto: vehicleDetails.rc_fit_upto || 'FitnessCertificateValidityUpto Not Found',
-                        RoadTaxValidityUpto: vehicleDetails.rc_tax_upto || 'RoadTaxValidityUpto Not Found',
-                        Valid: valid || 'Vehicle Data Not Found'
-                    });
-                }
-            }
-
-            const newWorkbook = XLSXStyle.utils.book_new();
-            let extractedData1 = [[
-                { v: 'vehiclenumber' },
-                { v: 'OwnerName' },
-                { v: 'VehiclePurchaseDate' },
-                { v: 'InsurancePolicyNumbe' },
-                { v: 'InsuracePolicyValidityUpto' },
-                { v: 'PollutionCertificateNumber' },
-                { v: 'PollutionValidityUpto' },
-                { v: 'RegistrationNumberValidity' },
-                { v: 'FitnessCertificateValidityUpto' },
-                { v: 'RoadTaxValidityUpto' },
-                { v: 'Valid' },
-
-            ]];
-
-            responses.forEach((item_1) => {
-                let item1 = item_1;
-                let obj = {};
-                obj['vehiclenumber'] = item1.vehiclenumber;
-                obj['OwnerName'] = item1.OwnerName;
-                obj['VehiclePurchaseDate'] = item1.VehiclePurchaseDate;
-                obj['InsurancePolicyNumbe'] = item1.InsurancePolicyNumbe;
-                obj['InsuracePolicyValidityUpto'] = item1.InsuracePolicyValidityUpto;
-                obj['PollutionCertificateNumber'] = item1.PollutionCertificateNumber;
-                obj['PollutionValidityUpto'] = item1.PollutionValidityUpto;
-                obj['RegistrationNumberValidity'] = item1.RegistrationNumberValidity;
-                obj['FitnessCertificateValidityUpto'] = item1.FitnessCertificateValidityUpto;
-                obj['RoadTaxValidityUpto'] = item1.RoadTaxValidityUpto;
-                obj['Valid'] = item1.Valid;
-
-                const row = [];
-                for (const key in obj) {
-                    let setObj = {};
-                    setObj.v = obj[key];
-                    setObj.t = "s";
-                    if (obj['Valid'] === 'Fit To Go') {
-                        setObj.s = { fill: { fgColor: { rgb: '66FF66' } } }; // Highlight cells with green background
+    
+                const worksheet1 = XLSXStyle.utils.aoa_to_sheet(extractedData1);
+                XLSXStyle.utils.book_append_sheet(newWorkbook, worksheet1, "vehiclenumbers Response");
+    
+                const newFilePath = `uploads/responses_${Date.now()}.xlsx`;
+                XLSXStyle.writeFile(newWorkbook, newFilePath);
+    
+                res.download(newFilePath, (err) => {
+                    if (err) {
+                        console.log('Error downloading file', err);
                     }
-                    if (obj['Valid'] === 'Not Fit To Go') {
-                        setObj.s = { fill: { fgColor: { rgb: 'FFCCCC' } } }; // Highlight cells with red background
-                    }
-                    if (obj['Valid'] === 'Vehicle Data Not Found') {
-                        setObj.s = { fill: { fgColor: { rgb: 'ADD8E6' } } }; // Highlight cells with blue background
-                    }
-                    if (obj['Valid'] === 'InValid vehicle Number Format') {
-                        setObj.s = { fill: { fgColor: { rgb: 'FFFF00' } } }; // Highlight cells with yellow background
-                    }
-                    row.push(setObj);
-                }
-                extractedData1.push(row);
-            });
-
-            const worksheet1 = XLSXStyle.utils.aoa_to_sheet(extractedData1);
-            XLSXStyle.utils.book_append_sheet(newWorkbook, worksheet1, "vehiclenumbers Response");
-
-            const newFilePath = `uploads/responses_${Date.now()}.xlsx`;
-            XLSXStyle.writeFile(newWorkbook, newFilePath);
-
-            res.download(newFilePath, (err) => {
-                if (err) {
-                    console.log('Error downloading file', err);
-                }
-                // Optionally delete the files after download
-                 fs.unlinkSync(req.file.path);
-                 fs.unlinkSync(newFilePath);
-
-            });
-
+                    // Optionally delete the files after download
+                    fs.unlinkSync(req.file.path);
+                    fs.unlinkSync(newFilePath);
+                });
         } else if (req.params.ulipIs === "SARATHI") {
             if (!data[0].hasOwnProperty('dlnumber') && !data[1].hasOwnProperty('dob')) {
                 fs.unlinkSync(req.file.path);
