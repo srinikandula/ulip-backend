@@ -121,7 +121,7 @@ export class BulkUploadComponent implements OnInit{
     this.http.post<any>(myUrl, formData, { headers, responseType: 'blob' as 'json' }).subscribe((response) => {
       console.log(response, '------------------------------------');
       this.downloadFile(response);
-      swal.fire('Success', 'Successfully Download responese', 'success' );
+      swal.fire('Success', 'Your Data will be Auto Downloaded!', 'success' );
     }, error => {
       console.error('Error downloading file', error);
       if(error.status==400){
@@ -179,7 +179,7 @@ export class BulkUploadComponent implements OnInit{
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'vehicleNumbersData.xlsx'; // Set the desired file name with .xlsx extension for Excel files
+    a.download = 'ulipResponeseData.xlsx'; // Set the desired file name with .xlsx extension for Excel files
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
@@ -190,7 +190,7 @@ export class BulkUploadComponent implements OnInit{
     // Create a new workbook and worksheet
     const wb = XLSX.utils.book_new();
     const ws = XLSX.utils.json_to_sheet([
-      { Vehiclenumber: '' } // Creating header with empty cell
+      { vehiclenumber: '' } // Creating header with empty cell
     ]);
 
     // Append worksheet to workbook
@@ -227,7 +227,7 @@ export class BulkUploadComponent implements OnInit{
     // Create a link element and trigger download
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'Template.xlsx';
+    a.download = 'SarathiTemplate.xlsx';
     a.click();
     window.URL.revokeObjectURL(url);
   }
