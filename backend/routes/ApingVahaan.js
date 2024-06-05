@@ -836,7 +836,9 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'), fetchapiui, async (
                     const json = await response.json();
                     // console.log("------------json", json);
                     // console.log("====json", json);
-                    if (json.code === '400' && json.error === 'true') {
+                    if (json.error === 'true' && json.code === '200' && json.response[0].responseStatus === 'ERROR') {
+                        responses.push({ dlnumber: obj.dlnumber, DrivingLicenseValidityUpto: "-------", Message: json.response[0].response });
+                    } else if (json.code === '400' && json.error === 'true') {
                         responses.push({ dlnumber: obj.dlnumber, DrivingLicenseValidityUpto: "-------", Message: json.message });
                     } else if (json.code === '200' && json.response[0].response.dldetobj[0].erormsg === 'Details not available ') {
                         responses.push({ dlnumber: obj.dlnumber, DrivingLicenseValidityUpto: '***********', Message: 'Details not available' });
