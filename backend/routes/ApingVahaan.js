@@ -821,22 +821,32 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'), fetchapiui, async (
                         'Authorization': `Bearer ${req.authorization}`,
                     },
                     body: JSON.stringify(obj),
-                    // agent: new https.Agent({ rejectUnauthorized: false })
+                    //  agent: new https.Agent({ rejectUnauthorized: false })
                 });
 
-                const json = await response.json();
-                console.log("====json", json)
-                if (json.code === '400' && json.error === 'ture') {
-                    responses.push({ dlnumber: obj.dlnumber, DrivingLicenseValidityUpto: "-------", Message: json.message });
-
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.log('Error response:', errorText);
+                    responses.push({ dlnumber: obj.dlnumber, DrivingLicenseValidityUpto: "-------", Message: `HTTP error ${response.status} Gateway Time-out` });
+                    continue;
                 }
-                else if (json.code === '200' && json.response[0].response.dldetobj[0].erormsg === 'Details not available ') {
-
-                    responses.push({ dlnumber: obj.dlnumber, DrivingLicenseValidityUpto: '***********', Message: 'Details not available' });
-
-                }
-                else {
-                    responses.push({ dlnumber: obj.dlnumber, DrivingLicenseValidityUpto: json.response[0].response.dldetobj[0].dlobj.dlNtValdtoDt, Message: 'SUCCESSFULL' });
+    
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.indexOf('application/json') !== -1) {
+                    const json = await response.json();
+                    // console.log("------------json", json);
+                    // console.log("====json", json);
+                    if (json.code === '400' && json.error === 'true') {
+                        responses.push({ dlnumber: obj.dlnumber, DrivingLicenseValidityUpto: "-------", Message: json.message });
+                    } else if (json.code === '200' && json.response[0].response.dldetobj[0].erormsg === 'Details not available ') {
+                        responses.push({ dlnumber: obj.dlnumber, DrivingLicenseValidityUpto: '***********', Message: 'Details not available' });
+                    } else {
+                        responses.push({ dlnumber: obj.dlnumber, DrivingLicenseValidityUpto: json.response[0].response.dldetobj[0].dlobj.dlNtValdtoDt, Message: 'SUCCESSFULL' });
+                    }
+                } else {
+                    const text = await response.text();
+                    console.log('Non-JSON response:', text);
+                    responses.push({ dlnumber: obj.dlnumber, DrivingLicenseValidityUpto: "-------", Message: 'Unexpected response format' });
                 }
             }
             const newSheet = xlsx.utils.json_to_sheet(responses);
