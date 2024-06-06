@@ -15,9 +15,9 @@ export class BulkUploadComponent implements OnInit{
   dropdownList: any = [
     "VAHAN",  "SARATHI"
   ];
-  selectedPdiStatus = [];
-  dropdownSettingsForPdi = {};
-  requiredFieldForPdi: boolean = false;
+  selectedApiValue = [];
+  dropdownSettingsForApiValue = {};
+  requiredFieldForApiValues: boolean = false;
   selectedId: any;
    tokeVal: any;
   selectedVersionMap = new Map();
@@ -27,7 +27,7 @@ export class BulkUploadComponent implements OnInit{
   }
   ngOnInit() {
     this.keypage.pageNav = 4
-    this.dropdownSettingsForPdi = {
+    this.dropdownSettingsForApiValue = {
       singleSelection: true,
       idField: 'id',
       textField: 'item_text',
@@ -37,25 +37,25 @@ export class BulkUploadComponent implements OnInit{
       allowSearchFilter: false,
       enableCheckAll: false
     };
-    this.setStatusForPdi();
+    this.setStatusForApiValues();
   }
 
 
-  onItemSelectForPdi(item: any) {
+  onItemSelectForApiValues(item: any) {
     this.selectedId = item
     console.log(item)
-    this.setClassForPdi();
+    this.setClassForApiValues();
   }
-  onSelectAllForPdi(items: any) {
-    this.setClassForPdi();
+  onSelectAllForApiValues(items: any) {
+    this.setClassForApiValues();
   }
-  setClassForPdi() {
-    this.setStatusForPdi();
-    if (this.selectedPdiStatus.length > 0) { return 'validField' }
+  setClassForApiValues() {
+    this.setStatusForApiValues();
+    if (this.selectedApiValue.length > 0) { return 'validField' }
     else { return 'invalidField' }
   }
-  setStatusForPdi() {
-    (this.selectedPdiStatus.length > 0) ? this.requiredFieldForPdi = true : this.requiredFieldForPdi = false;
+  setStatusForApiValues() {
+    (this.selectedApiValue.length > 0) ? this.requiredFieldForApiValues = true : this.requiredFieldForApiValues = false;
   }
 
   public files: any[] = [];
@@ -79,26 +79,20 @@ export class BulkUploadComponent implements OnInit{
 
 
   handleFileInput(event: Event): void {
-    console.log(event, 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
     const input = event.target as HTMLInputElement;
-    console.log(input, '-----------iiiiiiiiiiiiiiiiiiii')
     if (input && input.files) {
       const filesArray: File[] = Array.from(input.files);
       this.onFileChange(filesArray);
+      input.value = '';
     }
   }
 
   onFileChange(pFileList: File[]): void {
-    console.log(pFileList, '-------------------Pfile');
     this.files = pFileList;
-    console.log(this.files, '==============');
-
-    const formData: FormData = new FormData();
+    let formData: FormData = new FormData();
     this.files.forEach(file => {
       formData.append('file', file);
     });
-
-    console.log(formData, '------------------------formData');
 
     let ind = this.selectedVersionMap.get(this.selectedId);
     let verNum: any = 0;
@@ -109,7 +103,6 @@ export class BulkUploadComponent implements OnInit{
     }
 
     const myUrl = this.apiSrivice.mainUrl + 'aping/ulipxl/' + this.selectedId + "/" + '01';
-    console.log(myUrl, "-------------myUrl");
 
     const headers = new HttpHeaders({
       'auth-token': this.tokeVal || '',
@@ -122,6 +115,9 @@ export class BulkUploadComponent implements OnInit{
       console.log(response, '------------------------------------');
       this.downloadFile(response);
       swal.fire('Success', 'Your Data will be Auto Downloaded!', 'success' );
+      setTimeout( () => {
+        formData = new FormData()
+      }, 2000)
     }, error => {
       console.error('Error downloading file', error);
       if(error.status==400){
@@ -130,12 +126,10 @@ export class BulkUploadComponent implements OnInit{
         swal.fire('Error',error.message , 'error' );
 
       }
+      // formData = new FormData();
+      formData = new FormData()
 
     });
-
-    // this._snackBar.open("Successfully upload!", 'Close', {
-    //   duration: 2000,
-    // });
   }
 
 
