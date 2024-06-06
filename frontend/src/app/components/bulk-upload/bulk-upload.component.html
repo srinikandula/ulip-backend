@@ -4,12 +4,12 @@
                 class="cut-multi-select"
                 [placeholder]="'Select'"
                 [data]="dropdownList"
-                [(ngModel)]="selectedPdiStatus"
-                [settings]="dropdownSettingsForPdi"
-                (onSelect)="onItemSelectForPdi($event)"
-                (onSelectAll)="onSelectAllForPdi($event)"
-                [required]='requiredFieldForPdi'
-                [ngClass]='setClassForPdi()'
+                [(ngModel)]="selectedApiValue"
+                [settings]="dropdownSettingsForApiValue"
+                (onSelect)="onItemSelectForApiValues($event)"
+                (onSelectAll)="onSelectAllForApiValues($event)"
+                [required]='requiredFieldForApiValues'
+                [ngClass]='setClassForApiValues()'
                 name='countrySelect1'>
         </ng-multiselect-dropdown>
     </div>
