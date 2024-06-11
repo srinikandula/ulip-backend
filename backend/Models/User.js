@@ -22,8 +22,18 @@ module.exports = (Sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-
-
+        status:{
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        roleName:{
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        roleId:{
+            type: DataTypes.STRING,
+            allowNull: false,
+        }
     });
     return User
 }
