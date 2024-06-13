@@ -10,6 +10,7 @@ import { FetchulipComponent } from './components/tools/fetchulip/fetchulip.compo
 import { ProfileComponent } from './components/profile/profile.component';
 import { InfographicsComponent } from './components/infographics/infographics.component';
 import {BulkUploadComponent} from "./components/bulk-upload/bulk-upload.component";
+import {UsersAccessComponent} from "./components/users-access/users-access.component";
 
 
 const routes: Routes = [
@@ -43,6 +44,10 @@ const routes: Routes = [
     {
       path: 'bulkUpload',
       component: BulkUploadComponent
+    },
+      {
+      path: 'userAccess',
+      component: UsersAccessComponent
     }
 
     ]

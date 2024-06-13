@@ -41,11 +41,19 @@
                                     <input class="inputTexts" [(ngModel)]="email" name="email" type="email" id="email" placeholder="Email"
                                         required><br>
                                 </div>
-                                <div class="inputDivAllTexts">
-                                    <input class="inputTexts" [(ngModel)]="contact" name="contact" type="tel" id="contact"
-                                        placeholder="Contact" required><br>
-                                </div>
 
+                                <div class="inputDivAllTexts">
+                                    <input class="inputTexts"
+                                           [(ngModel)]="contact"
+                                           name="contact"
+                                           type="text"
+                                           id="contact"
+                                           placeholder="Contact"
+                                           (keypress)="onKeyPress($event)"
+                                           maxlength="10"
+                                           minlength="10"
+                                           required><br>
+                                </div>
                             </div>
 
 
