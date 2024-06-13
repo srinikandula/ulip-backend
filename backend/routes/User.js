@@ -137,6 +137,24 @@ router.post("/login", [
             return res.status(500).json({ error: "Internal Server Error" });
         }
     });
+
+    router.get('/getOne/:username', async (req, res) => {
+        const { username } = req.params;
+    
+        try {
+            // Find the user by username
+            const user = await User.findOne({ where: { username } });
+    
+            if (!user) {
+                return res.status(404).json({ message: "User not found",user });
+            }
+            user.password = undefined
+            return res.status(200).json({ message: "User Data Get successfully",user });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
+    });
     
 
 
