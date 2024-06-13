@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {apiService} from "../../services/api/apiservice";
 import {MessageService} from "primeng/api";
+import swal from "sweetalert2";
 
 @Component({
   selector: 'app-login',
@@ -29,12 +30,7 @@ export class LoginComponent implements OnInit {
         }
       },
       error:error=>{
-        console.error("There is an error", error.error.errors[0].msg)
-        if (error.error.errors) {
-          for (let i = 0; i < error.error.errors.length; ++i) {
-            this.messageService.add({ severity: 'error', summary: 'Failed', detail: error.error.errors[i].msg })
-          }
-        }
+        swal.fire('Error',error.error.message , 'error' );
       }
     })
     
