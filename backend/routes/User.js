@@ -39,6 +39,8 @@ router.post("/signup", [
         var secPass = await bcrypt.hash(user.password, salt)
         user.password = secPass
         user.status="InActive"
+        user.roleName="User"
+        user.roleId=2
         const userIs = await User.create(user)
         const data = {
             user: { id: userIs.id }
@@ -111,9 +113,9 @@ router.post("/login", [
         }
     })
 
-    router.post('/access/:username', async (req, res) => {
-        const { username } = req.params;
-        const { roleName, roleId } = req.body;
+    router.post('/access', async (req, res) => {
+        // const { username } = req.params;
+        const { status,username } = req.body;
     
         try {
             // Find the user by username
@@ -124,9 +126,9 @@ router.post("/login", [
             }
     
             // Update the user's status, roleName, and roleId
-            user.status = 'Active';
-            user.roleName = roleName;
-            user.roleId = roleId;
+            user.status = status;
+            // user.roleName = roleName;
+            // user.roleId = roleId;
     
             // Save the updated user to the database
             await user.save();
