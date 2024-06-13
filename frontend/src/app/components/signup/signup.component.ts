@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {apiService} from "../../services/api/apiservice";
+import swal from "sweetalert2";
 
 @Component({
   selector: 'app-signup',
@@ -28,10 +29,40 @@ export class SignupComponent {
         }
       },
       error: error => {
-        console.error("There is an error", error)
+        console.error("There is an error", error.error.message)
+        if (error.error && error.error.errors && Array.isArray(error.error.errors)) {
+          this.displayErrors(error.error.errors);
+        } else {
+          swal.fire('Error', 'Failed to signup. Please try again later.', 'error');
+        }
       }
     })
   }
+  displayErrors(errors: any[]): void {
+    let errorMessage = '<ul style="text-align: left; padding-left: 20px; color: red">'; // Left-align with some padding
+    errors.forEach(error => {
+      errorMessage += `<li>${error.msg}</li>`;
+    });
+    errorMessage += '</ul>';
+    swal.fire({
+      title: 'Validation Errors',
+      html: errorMessage,
+      icon: 'error',
+      customClass: {
+        popup: 'swal-popup',
+        title: 'swal-title',
+        htmlContainer: 'swal-html-container'
+      }
+    });
+  }
+  onKeyPress(event: KeyboardEvent) {
+    const inputChar = String.fromCharCode(event.keyCode);
+    const isDigit = /^[0-9]$/.test(inputChar);
+    if (!isDigit) {
+      event.preventDefault();
+    }
+  }
+
   name: string = "";
   username: string = "";
   password: string = "";

@@ -72,6 +72,15 @@
                 <i class="fa-sharp fa-solid fa-cloud-arrow-up"></i>
                 <span [style.display]="sidebarOpen?'block':'none'">Bulk Upload</span>
             </li>
+            <li id="menu_view_logs" class="grey_font menu_items"
+                [style.borderLeftColor]="this.keypage.pageNav === 5 ? '#D6223A' : 'transparent'"
+                [style.color]="this.keypage.pageNav === 5 ? '#D3223A' : ''" (click)="navigateToUserAccess()"
+                [style.justifyContent]="sidebarOpen?'':'center'"
+            >
+                <div id="red_bar" [style.backgroundColor]="keypage.pageNav === 5 ? '#D3223A' : ''"></div>
+                <i class="fa-solid fa-users"></i>
+                <span [style.display]="sidebarOpen?'block':'none'">Users Access</span>
+            </li>
 
             <!-- </div> -->
 

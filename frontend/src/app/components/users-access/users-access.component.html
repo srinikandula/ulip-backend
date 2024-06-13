@@ -1,0 +1,61 @@
+<!--<app-side-bar (keyCardAdd)="addKeyCard($event)"></app-side-bar>-->
+<div class="allBlur" *ngIf="keypage.createKeyBool"></div>
+
+
+<div id="page_desc_container">
+    <div id="page_desc">
+        <div id="desc_home" class="grey_font">Home</div>
+        <div id="desc_page_name">User Access</div>
+
+    </div>
+    <div id="create_keys_button_div">
+        <!--        <button id="create_keys_button" (click)="handleOnCreate()" class="redBtnEffect"> + Create</button>-->
+    </div>
+</div>
+<div id="history_keys_title" class="grey_font">User Table Data</div>
+<div id="table_container">
+    <table>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Contact Number</th>
+                <th>Email</th>
+                <th>Role Name</th>
+                <th>User Name</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of getAllUserListData; let i = index">
+                <td>{{user.name}}</td>
+                <td>{{user.contactNo}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.roleName || '---'}}</td>
+                <td>{{user.username || '---'}}</td>
+                <td>{{user.status || '---'}}</td>
+                <td>
+<!--                    <button-->
+<!--                            class="active-button"-->
+<!--                            [ngClass]="{'inactive': user.status === 'Active', 'active': user.status !== 'Active'}"-->
+<!--                            (click)="activeUser(user)">-->
+<!--                        {{ user.status === 'Active' ? 'De-Activate' : 'Activate' }}-->
+<!--                    </button>-->
+                    <button *ngIf="user.status !== 'Active'"
+                            class="active-button"
+                            (click)="active(user)">Activate
+                    </button>
+
+                    <button *ngIf="user.status === 'Active'"
+                            class="deactive-button"
+                            (click)="deActiveUser(user)">De-activate
+                    </button>
+
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </table>
+</div>
