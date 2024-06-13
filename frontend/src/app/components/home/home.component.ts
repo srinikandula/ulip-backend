@@ -9,6 +9,7 @@ import { KeypageService } from 'src/app/services/keypage/keypage.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  public userRole: any
   navigateFetchUlip() {
     this.router.navigate(["home/tools/fetchulip"])
   }
@@ -63,7 +64,8 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['login'])
   }
   ngOnInit() {
-
+    this.userRole = localStorage.getItem('roleName')
+    console.log(this.userRole)
     if (!localStorage.getItem("authtoken")) {
       this.router.navigate(['login'])
     }
