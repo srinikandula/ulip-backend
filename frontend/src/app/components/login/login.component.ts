@@ -26,6 +26,8 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("ulip-person-name", data.user.name)
           localStorage.setItem("authtoken", data.authtoken)
           localStorage.setItem("ulip-person-username", data.user.username)
+          localStorage.setItem("roleId", data.user.roleId)
+          localStorage.setItem("roleName", data.user.roleName)
           this.router.navigate(['home/createkey'])
         }
       },
