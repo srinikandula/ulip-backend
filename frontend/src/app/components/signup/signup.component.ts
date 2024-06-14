@@ -34,7 +34,7 @@ export class SignupComponent {
         if (error.error && error.error.errors && Array.isArray(error.error.errors)) {
           this.displayErrors(error.error.errors);
         } else {
-          swal.fire('Error', 'Failed to signup. Please try again later.', 'error');
+          swal.fire('Error',error.error.message, 'error');
         }
       }
     })

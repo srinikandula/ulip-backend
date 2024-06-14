@@ -32,7 +32,7 @@ exports.sendMails = async (userObj, done) => {
         subject: 'User Access Creation - ULIP',
         html: templateHtmlBody
     };
-
+ console.log("------mailOptions",mailOptions)
     try {
         await transporter.sendMail(mailOptions);
         done({

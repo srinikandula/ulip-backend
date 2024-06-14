@@ -34,6 +34,10 @@ router.post("/signup", [
         if (userNameCheck) {
             return res.status(400).json({ success: false, message: "user Name already Exisit" });
         }
+        const tokenCheck = await User.findOne({ where: { tokenId: req.body.tokenId } });
+        if (tokenCheck) {
+            return res.status(400).json({ success: false, message: "Token Id already Exisit" });
+        }
         const user = req.body
         const salt = await bcrypt.genSalt(10)
         var secPass = await bcrypt.hash(user.password, salt)
