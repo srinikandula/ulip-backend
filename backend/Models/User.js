@@ -6,7 +6,7 @@ module.exports = (Sequelize, DataTypes) => {
             allowNull: false,
             primaryKey: true,
         },
-        name: {
+        tokenId: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -22,8 +22,18 @@ module.exports = (Sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-
-
+        status:{
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        roleName:{
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        roleId:{
+            type: DataTypes.STRING,
+            allowNull: false,
+        }
     });
     return User
 }

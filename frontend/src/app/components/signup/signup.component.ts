@@ -14,18 +14,19 @@ export class SignupComponent {
   handleOnSubmitSignup() {
     this.http.post<any>(this.apiSrivice.mainUrl + 'user/signup', {
       "username":this.username,
-      "name":this.name,
+      "tokenId":this.tokenId,
       "password":this.password,
       "contactNo":this.contact,
       "email":this.email
     }).subscribe({
       next: data => {
-        console.log(data)
+          console.log(data)
         if (data.success) {
-          localStorage.setItem("authtoken", data.authtoken)
-          localStorage.setItem("ulip-person-name", data.name)
-          localStorage.setItem("ulip-person-username", data.user.username)
-          this.router.navigate(['home/createkey'])
+          // localStorage.setItem("authtoken", data.authtoken)
+          // localStorage.setItem("ulip-person-tokenId", data.tokenId)
+          // localStorage.setItem("ulip-person-username", data.user.username)
+           this.router.navigate(['/login'])
+          swal.fire('Success', 'Thanks for creating the Account in ULIP! An Email will be sent to our Team for your Account Activation.', 'success' );
         }
       },
       error: error => {
@@ -33,7 +34,7 @@ export class SignupComponent {
         if (error.error && error.error.errors && Array.isArray(error.error.errors)) {
           this.displayErrors(error.error.errors);
         } else {
-          swal.fire('Error', 'Failed to signup. Please try again later.', 'error');
+          swal.fire('Error',error.error.message, 'error');
         }
       }
     })
@@ -63,7 +64,7 @@ export class SignupComponent {
     }
   }
 
-  name: string = "";
+  tokenId: string = "";
   username: string = "";
   password: string = "";
   conPassword: string = "";

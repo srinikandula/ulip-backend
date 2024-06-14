@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
       next: data => {
         console.log(data)
         if(data.success){
-          localStorage.setItem("ulip-person-name", data.user.name)
+          localStorage.setItem("ulip-person-tokenId", data.user.tokenId)
           localStorage.setItem("authtoken", data.authtoken)
           localStorage.setItem("ulip-person-username", data.user.username)
           localStorage.setItem("roleId", data.user.roleId)

@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
   }
 
   constructor(private router: Router, public keypage: KeypageService) {
-    this.ulipPersonName = `${localStorage.getItem('ulip-person-name')}`;
+    this.ulipPersonName = `${localStorage.getItem('ulip-person-username')}`;
   }
 
   handleOnLogout() {

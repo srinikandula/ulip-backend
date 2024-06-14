@@ -12,28 +12,40 @@
         <!--        <button id="create_keys_button" (click)="handleOnCreate()" class="redBtnEffect"> + Create</button>-->
     </div>
 </div>
+
 <div id="history_keys_title" class="grey_font">User Table Data</div>
+  <!-- <div class="input-group">
+    <input type="text" class="form-control" placeholder="Search users..." [(ngModel)]="searchTerm" (input)="filterUsers()">    <i class="fa fa-search"></i>
+</div> -->
+<div class="input-group" style="padding: 10px 0;">
+    <div class="form-outline" data-mdb-input-init>
+    <input type="text" class="form-control" placeholder="Search users..." [(ngModel)]="searchTerm" (input)="filterUsers()">
+    </div>
+    <button type="button" class="btn btn-primary" data-mdb-ripple-init>
+      <i class="fas fa-search"></i>
+    </button>
+  </div>
 <div id="table_container">
     <table>
         <table>
             <thead>
             <tr>
-                <th>Name</th>
+                <th>User Name</th>
+                <th>Token Id</th>
                 <th>Contact Number</th>
                 <th>Email</th>
                 <th>Role Name</th>
-                <th>User Name</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let user of getAllUserListData; let i = index">
-                <td>{{user.name}}</td>
+            <tr *ngFor="let user of filteredUsers | paginate: { itemsPerPage: 10, currentPage: page }; let i = index">
+                <td>{{user.username}}</td>
+                <td>{{user.tokenId}}</td>
                 <td>{{user.contactNo}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.roleName || '---'}}</td>
-                <td>{{user.username || '---'}}</td>
                 <td>{{user.status || '---'}}</td>
                 <td>
 <!--                    <button-->
@@ -58,4 +70,5 @@
             </tbody>
         </table>
     </table>
+    <pagination-controls class="cust-pagination" (pageChange)="page = $event"></pagination-controls>
 </div>

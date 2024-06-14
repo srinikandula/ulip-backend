@@ -49,6 +49,7 @@ import { DragdropfileDirective } from './directive/dragdropfile.directive';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { LoadingInterceptor } from './loading.interceptor';
 import { UsersAccessComponent } from './components/users-access/users-access.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -135,6 +136,7 @@ import { UsersAccessComponent } from './components/users-access/users-access.com
     ProgressBarModule,
     SliderModule,
     MultiSelectModule,
+    NgxPaginationModule,
     NgMultiSelectDropDownModule.forRoot()
 
   ],
