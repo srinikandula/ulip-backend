@@ -11,8 +11,8 @@ const { body, validationResult } = require('express-validator');
 
 router.post("/signup", [
     body("username", "Username must be atleast 4 characters").isLength({ min: 4 }),
-    body("tokenId", "Token Id Must be atleast 1 character").isLength({ min: 1 }),
-    body("password", "Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, and one special character").isLength({ min: 8 }).matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$/, "i"),
+    body('tokenId').isNumeric().withMessage('Token Id must be a number').isInt({ min: 3 }).withMessage('Token Id must be at least 3'),
+     body("password", "Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, and one special character").isLength({ min: 8 }).matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$/, "i"),
     body("contactNo", "Contact Number must be atleast 10 characters").isLength({ min: 10 }),
     body("email", "Must be a email").isEmail()
 ], async (req, res) => {

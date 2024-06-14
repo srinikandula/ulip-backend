@@ -27,6 +27,7 @@ export class SignupComponent {
           localStorage.setItem("ulip-person-username", data.user.username)
           this.router.navigate(['home/createkey'])
         }
+        swal.fire('Success', 'Thanks for creating the Account in ULIP! An Email will be sent to our Team for your Account Activation.', 'success' );
       },
       error: error => {
         console.error("There is an error", error.error.message)
