@@ -3,6 +3,7 @@ const router = express.Router()
 const { User } = require("../Models")
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
+const email = require('../emailService/mailer')
 const JWT_SECRET = 'saltcode';
 const { body, validationResult } = require('express-validator');
 
@@ -10,7 +11,7 @@ const { body, validationResult } = require('express-validator');
 
 router.post("/signup", [
     body("username", "Username must be atleast 4 characters").isLength({ min: 4 }),
-    body("name", "Name Must be atleast 1 character").isLength({ min: 1 }),
+    body("tokenId", "Token Id Must be atleast 1 character").isLength({ min: 1 }),
     body("password", "Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, and one special character").isLength({ min: 8 }).matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$/, "i"),
     body("contactNo", "Contact Number must be atleast 10 characters").isLength({ min: 10 }),
     body("email", "Must be a email").isEmail()
@@ -25,7 +26,6 @@ router.post("/signup", [
         if (emailCheck) {
             return res.status(400).json({ success: false, message: "Email already Exisit" });
         }
-
         const phoneCheck = await User.findOne({ where: { contactNo: req.body.contactNo } });
         if (phoneCheck) {
             return res.status(400).json({ success: false, message: "contact number already Exisit" });
@@ -45,8 +45,19 @@ router.post("/signup", [
         const data = {
             user: { id: userIs.id }
         }
+       let mailresult=''
+        // const sendMail = email.sendMails(user)
+        email.sendMails(user, (emailResult) => {
+            if (emailResult.status === 400) {
+                mailresult = 'Error in sending mail'
+            }
+            else if(emailResult.status === 200){
+                mailresult = 'Mail sent successfully'
+
+            }
+        });
         const authtoken = jwt.sign(data, JWT_SECRET);
-        return res.json({ success: true, authtoken: authtoken, userIs })
+        return res.json({ success: true,message:"Successfully Register", authtoken: authtoken,mailresult })
 
     } catch (error) {
         console.log(error,'============errrr')

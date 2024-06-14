@@ -14,7 +14,7 @@ export class SignupComponent {
   handleOnSubmitSignup() {
     this.http.post<any>(this.apiSrivice.mainUrl + 'user/signup', {
       "username":this.username,
-      "name":this.name,
+      "tokenId":this.tokenId,
       "password":this.password,
       "contactNo":this.contact,
       "email":this.email
@@ -23,7 +23,7 @@ export class SignupComponent {
         console.log(data)
         if (data.success) {
           localStorage.setItem("authtoken", data.authtoken)
-          localStorage.setItem("ulip-person-name", data.name)
+          localStorage.setItem("ulip-person-tokenId", data.tokenId)
           localStorage.setItem("ulip-person-username", data.user.username)
           this.router.navigate(['home/createkey'])
         }
@@ -63,7 +63,7 @@ export class SignupComponent {
     }
   }
 
-  name: string = "";
+  tokenId: string = "";
   username: string = "";
   password: string = "";
   conPassword: string = "";
