@@ -20,14 +20,14 @@ export class SignupComponent {
       "email":this.email
     }).subscribe({
       next: data => {
-        console.log(data)
+          console.log(data)
         if (data.success) {
-          localStorage.setItem("authtoken", data.authtoken)
-          localStorage.setItem("ulip-person-tokenId", data.tokenId)
-          localStorage.setItem("ulip-person-username", data.user.username)
-          this.router.navigate(['home/createkey'])
+          // localStorage.setItem("authtoken", data.authtoken)
+          // localStorage.setItem("ulip-person-tokenId", data.tokenId)
+          // localStorage.setItem("ulip-person-username", data.user.username)
+           this.router.navigate(['/login'])
+          swal.fire('Success', 'Thanks for creating the Account in ULIP! An Email will be sent to our Team for your Account Activation.', 'success' );
         }
-        swal.fire('Success', 'Thanks for creating the Account in ULIP! An Email will be sent to our Team for your Account Activation.', 'success' );
       },
       error: error => {
         console.error("There is an error", error.error.message)

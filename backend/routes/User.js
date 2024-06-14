@@ -24,19 +24,19 @@ router.post("/signup", [
     try {
         const emailCheck = await User.findOne({ where: { email: req.body.email } });
         if (emailCheck) {
-            return res.status(400).json({ success: false, message: "Email already Exisit" });
+            return res.status(400).json({ success: false, message: "Email already Exist" });
         }
         const phoneCheck = await User.findOne({ where: { contactNo: req.body.contactNo } });
         if (phoneCheck) {
-            return res.status(400).json({ success: false, message: "contact number already Exisit" });
+            return res.status(400).json({ success: false, message: "contact number already Exist" });
         }
         const userNameCheck = await User.findOne({ where: { username: req.body.username } });
         if (userNameCheck) {
-            return res.status(400).json({ success: false, message: "user Name already Exisit" });
+            return res.status(400).json({ success: false, message: "user Name already Exist" });
         }
         const tokenCheck = await User.findOne({ where: { tokenId: req.body.tokenId } });
         if (tokenCheck) {
-            return res.status(400).json({ success: false, message: "Token Id already Exisit" });
+            return res.status(400).json({ success: false, message: "Token Id already Exist" });
         }
         const user = req.body
         const salt = await bcrypt.genSalt(10)
