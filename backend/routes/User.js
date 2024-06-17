@@ -6,14 +6,15 @@ var bcrypt = require('bcryptjs');
 const email = require('../emailService/mailer')
 const JWT_SECRET = 'saltcode';
 const { body, validationResult } = require('express-validator');
+const CryptoJS = require("crypto-js");
 
 
 
 router.post("/signup", [
     body("username", "Username must be atleast 4 characters").isLength({ min: 4 }),
     body('tokenId').isNumeric().withMessage('Token Id must be a number').isInt({ min: 3 }).withMessage('Token Id must be at least 3'),
-     body("password", "Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, and one special character").isLength({ min: 8 }).matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$/, "i"),
-    body("contactNo", "Contact Number must be atleast 10 characters").isLength({ min: 10 }),
+    body("password", "Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, and one special character").isLength({ min: 8 }).matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$/, "i"),
+    body("contactNo", "Contact Number must be atleast 10 characters").isNumeric().withMessage('contactNo must be a Number').isInt({ min: 10 }).withMessage('ContactNo must be at 10 Numbers'),
     body("email", "Must be a email").isEmail()
 ], async (req, res) => {
     let success = false
@@ -22,6 +23,10 @@ router.post("/signup", [
         return res.status(400).json({ errors: errors.array() })
     }
     try {
+        if(req.body.password != req.body.conformpassword){
+        return res.status(400).json({ success: false, message: "Mismatch the password" });
+
+        }
         const emailCheck = await User.findOne({ where: { email: req.body.email } });
         if (emailCheck) {
             return res.status(400).json({ success: false, message: "Email already Exist" });
@@ -86,14 +91,20 @@ router.post("/login", [
             let success = false
             const { username, password } = req.body
             let user = await User.findOne({ where: { username: username } })
+            if(!user){
+                return res.status(400).json({ success: false, message: "UserName Not Exist" });
+
+            }
             if(user.status==='InActive'||user.status===''){
              return res.status(400).json({ success: false, message: "You'r InActive please contact Admin" });
             }
-            const comparePassword = await bcrypt.compare(password, user.password)
+            const bytes = CryptoJS.AES.decrypt(req.body.password, process.env.secretKey);
+           const decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
+            const comparePassword = await bcrypt.compareSync(decryptedPassword, user.password)
             // console.log(user)
             if (!comparePassword) {
                 success = false
-                return res.status(400).json({ success, error: "Please try with correct password" })
+                return res.status(400).json({ success, message: "Invalid Credentials" })
             }
             const data = {
                 user: { username: username, password: password }
@@ -106,7 +117,7 @@ router.post("/login", [
 
         } catch (error) {
             console.log(error.message)
-            res.status(500).send("Internal Server Error")
+            return res.status(500).json({ message: error.message })
         }
 
     })

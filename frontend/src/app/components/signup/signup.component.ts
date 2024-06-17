@@ -17,7 +17,8 @@ export class SignupComponent {
       "tokenId":this.tokenId,
       "password":this.password,
       "contactNo":this.contact,
-      "email":this.email
+      "email":this.email,
+      "conformpassword":this.conPassword
     }).subscribe({
       next: data => {
           console.log(data)
