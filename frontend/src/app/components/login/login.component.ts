@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import {apiService} from "../../services/api/apiservice";
 import {MessageService} from "primeng/api";
 import swal from "sweetalert2";
+import CryptoJS from "crypto-js";
 
 @Component({
   selector: 'app-login',
@@ -14,11 +15,14 @@ import swal from "sweetalert2";
 export class LoginComponent implements OnInit {
   username: string = ""
   password: string = ""
+  secretKey:any= "mllf3xpex2kPk"
   handleOnLogin() {
     console.log("cliccked")
+    const encryptedPassword = CryptoJS.AES.encrypt(this.password, this.secretKey).toString();
+    console.log("encryptedPassword------",encryptedPassword)
     this.http.post<any>(this.apiSrivice.mainUrl + 'user/login', {
       "username": this.username,
-      "password": this.password
+      "password": encryptedPassword
     }).subscribe({
       next: data => {
         console.log(data)
@@ -32,7 +36,8 @@ export class LoginComponent implements OnInit {
         }
       },
       error:error=>{
-        swal.fire('Error',error.error.message , 'error' );
+        console.log (error,'-------------------errro')
+        swal.fire('Error',error.error.message, 'error' );
       }
     })
     

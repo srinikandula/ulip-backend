@@ -2,10 +2,13 @@ var jwt = require("jsonwebtoken")
 const JWT_SECRET = "saltcode"
 const {User}  = require("../Models")
 const bcrypt = require("bcryptjs")
+const CryptoJS = require("crypto-js");
+
 const fetchuser =async(req,res,next)=>{
      
     //get the user from the jwt token and add id to req object
     const token = req.header("auth-token")
+    console.log(token,"0--------------token")
     if(!token){
         
         res.status(401).send({error: "Please authenticate using a valid token"})   //status 401 stands for access denied
@@ -13,9 +16,11 @@ const fetchuser =async(req,res,next)=>{
     try {
         const data = jwt.verify(token, JWT_SECRET)
         let userPerson = await User.findOne({ where: { username: data.user.username } })
-        const comparePassword = await bcrypt.compare(data.user.password, userPerson.password)
+        const bytes = CryptoJS.AES.decrypt(data.user.password, process.env.secretKey);
+           const decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
+        const comparePassword = await bcrypt.compare(decryptedPassword, userPerson.password)
         req.usn = data.user.username
-        // console.log("Compare password ",comparePassword)
+         console.log("Compare password ",comparePassword)
         if (!comparePassword) {
             
             return res.status(400).json({ success:false, error: "Please authenticate using a valid token" })
