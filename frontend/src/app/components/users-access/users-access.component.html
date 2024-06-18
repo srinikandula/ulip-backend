@@ -18,12 +18,16 @@
     <input type="text" class="form-control" placeholder="Search users..." [(ngModel)]="searchTerm" (input)="filterUsers()">    <i class="fa fa-search"></i>
 </div> -->
 <div class="input-group" style="padding: 10px 0;">
-    <div class="form-outline" data-mdb-input-init>
-    <input type="text" class="form-control" placeholder="Search users..." [(ngModel)]="searchTerm" (input)="filterUsers()">
-    </div>
-    <button type="button" class="btn btn-primary" data-mdb-ripple-init>
-      <i class="fas fa-search"></i>
-    </button>
+    <div class="search-container">
+        <input 
+          type="text" 
+          class="form-control search-input" 
+          placeholder="Search users..." 
+          [(ngModel)]="searchTerm" 
+          (input)="filterUsers()"
+        >
+      </div>
+      
   </div>
 <div id="table_container">
     <table>
