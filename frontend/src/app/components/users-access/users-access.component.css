@@ -193,3 +193,60 @@ tbody {
     box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.5);
 }
 
+.search-container {
+    position: relative;
+    margin: 20px;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    transition: border-color 0.3s ease-in-out;
+  }
+  
+  .search-input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .search-input::placeholder {
+    color: #999;
+  }
+  
+  .search-container .search-input {
+    padding-left: 40px;
+  }
+  
+  .search-container::before {
+    content: "\f002"; /* FontAwesome search icon */
+    font-family: FontAwesome;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #999;
+  }
+  .cust-pagination {
+    display: flex;
+    justify-content: end;
+    margin-top: 20px; /* Margin between table and pagination */
+  }
+  
+  .cust-pagination .ng-star-inserted {
+    margin: 0 5px;
+  }
+  
+  .cust-pagination .ng-star-inserted a {
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .cust-pagination .ng-star-inserted a.active {
+    font-weight: bold;
+  }  
