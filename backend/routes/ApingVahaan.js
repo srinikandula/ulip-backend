@@ -654,6 +654,8 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'), fetchapiui, async (
                                 RegistrationNumberValidity: 'Invalid vehicle Number Format',
                                 FitnessCertificateValidityUpto: 'Invalid vehicle Number Format',
                                 RoadTaxValidityUpto: 'Invalid vehicle Number Format',
+                                RegistrationDate: 'Invalid vehicle Number Format',
+                                VehicleMake: 'Invalid vehicle Number Format',
                                 Valid: 'Invalid vehicle Number Format'
                             });
                         } else if (json.response[0].response === 'Vehicle Details not Found') {
@@ -668,6 +670,8 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'), fetchapiui, async (
                                 RegistrationNumberValidity: 'RegistrationNumberValidity Not Found',
                                 FitnessCertificateValidityUpto: 'FitnessCertificateValidityUpto Not Found',
                                 RoadTaxValidityUpto: 'RoadTaxValidityUpto Not Found',
+                                RegistrationDate: 'RegistrationDate Not Found',
+                                VehicleMake: 'VehicleMake Not Found',
                                 Valid: 'Vehicle Data Not Found'
                             });
                         } else {
@@ -697,6 +701,8 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'), fetchapiui, async (
                                     RegistrationNumberValidity: vehicleDetails.rc_regn_upto || 'RegistrationNumberValidity Not Found',
                                     FitnessCertificateValidityUpto: vehicleDetails.rc_fit_upto || 'FitnessCertificateValidityUpto Not Found',
                                     RoadTaxValidityUpto: vehicleDetails.rc_tax_upto || 'RoadTaxValidityUpto Not Found',
+                                    RegistrationDate:vehicleDetails.rc_regn_dt|| 'RegistrationDate Not Found',
+                                    VehicleMake: vehicleDetails.rc_maker_model||'VehicleMake Not Found',
                                     Valid: valid || 'Vehicle Data Not Found'
                                 });
                             } catch (parseError) {
@@ -713,6 +719,8 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'), fetchapiui, async (
                                     RegistrationNumberValidity: 'Error parsing data',
                                     FitnessCertificateValidityUpto: 'Error parsing data',
                                     RoadTaxValidityUpto: 'Error parsing data',
+                                    RegistrationDate: 'Error parsing data',
+                                    VehicleMake:'Error parsing data',
                                     Valid: 'Error parsing data'
                                 });
                             }
@@ -730,6 +738,8 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'), fetchapiui, async (
                             RegistrationNumberValidity: 'Error fetching data',
                             FitnessCertificateValidityUpto: 'Error fetching data',
                             RoadTaxValidityUpto: 'Error fetching data',
+                            RegistrationDate: 'Error fetching data',
+                            VehicleMake:'Error fetching data',
                             Valid: 'Error fetching data'
                         });
                     }
@@ -747,6 +757,9 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'), fetchapiui, async (
                     { v: 'RegistrationNumberValidity' },
                     { v: 'FitnessCertificateValidityUpto' },
                     { v: 'RoadTaxValidityUpto' },
+                    { v: 'RegistrationDate' },
+                    { v: 'VehicleMake' },
+
                     { v: 'Valid' },
                 ]];
     
@@ -762,6 +775,8 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'), fetchapiui, async (
                         'RegistrationNumberValidity': item_1.RegistrationNumberValidity,
                         'FitnessCertificateValidityUpto': item_1.FitnessCertificateValidityUpto,
                         'RoadTaxValidityUpto': item_1.RoadTaxValidityUpto,
+                        'RegistrationDate':item_1.RegistrationDate,
+                        'VehicleMake':item_1.VehicleMake,
                         'Valid': item_1.Valid
                     };
     
