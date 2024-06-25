@@ -6,6 +6,7 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { KeypageService } from 'src/app/services/keypage/keypage.service';
 import { MessageService } from 'primeng/api';
 import {apiService} from "../../services/api/apiservice";
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -59,6 +60,7 @@ handleOnEditKeyPressed(apikey: string) {
       },
       error: error => {
         console.error("There is an error", error)
+         Swal.fire('error',error.error.error,'error')
       }
     })
 
@@ -76,6 +78,11 @@ handleOnEditKeyPressed(apikey: string) {
   
   handleOnLogout() {
     localStorage.removeItem("authtoken")
+    localStorage.removeItem("roleName")
+    localStorage.removeItem("ulip-person-tokenId")
+    localStorage.removeItem("roleId")
+    localStorage.removeItem("ulip-person-username")
+    console.log("LocalStorage after removal:", localStorage);
     this.router.navigate(['login'])
   }
   handleOnCreate() {
