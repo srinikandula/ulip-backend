@@ -6,6 +6,7 @@ const { ApiLogs } = require("../Models")
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 const JWT_SECRET = 'saltcode';
+const { User } = require("../Models")
 var fetchuser = require("../middleware/fetchuser")
 var fetchapi = require("../middleware/fetchapi")
 var convert = require('xml-js');
@@ -20,6 +21,8 @@ const fetch = require('node-fetch')
 const multer = require('multer');
 const xlsx = require('xlsx');
 const xml2js = require('xml2js');
+const email = require('../emailService/mailer')
+const CryptoJS = require("crypto-js");
 
 const upload = multer({ dest: 'uploads/' }); // configure multer for file uploads
 
@@ -100,12 +103,16 @@ router.post("/sendmailcreatekey", [
 
 router.post("/createKey", [
     body("email", "Must be a email").isEmail(),
-    body("applicationName", "Application Name must have some value").isLength({ min: 1 }),
+    body("applicationName", "Application Name must have some value").isLength({ min: 3 }),
+    body('applicationName', 'Application Name must only contain alphabets, numbers, and underscores')
+    .matches(/^[A-Za-z0-9_ ]+$/),
     body("ownerName", "Owner Name must have some value").isLength({ min: 1 }),
+    body('ownerName', 'Owner Name must only contain alphabets')
+    .matches(/^[A-Za-z\s]+$/),
     body("ip", "Should be a valid IP address").isLength({ min: 4 }),
     body("key", "Empty API key passed").isLength({ min: 1 }),
-    body("contactNo", "Contact Number should be greater than 8 characters").isLength({ min: 8 }),
-
+    body('contactNo', 'Contact Number should be exactly 10 digits').isLength({ min: 10, max: 10 }),
+    body('contactNo', 'Contact Number must be Number').isNumeric(),
 ], fetchuser, async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -113,16 +120,21 @@ router.post("/createKey", [
     }
 
     try {
+        const { applicationName } = req.body;
+        const applicationExists = await ApiKeys.findOne({
+            where: { applicationName }
+          });
+      
+          if (applicationExists) {
+            return res.status(400).json({ message: 'Application Name already exists' });
+          }        
         let secKey = crypto.randomUUID()
-
         const newKey = crypto.createCipher('aes-128-cbc', "secKey");
         var mystr = newKey.update(secKey, 'utf8', 'hex')
         mystr += newKey.final('hex');
 
         const dateTime = new Date()
         dateTime.setDate(dateTime.getDate() + 15)
-
-
         let key = req.body
         key.username = req.usn
         key.secKey = mystr
@@ -130,6 +142,17 @@ router.post("/createKey", [
         // let keyVal = key.key
         // keyVal = CrockfordBase32.encode(keyVal)
         const keyIs = await ApiKeys.create(key)
+        email.sendKeys(key, (emailResult) => {
+            if (emailResult.status === 400) {
+                let mailresult = 'Error in sending mail'
+                res.json({ success: true, keyIs ,mailresult})
+
+            }
+            else if(emailResult.status === 200){
+                let mailresult = 'Mail sent successfully'
+                res.json({ success: true, keyIs ,mailresult})
+            }
+        });
         res.json({ success: true, keyIs })
         // res.json({success:true,key, keyVal})
 
@@ -249,6 +272,36 @@ router.post("/fetchKeys", fetchuser, async (req, res) => {
 
 })
 
+// router.post("/fetchKeys", fetchuser, async (req, res) => {
+//     try {
+//         const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
+//         const pageSize = parseInt(req.query.pageSize) || 10; // Default to 10 items per page if not provided
+//         const offset = (page - 1) * pageSize;
+
+//         const allKey = await ApiKeys.findAll({
+//             where: { username: req.usn },
+//             limit: pageSize,
+//             offset: offset
+//         });
+
+//         // Optionally, get the total count of items
+//         const totalCount = await ApiKeys.count({ where: { username: req.usn } });
+
+//         res.send({
+//             success: true,
+//             allKey,
+//             pagination: {
+//                 totalItems: totalCount,
+//                 currentPage: page,
+//                 totalPages: Math.ceil(totalCount / pageSize)
+//             }
+//         });
+
+//     } catch (error) {
+//         console.log(error.message);
+//         res.status(500).send("Internal Server Error");
+//     }
+// });
 router.put("/toggle-api-key", fetchuser, [
     body("passKey", "API must be valid").isLength({ min: 1 }),
     body("isEnable", "API key toggle failed").isBoolean()
@@ -273,11 +326,64 @@ router.put("/toggle-api-key", fetchuser, [
         }
 
     })
+    router.post("/changePassword",fetchuser,async(req,res)=>{
+        try {
+        const {oldPassword,newPassword,confirmPassword}=req.body
+        const bytesOldPass = CryptoJS.AES.decrypt(oldPassword, process.env.secretKey);
+        const decryptedOldPassword = bytesOldPass.toString(CryptoJS.enc.Utf8);
+        const bytesPass = CryptoJS.AES.decrypt(newPassword, process.env.secretKey);
+        const decryptedPassword = bytesPass.toString(CryptoJS.enc.Utf8);
+        const bytesConPass = CryptoJS.AES.decrypt(confirmPassword, process.env.secretKey);
+        const decryptedConPassword = bytesConPass.toString(CryptoJS.enc.Utf8);
 
-router.put("/updatekey", fetchuser, [
+        if (!decryptedPassword || decryptedPassword.length < 8 || !decryptedPassword.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$/)) {
+            return res.status(400).json({
+              message: 'Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, and one special character.'
+            });
+          }
+        if(decryptedPassword != decryptedConPassword){
+        return res.status(400).json({ success: false, message: "Mismatch the password" });
+
+        }
+        const user = await User.findOne({ where: { username: req.usn }  }); // Assuming `fetchuser` adds the user ID to `req.user.id`
+    
+        if (!user) {
+          return res.status(404).json({ message: "User not found" });
+        }
+    
+        // Check if the old password is correct
+        const isMatch = await bcrypt.compare(decryptedOldPassword, user.password);
+        if (!isMatch) {
+          return res.status(400).json({ message: "Old password is incorrect" });
+        }
+        const salt = await bcrypt.genSalt(10)
+        var secPass = await bcrypt.hash(decryptedPassword, salt)
+        const up= await User.update({
+            password:secPass,
+            passW:decryptedPassword
+    
+        }, {
+            where: {
+              username:user.username 
+            }
+        });  
+        } catch (error) {
+            console.log("-----error",error)
+            return res.status(500).json({ error });
+
+        }
+
+    
+    })
+    
+    router.put("/updatekey", fetchuser, [
     body("apiKey", "Empty API key passed").isLength({ min: 1 }),
-    body("applicationName", "Application Name must have some value").isLength({ min: 1 }),
+    body("applicationName", "Application Name must have some value").isLength({ min: 3 }),
+    body('applicationName', 'Application Name must only contain alphabets, numbers, and underscores')
+    .matches(/^[A-Za-z0-9_ ]+$/),
     body("ownerName", "Owner Name must have some value").isLength({ min: 1 }),
+    body('ownerName', 'Owner Name must only contain alphabets')
+    .matches(/^[A-Za-z\s]+$/),
     body("contactNo", "Contact Number should be greater than 8 characters").isLength({ min: 8 }),
 ]
 

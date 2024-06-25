@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {apiService} from "../../services/api/apiservice";
 import swal from "sweetalert2";
+import CryptoJS from "crypto-js";
 
 @Component({
   selector: 'app-signup',
@@ -10,15 +11,18 @@ import swal from "sweetalert2";
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
+  secretKey:any= "mllf3xpex2kPk"
   constructor(private http: HttpClient, private router:Router, private apiSrivice: apiService){}
   handleOnSubmitSignup() {
+    const encryptedPassword = CryptoJS.AES.encrypt(this.password, this.secretKey).toString();
+    const encryptedConPassword = CryptoJS.AES.encrypt(this.conPassword, this.secretKey).toString();
     this.http.post<any>(this.apiSrivice.mainUrl + 'user/signup', {
       "username":this.username,
       "tokenId":this.tokenId,
-      "password":this.password,
+      "password":encryptedPassword,
       "contactNo":this.contact,
       "email":this.email,
-      "conformpassword":this.conPassword
+      "conformpassword":encryptedConPassword
     }).subscribe({
       next: data => {
           console.log(data)

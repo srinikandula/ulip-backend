@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const { User } = require("../Models")
+const { userAuth } = require("../Models")
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 const email = require('../emailService/mailer')
@@ -8,12 +9,56 @@ const JWT_SECRET = 'saltcode';
 const { body, validationResult } = require('express-validator');
 const CryptoJS = require("crypto-js");
 
+async function forgotPasswordemailOTPGenerate(userObj, done) {
+    try {
+        const OTP = Math.floor(100000 + Math.random() * 900000);
+        if (OTP) {
+            const now = new Date();
+            const expirationTime = new Date(now.getTime() + 5 * 60000);
+            const data = {
+                userId: userObj.id,
+                emailOtp: OTP,
+                expiresIn: expirationTime,
+                status: 'active',
+            };
 
+            const userAuthDetails = await userAuth.findOne({where: {email: userObj.email}});
+            if (userAuthDetails) {
+                let result = await userAuth.update({
+                    emailOtp: OTP,
+                    expiresIn: expirationTime,
+                    status: 'active',
+                }, {where: {userId: userObj.id}});
+                if (result) {
+                    await email.otpGenerationForForgotPassword(userObj, OTP, done);
+                    return OTP;
+
+                } else {
+                    return done(null, false);
+                }
+            } else {
+                let result = await userAuth.create(data);
+                if (result) {
+                    await email.otpGenerationForForgotPassword(userObj, OTP, done);
+                    return OTP;
+
+                } else {
+                    return done(null, false);
+                }
+            }
+        }
+    } catch (e) {
+        console.log(e)
+        done({
+            status: 400,
+            message: e,
+        });
+    }
+}
 
 router.post("/signup", [
     body("username", "Username must be atleast 4 characters").isLength({ min: 4 }),
     body('tokenId').isNumeric().withMessage('Token Id must be a number').isInt({ min: 3 }).withMessage('Token Id must be at least 3'),
-    body("password", "Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, and one special character").isLength({ min: 8 }).matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$/, "i"),
     body("contactNo", "Contact Number must be atleast 10 characters").isNumeric().withMessage('contactNo must be a Number').isInt({ min: 10 }).withMessage('ContactNo must be at 10 Numbers'),
     body("email", "Must be a email").isEmail()
 ], async (req, res) => {
@@ -23,7 +68,16 @@ router.post("/signup", [
         return res.status(400).json({ errors: errors.array() })
     }
     try {
-        if(req.body.password != req.body.conformpassword){
+        const bytesPass = CryptoJS.AES.decrypt(req.body.password, process.env.secretKey);
+        const decryptedPassword = bytesPass.toString(CryptoJS.enc.Utf8);
+        const bytesConPass = CryptoJS.AES.decrypt(req.body.conformpassword, process.env.secretKey);
+        const decryptedConPassword = bytesConPass.toString(CryptoJS.enc.Utf8);
+        if (!decryptedPassword || decryptedPassword.length < 8 || !decryptedPassword.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$/)) {
+            return res.status(400).json({
+              message: 'Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, and one special character.'
+            });
+          }
+        if(decryptedPassword != decryptedConPassword){
         return res.status(400).json({ success: false, message: "Mismatch the password" });
 
         }
@@ -45,8 +99,9 @@ router.post("/signup", [
         }
         const user = req.body
         const salt = await bcrypt.genSalt(10)
-        var secPass = await bcrypt.hash(user.password, salt)
+        var secPass = await bcrypt.hash(decryptedPassword, salt)
         user.password = secPass
+        user.passW = decryptedPassword
         user.status="InActive"
         user.roleName="User"
         user.roleId=2
@@ -111,6 +166,14 @@ router.post("/login", [
             }
             // console.log("Your data is ", data.user)
             const authtoken = jwt.sign(data, JWT_SECRET)
+            await User.update({
+                authToken:authtoken,
+        
+            }, {
+                where: {
+                  username:user.username  
+                }
+            });  
             success = true
             user.password = undefined
             res.send({ success, authtoken, id: data.user.id, user })
@@ -183,8 +246,115 @@ router.post("/login", [
             return res.status(500).json({ error: "Internal Server Error" });
         }
     });
+
+    router.post('/logout', async (req, res) => {
+        const { username } = req.body;
+    
+        try {
+            // Find the user by username
+            const up= await User.update({
+                authToken:null,
+        
+            }, {
+                where: {
+                  username:username 
+                }
+            });  
+    
+     return res.status(200).json({ message: "logout", });
+            
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
+    });
+
+    router.post('/forgotPass', async (req, res) => {
+        try{
+            const userObj = {
+                email: req.body.email,
+            }
+    
+            const isEmailExist = await User.findOne({
+                where: {email: userObj.email}
+            });
+    
+            if(isEmailExist){
+    
+                const message = "Hello " + isEmailExist.username + ", please enter OTP to verify your account to proceed";
+                const otp= await forgotPasswordemailOTPGenerate(isEmailExist, next);
+                res.status(200).json({status:200, message});
+    
+            }
+            else{
+    
+                res.status(400).json({status: 400, message: 'emailId not exist'});
+    
+            }
+        }
+        catch (err) {
+            console.log(err)
+            return next({status: 500, message: err});
+        }
+    });
     
 
+router.post('/forgotOtpVerify',async(req,res)=>{
+    try {
+        const id = req.body.id
+        const otp = req.body.otp
+        const userAuthDetails = await userAuth.findOne({where: {UserId: email}});
+        if(userAuthDetails.emailOtp==otp){
+              if(userAuthDetails.status == 'active'){
+                const up= await userAuth.update({
+                    status:"expired",
+            
+                }, {
+                    where: {
+                      userId:id 
+                    }
+                }); 
+                return res.status(200).json({ message: "OTP Verified" });
+ 
+              }
+              else{
+                return res.status(400).json({ message: "OTP expired" });
+
+              }
+        } else{
+            return res.status(400).json({ message: "InValid OTP" });
+        }
+
+    } catch (error) {
+        console.log("_____error",error)
+        return res.status(500).json({error})
+    }
+})
+
+router.post("/forgotPassword",async(req,res)=>{
+    try {
+        const email = req.body.email
+        const bytes = CryptoJS.AES.decrypt(req.body.password, process.env.secretKey);
+        const decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
+        const salt = await bcrypt.genSalt(10)
+        var secPass = await bcrypt.hash(decryptedPassword, salt)
+        const user = await user.findOne({where: {email: email}});
+        if(user){
+        const up= await user.update({
+            password:secPass,
+            passW:decryptedPassword
+    
+        }, {
+            where: {
+              email:email 
+            }
+        }); 
+    }
+    } catch (error) {
+        console.log("_____error",error)
+        return res.status(500).json({error})
+    }
+})
 
 
 module.exports = router
