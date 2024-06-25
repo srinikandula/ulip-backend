@@ -6,6 +6,7 @@ const db = require("./Models");
 const http = require("http");
 const { Server } = require("socket.io");
 const rateLimit = require('express-rate-limit');
+const cookieParser = require('cookie-parser');
 
 // Use Helmet with specific configurations
 app.use(helmet());
@@ -44,7 +45,21 @@ app.use(helmet.frameguard({
   action: 'sameorigin'
 }));
 
-app.use(cors());
+// app.use(cors());
+// app.use(cookieParser());
+
+var allowedOrigins = [ 'http://localhost:3000', 'http://localhost:4200','https://ulip.mllqa.com/','https://ulip.mahindralogistics.com/']
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  optionsSuccessStatus: 200 // Some legacy browsers choke on 204
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 const createRecordLimiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
@@ -76,6 +91,27 @@ app.use("/driver", createRecordLimiter,driverRouter);
 app.use("/user",createRecordLimiter, userRouter);
 app.use("/vehicle",createRecordLimiter, vehicleRouter);
 app.use("/aping",createRecordLimiter, apingRouter);
+
+// app.use('/driver', (req, res, next) => {
+//   res.cookie('driverToken', 'tokenValue', { path: '/driver', httpOnly: true, secure: true });
+//   next();
+// }, createRecordLimiter, driverRouter);
+
+// app.use('/user', (req, res, next) => {
+//   res.cookie('userToken', 'tokenValue', { path: '/user', httpOnly: true, secure: true });
+//   next();
+// }, createRecordLimiter, userRouter);
+
+// app.use('/vehicle', (req, res, next) => {
+//   res.cookie('vehicleToken', 'tokenValue', { path: '/vehicle', httpOnly: true, secure: true });
+//   next();
+// }, createRecordLimiter, vehicleRouter);
+
+// app.use('/aping', (req, res, next) => {
+//   res.cookie('apingToken', 'tokenValue', { path: '/aping', httpOnly: true, secure: true });
+//   next();
+// }, createRecordLimiter, apingRouter);
+
 
 app.get('/', (req, res) => res.send('This is ulip-backend'));
 
