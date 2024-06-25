@@ -19,11 +19,10 @@ const fetchuser =async(req,res,next)=>{
         // const bytes = CryptoJS.AES.decrypt(data.user.password, process.env.secretKey);
         // const decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
         // const comparePassword = await bcrypt.compare(decryptedPassword, userPerson.password)
-        req.usn = data.user.username
+         req.usn = data.user.username
         //  console.log("Compare password ",comparePassword)
         if (userPerson.authToken != token) {
-            
-            return res.status(401).json({ success:false, error: "Please authenticate using a valid token" })
+            return res.status(401).json({ success:false, error: "Invalid authToken" })
         }
         next()
     } catch (error) {

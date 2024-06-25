@@ -48,7 +48,7 @@ app.use(helmet.frameguard({
 // app.use(cors());
 // app.use(cookieParser());
 
-var allowedOrigins = [ 'http://localhost:3000', 'http://localhost:4200','https://ulip.mllqa.com/','https://ulip.mahindralogistics.com/']
+var allowedOrigins = [ 'http://localhost:3000', 'http://localhost:4200','https://ulip.mllqa.com','https://ulip.mahindralogistics.com']
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
