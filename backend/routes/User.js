@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const { User } = require("../Models")
 const { userAuth } = require("../Models")
+var fetchuser = require("../middleware/fetchuser")
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 const email = require('../emailService/mailer')
@@ -185,7 +186,7 @@ router.post("/login", [
 
     })
 
-    router.get('/getUserData',async(req,res)=>{
+    router.get('/getUserData',fetchuser,async(req,res)=>{
         try {
             const userData = await User.findAll()
             if(userData){
@@ -202,7 +203,7 @@ router.post("/login", [
         }
     })
 
-    router.post('/access', async (req, res) => {
+    router.post('/access', fetchuser,async (req, res) => {
         // const { username } = req.params;
         const { status,username } = req.body;
     
@@ -229,7 +230,7 @@ router.post("/login", [
         }
     });
 
-    router.get('/getOne/:username', async (req, res) => {
+    router.get('/getOne/:username',fetchuser, async (req, res) => {
         const { username } = req.params;
     
         try {
