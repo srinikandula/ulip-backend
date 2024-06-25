@@ -14,6 +14,9 @@ module.exports = (Sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        passW:{
+            type: DataTypes.STRING,
+        },
         contactNo: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -33,6 +36,10 @@ module.exports = (Sequelize, DataTypes) => {
         roleId:{
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        authToken:{
+            type: DataTypes.STRING,
+            allowNull: true,
         }
     });
     return User

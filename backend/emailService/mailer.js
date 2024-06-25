@@ -48,3 +48,60 @@ exports.sendMails = async (userObj, done) => {
     }
 };
 
+exports.sendKeys = async (userObj, done) => {
+    const htmlTemplate = fs.readFileSync('Html/index.html', 'utf8');
+    const renderedHtmlContent = htmlTemplate.replace('{apiKey}', userObj.Key)
+                .replace('{applicationName}', userObj.applicationName)
+                .replace('{ownerName}', userObj.ownerName)
+                .replace('{seckey}', userObj.seckey)
+
+    let mailOptions = {
+        from: process.env.fromMail,
+        to: userObj.email,
+        cc: ['Srivyas.kopperla@mahindralogistics.com','29002168@mahindralogistics.com','29002891@mahindralogistics.com'],
+        subject: 'ULIP API Key',
+        html: renderedHtmlContent
+    };
+ console.log("------mailOptions",mailOptions)
+    try {
+        await transporter.sendMail(mailOptions);
+        done({
+            status: 200,
+            message: 'Mail sent successfully!'
+        });
+    } catch (error) {
+        console.error('Error sending mail:', error);
+        done({
+            status: 400,
+            message: 'Error in sending mail'
+        });
+    }
+};
+
+exports.otpGenerationForForgotPassword = async (userObj, OTP, done) => {
+    let file = fs.readFileSync(
+        path.join(__dirname, '../email-templates', 'forgotPasswordAuthentication.html'),
+        'utf8'
+    );
+    let templateHtmlBody = file.replace('$$FULLNAME$$', userObj.username).replace('$$PASSWORD$$', OTP);
+    let mailOptions = {
+        from: process.env.fromMail,
+        to: userObj.email,
+        subject: 'Forgot Password Authentication - Ulip',
+        html: templateHtmlBody,
+    };
+
+    await transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            done({
+                status: 400,
+                message: 'Error in sending Mail',
+            });
+        } else {
+            done({
+                status: 200,
+                message: 'Mail sent Successfully..!',
+            });
+        }
+    });
+};
