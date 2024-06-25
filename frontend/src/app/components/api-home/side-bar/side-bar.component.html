@@ -83,12 +83,12 @@
         <div id="menu_container">
             <div class="inputs_container">
                 <div class="input_label">Application Name</div>
-                <input [(ngModel)]="applicationName" name="applicationName" type="text"
-                    placeholder="Enter Application Name">
+                <input [(ngModel)]="applicationName" (keypress)="validateNumberAndChar($event)" name="applicationName" type="text"
+                       pattern="[a-zA-Z0-9_]*" placeholder="Enter Application Name">
             </div>
             <div class="inputs_container">
                 <div class="input_label">Owner Name</div>
-                <input [(ngModel)]="ownerName" name="ownerName" type="text" placeholder="Enter Owner Name">
+                <input [(ngModel)]="ownerName" name="ownerName" type="text" placeholder="Enter Owner Name" (keypress)="validateNumberAndChar($event)">
             </div>
             <div class="inputs_container">
                 <div class="input_label">Contact Number</div>
@@ -97,7 +97,7 @@
             </div>
             <div class="inputs_container">
                 <div class="input_label">Email Address</div>
-                <input [(ngModel)]="emailAddress" name="emailAddress" type="text" placeholder="Enter Email Address">
+                <input [(ngModel)]="emailAddress" name="emailAddress" type="text" placeholder="Enter Email Address" (keypress)="validateEmail($event)">
             </div>
 
             <p id="ip_config_title">IP Config</p>
@@ -117,7 +117,7 @@
                 <div class="inputs_container">
                     <div class="input_label">Custom IP</div>
                     <input [(ngModel)]="myIp" name="myIp" type="text"
-                        placeholder="Custom IP Address">
+                        placeholder="Custom IP Address" (keypress)="validateNumberAndChar($event)">
                 </div>
             </div>
             <p id="ip_config_title">ULIP Access</p>

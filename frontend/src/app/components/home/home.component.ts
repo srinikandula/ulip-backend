@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem, MessageService } from 'primeng/api';
 import { KeypageService } from 'src/app/services/keypage/keypage.service';
+import {apiService} from "../../services/api/apiservice";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-home',
@@ -10,6 +12,7 @@ import { KeypageService } from 'src/app/services/keypage/keypage.service';
 })
 export class HomeComponent implements OnInit {
   public userRole: any
+  public userName: any
   navigateFetchUlip() {
     this.router.navigate(["home/tools/fetchulip"])
   }
@@ -55,16 +58,30 @@ export class HomeComponent implements OnInit {
     this.router.navigate(["home/createkey"])
   }
 
-  constructor(private router: Router, public keypage: KeypageService) {
+  constructor(private router: Router, public keypage: KeypageService, private apiSrivice: apiService, private http: HttpClient,) {
     this.ulipPersonName = `${localStorage.getItem('ulip-person-username')}`;
   }
 
   handleOnLogout() {
+    this.http.post(this.apiSrivice.mainUrl +'user/logout', {username: this.userName}).subscribe(
+        response => {
+          console.log('Logged out successfully');
+        },
+        error => {
+          localStorage.removeItem("authtoken")
+          console.error('Logout failed', error);
+        }
+    );
+    localStorage.removeItem("ulip-person-tokenId")
     localStorage.removeItem("authtoken")
+    localStorage.removeItem("ulip-person-username")
+    localStorage.removeItem("roleId")
+    localStorage.removeItem("roleName")
     this.router.navigate(['login'])
   }
   ngOnInit() {
     this.userRole = localStorage.getItem('roleName')
+    this.userName = localStorage.getItem('ulip-person-username')
     console.log(this.userRole)
     if (!localStorage.getItem("authtoken")) {
       this.router.navigate(['login'])

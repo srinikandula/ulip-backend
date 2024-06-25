@@ -50,6 +50,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { LoadingInterceptor } from './loading.interceptor';
 import { UsersAccessComponent } from './components/users-access/users-access.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import {BnNgIdleService} from "bn-ng-idle";
 
 
 
@@ -140,7 +141,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgMultiSelectDropDownModule.forRoot()
 
   ],
-  providers: [KeypageService, MessageService, ToastService, WebsocketService, ConfirmationService, {
+  providers: [KeypageService, MessageService, ToastService, WebsocketService, ConfirmationService, BnNgIdleService, {
     provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
   }],
   bootstrap: [AppComponent]

@@ -195,7 +195,25 @@ export class SideBarComponent implements OnInit {
 
 
   }
-
+  validateEmail(event: KeyboardEvent) {
+    const input = event.key;
+    if (/[0-9a-zA-Z@.]/.test(input)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
+  validateNumberAndChar(event: KeyboardEvent) {
+    const input = event.key;
+    // Regular expression to allow alphanumeric characters, @ symbol, dot, and dash
+    if (/^[a-zA-Z0-9@.\-]*$/.test(input)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
   validateNumber(event: KeyboardEvent) {
     const input = event.key;
     if (/[0-9]/.test(input)) {

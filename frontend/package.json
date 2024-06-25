@@ -20,6 +20,7 @@
     "@angular/router": "^16.1.0",
     "@ng-select/ng-select": "^6.1.0",
     "@types/xlsx": "^0.0.36",
+    "bn-ng-idle": "^2.0.5",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.2",
     "crockford-base32": "^2.0.0",
