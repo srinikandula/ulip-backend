@@ -121,8 +121,8 @@ router.post("/signup", [
 
             }
         });
-        const authtoken = jwt.sign(data, JWT_SECRET);
-        return res.json({ success: true,message:"Successfully Register", authtoken: authtoken,mailresult })
+        // const authtoken = jwt.sign(data, JWT_SECRET);
+        return res.json({ success: true,message:"Successfully Register",mailresult })
 
     } catch (error) {
         console.log(error,'============errrr')
@@ -176,8 +176,15 @@ router.post("/login", [
                 }
             });  
             success = true
-            user.password = undefined
-            res.send({ success, authtoken, id: data.user.id, user })
+        const sanitizedUser = { ...user.dataValues };
+        delete sanitizedUser.password;
+        delete sanitizedUser.passW;
+        delete sanitizedUser.createdAt;
+        delete sanitizedUser.contactNo;
+        delete sanitizedUser.updatedAt;
+        delete sanitizedUser.email;
+        delete sanitizedUser.authToken;
+     res.send({ success, authtoken, id: data.user.id, user:sanitizedUser})
 
         } catch (error) {
             console.log(error.message)
@@ -185,23 +192,28 @@ router.post("/login", [
         }
 
     })
-
-    router.get('/getUserData',fetchuser,async(req,res)=>{
+    router.get('/getUserData', fetchuser, async (req, res) => {
         try {
-            const userData = await User.findAll()
-            if(userData){
-                return res.status(200).json({ message: "get User Data Successfully",userData });
-            }else{
-                return res.status(200).json({ message: "User Data Empty",userData });
-
+            const userData = await User.findAll();
+            if (userData) {
+                userData.forEach(user => {
+                    delete user.dataValues.password;
+                    delete user.dataValues.passW;
+                    delete user.dataValues.authToken;
+                    delete user.dataValues.roleId;
+                    delete user.dataValues.createdAt;
+                    delete user.dataValues.updatedAt;
+                });
+                return res.status(200).json({ message: "User Data retrieved successfully", userData });
+            } else {
+                return res.status(200).json({ message: "User Data is empty", userData });
             }
-            
         } catch (error) {
-            console.log(error)
+            console.log(error);
             return res.status(500).json({ error });
-
         }
-    })
+    });
+    
 
     router.post('/access', fetchuser,async (req, res) => {
         // const { username } = req.params;
@@ -230,6 +242,34 @@ router.post("/login", [
         }
     });
 
+    router.post('/updateUser', fetchuser,async (req, res) => {
+        
+        const { username,email,tokenId,contactNo } = req.body;
+        try {
+            // Find the user by username
+            const user = await User.findOne({ where: { username } });
+    
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }else{
+                 
+                const up= await User.update({
+                    email:email,
+                    tokenId:tokenId,
+                    contactNo:contactNo
+                }, {
+                    where: {
+                        username:username 
+                    }
+                }); 
+            
+            return res.status(200).json({ message: "User updated successfully" });
+            }
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
+    });
     router.get('/getOne/:username',fetchuser, async (req, res) => {
         const { username } = req.params;
     
