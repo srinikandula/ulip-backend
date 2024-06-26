@@ -35,17 +35,17 @@
 
   display: flex;
   align-items: start;
-  justify-content: start;
+  justify-content: center;
 }
 
 #profile_container {
   /* height: 100%; */
   width: 65%;
-  padding: 10px;
+  padding: 30px;
   background-color: white;
 
   /* border: 1px solid black; */
-  border-radius: 20px;
+  border-radius: 8px;
 
   display: flex;
   flex-direction: column;
@@ -55,7 +55,7 @@
 .input_container {
   height: 30px;
   width: 100%;
-  
+
   display: flex;
   align-items: center;
   gap: 10px;
@@ -77,7 +77,7 @@
 }
 
 .input_field {
-  height: 30px;
+  /*height: 30px;*/
   /* width: 500px; */
   width: 70%;
   border-radius: 5px;
@@ -103,6 +103,60 @@
   font-stretch: semi-expanded;
   font-size: 14px;
 }
+.change-password {
+  background-color: #ff4d4d; /* Red background */
+  color: white; /* White text */
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.change-password:hover {
+  background-color: #ff3333; /* Darker red background on hover */
+  color: #ffe6e6; /* Light red text on hover */
+  transform: translateY(-2px); /* Slightly lift button on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly bigger shadow on hover */
+}
+
+/* Container styling */
+.input_container {
+  margin-bottom: 20px; /* Adjust as needed */
+}
+
+/* Label styling */
+.label_font {
+  font-size: 16px; /* Adjust font size */
+  font-weight: bold; /* Or normal, adjust as per design */
+  color: #333; /* Text color */
+  margin-bottom: 8px; /* Spacing below label */
+  display: block; /* Ensures label and input are on separate lines */
+}
+
+/* Input field styling */
+.input_field {
+  width: 100%; /* Full width of container */
+  padding: 10px; /* Padding around text inside input */
+  font-size: 16px; /* Adjust font size */
+  border: 1px solid #ccc; /* Border color and width */
+  border-radius: 5px; /* Rounded corners */
+}
+
+/* Hover effect (optional) */
+.input_field:hover {
+  border-color: #999; /* Darker border color on hover */
+}
+
+/* Focus effect (optional) */
+.input_field:focus {
+  outline: none; /* Remove default focus outline */
+  border-color: #66afe9; /* Example color for focus state */
+  box-shadow: 0 0 5px rgba(102, 175, 233, 0.5); /* Example shadow for focus */
+}
+
 
 @media only screen and (max-width: 500px) {
   #profile_container {

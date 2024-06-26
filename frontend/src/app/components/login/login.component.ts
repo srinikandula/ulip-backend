@@ -33,11 +33,12 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("roleId", data.user.roleId)
           localStorage.setItem("roleName", data.user.roleName)
           this.router.navigate(['home/createkey'])
+          this.messageService.add({ severity: 'success', summary: 'Login Success', detail: ""})
         }
       },
       error:error=>{
         console.log (error,'-------------------errro')
-        swal.fire('Error',error.error.message, 'error' );
+        this.messageService.add({ severity: 'error', summary: error.error.message, detail: ""})
       }
     })
     

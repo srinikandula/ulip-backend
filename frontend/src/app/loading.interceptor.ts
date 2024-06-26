@@ -10,6 +10,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { LoaderService } from './loader.service';
 import { Router } from '@angular/router';
+import {MessageService} from "primeng/api";
 
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
@@ -17,7 +18,8 @@ export class LoadingInterceptor implements HttpInterceptor {
 
   constructor(
       private loadingService: LoaderService,
-      private router: Router
+      private router: Router,
+      private messageService: MessageService,
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -34,6 +36,7 @@ export class LoadingInterceptor implements HttpInterceptor {
         }),
         catchError((error: HttpErrorResponse) => {
           if (error.status === 401) {
+            this.messageService.add({ severity: 'error', summary: 'Session Expired', detail: ""})
             localStorage.clear();
             this.router.navigate(['/login']);
           }

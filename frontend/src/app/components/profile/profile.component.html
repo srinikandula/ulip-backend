@@ -1,37 +1,37 @@
 <div id="body_container">
   <div id="title_container">
-      Profile Dashboard
+      Change Password
   </div>
 
   <div id="body_subcontainer">
       <div id="profile_container">
           <div id="username_container" class="input_container">
-              <p class="label_font">Username :</p>
-              <input type="text" id="username_input" class="input_field">
+              <p class="label_font">Old Password :</p>
+              <input autocomplete="off" type="password" id="username_input" class="input_field" [(ngModel)]="oldPassword">
           </div>
           <div id="first_name_container" class="input_container">
-              <p class="label_font">First Name :</p>
-              <input type="text" id="first_name_input" class="input_field">
+              <p class="label_font">New Password :</p>
+              <input type="password" id="first_name_input" class="input_field" [(ngModel)]="newPassword">
           </div>
           <div id="last_name_container" class="input_container">
-              <p class="label_font">Last Name :</p>
-              <input type="text" id="last_name_input" class="input_field">
+              <p class="label_font">Confirm New Password :</p>
+              <input type="password" id="last_name_input" class="input_field" [(ngModel)]="confirmPassword">
           </div>
-          <div id="occupation_container" class="input_container">
-              <p class="label_font">Occupation :</p>
-              <input type="text" id="occupation_input" class="input_field">
-          </div>
-          <div id="email_container" class="input_container">
-              <p class="label_font">E-Mail :</p>
-              <input type="text" id="email_input" class="input_field">
-          </div>
-          <div id="contact_num_container" class="input_container">
-              <p class="label_font">Contact Number :</p>
-              <input type="text" id="contact_num_input" class="input_field">
-          </div>
+<!--          <div id="occupation_container" class="input_container">-->
+<!--              <p class="label_font">Occupation :</p>-->
+<!--              <input type="text" id="occupation_input" class="input_field">-->
+<!--          </div>-->
+<!--          <div id="email_container" class="input_container">-->
+<!--              <p class="label_font">E-Mail :</p>-->
+<!--              <input type="text" id="email_input" class="input_field">-->
+<!--          </div>-->
+<!--          <div id="contact_num_container" class="input_container">-->
+<!--              <p class="label_font">Contact Number :</p>-->
+<!--              <input type="text" id="contact_num_input" class="input_field">-->
+<!--          </div>-->
 
           <div id="save_btn_container">
-              <button id="save_button">Save</button>
+              <button class="change-password" (click)="changePassword()">Change Password</button>
           </div>
       </div>
   </div>
