@@ -34,7 +34,7 @@ const routes: Routes = [
       component: FetchulipComponent
     },
     {
-      path: 'profile',
+      path: 'changePassword',
       component: ProfileComponent
     },
     {

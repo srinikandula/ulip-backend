@@ -99,9 +99,9 @@ export class HomeComponent implements OnInit {
             }
           },
           {
-            label: 'Dashboard',
+            label: 'Change Password',
             command: () => {
-              this.router.navigate(["home/profile"])
+              this.router.navigate(["home/changePassword"])
             }
           }
         ]

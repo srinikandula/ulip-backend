@@ -69,10 +69,11 @@ body, html{
 .p-menu-list {
     display: flex;
     flex-direction: column;
+    white-space: nowrap;
 }
 
 .p-menu-list li {
-    height: 4vh;
+    /*height: 4vh;*/
 }
 
 .p-menu-list li div {
