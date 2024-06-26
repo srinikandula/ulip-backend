@@ -1,78 +1,76 @@
-
 <app-side-bar (keyCardAdd)="addKeyCard($event)"></app-side-bar>
 <div class="allBlur" *ngIf="keypage.createKeyBool"></div>
 
-    
-
-        
-        <div id="page_desc_container">
-            <div id="page_desc">
-                <div id="desc_home" class="grey_font">Home</div>
-                <div id="desc_page_name">Create Keys</div>
-
-            </div>
-            <div id="create_keys_button_div">
-                <button id="create_keys_button" (click)="handleOnCreate()" class="redBtnEffect"> + Create</button>
-            </div>
-        </div>
-
-        <div id="history_keys_title" class="grey_font">History of Created Keys</div>
-        <div id="table_container">
-            <table>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Application Name</th>
-                            <th>Owner Name</th>
-                            <th>Contact Number</th>
-                            <th>Passkey</th>
-                            <th>Secret Key</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody *ngFor="let i of apiHome">                        
-                        <tr (mouseenter)="handleOnMouseEnterRow(i.active)" (mouseout)="handleOnMouseOutRow()" class="myHomeRow" [style.backgroundColor]="i.active ? '#fff' : '#cecece'">
-                            <!-- <td><div [style.backgroundColor]="i.active ? '#218700' : '#595959'" class="borderColorDisableIdentifier"></div> {{i.applicationName}}</td> -->
-                            <td>{{i.applicationName}}</td>
-                            <td>{{i.ownerName}}</td>
-                            <td>{{i.contactNo}}</td>
-                            <td class="generatedApiPart" (mouseenter)="handleOnMouseEnterRow(i.active)" (click)="handleOnCopyClick(i.key, 'Passkey')">
-                                <div class="copyBtnDiv" [style.display]="i.active ? 'flex' : 'none'">
-                                    <p class="copyBtn">Click to copy</p>
-                                </div>
-                                <p class="keyVal">{{i.key.slice(0,20)}}...</p>
-                            </td>
-                            <td class="generatedApiPart" (mouseenter)="handleOnMouseEnterRow(i.active)" (click)="handleOnCopyClick(i.secKey, 'Secret Key')">
-                                <div class="copyBtnDiv">
-                                    <p class="copyBtn" [style.display]="i.active ? 'flex' : 'none'">Click to copy</p>
-                                </div>
-                                <p class="keyVal">{{i.secKey.slice(0,20)}}...</p>
-                            </td>
-                            <td class="secKeyCreate genSecKeyTd">
-                                <div class="timePartOnLogs genSecKeyBtn">Edit Key</div>
-                                <button (click)="handleOnEditKeyPressed(i.key)">
-                                    <!-- <i class="fa-solid fa-play"></i> -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
-                                        <g id="Group_17387" data-name="Group 17387" transform="translate(-2669 -504)">
-                                          <rect id="Rectangle_8040" data-name="Rectangle 8040" width="48" height="48" rx="7" transform="translate(2669 504)" fill="#707070"/>
-                                          <path id="Icon_material-edit" data-name="Icon material-edit" d="M4.5,21.434v4.457H8.957L22.1,12.747,17.644,8.29ZM25.547,9.3a1.183,1.183,0,0,0,0-1.676L22.766,4.844a1.183,1.183,0,0,0-1.676,0L18.915,7.019l4.457,4.457Z" transform="translate(2677.371 512.504)" fill="#fff"/>
-                                        </g>
-                                      </svg>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </table>
-            <div id="ifNoKey" *ngIf="apiHome.length === 0" (click)="handleOnCreate()">
-                <div id="imageShowTableNoKey">
-                    
-                   
-                </div>
-                <p>No Data Found</p>
-
-            </div>
-            <div class="disableShowDiv" [style.scale]="this.isKeyEnable?'0':'1'" >
-                <p class="disableShowP">API key is Disabled</p>
-            </div>
-        </div>
+<div id="page_desc_container">
+    <div id="page_desc">
+        <div id="desc_home" class="grey_font">Home</div>
+        <div id="desc_page_name">Create Keys</div>
+    </div>
+    <div id="create_keys_button_div">
+        <button id="create_keys_button" (click)="handleOnCreate()" class="redBtnEffect"> + Create</button>
+    </div>
+</div>
+<div id="history_keys_title" class="grey_font">History of Created Keys</div>
+<div class="input-group" style="padding: 10px 0;">
+    <div class="search-container">
+        <input 
+            type="text" 
+            class="form-control search-input" 
+            placeholder="Search users..." 
+            [(ngModel)]="searchTerm" 
+            (input)="filterUsers()"
+        >
+    </div>
+</div>
+<div id="table_container">
+    <table>
+        <thead>
+            <tr>
+                <th>Application Name</th>
+                <th>Owner Name</th>
+                <th>Contact Number</th>
+                <th>Passkey</th>
+                <th>Secret Key</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of filteredUsers | paginate: { itemsPerPage: 10, currentPage: page }" (mouseenter)="handleOnMouseEnterRow(i.active)" (mouseout)="handleOnMouseOutRow()" class="myHomeRow" [style.backgroundColor]="i.active ? '#fff' : '#cecece'">
+                <td>{{i.applicationName}}</td>
+                <td>{{i.ownerName}}</td>
+                <td>{{i.contactNo}}</td>
+                <td class="generatedApiPart" (mouseenter)="handleOnMouseEnterRow(i.active)" (click)="handleOnCopyClick(i.key, 'Passkey')">
+                    <div class="copyBtnDiv" [style.display]="i.active ? 'flex' : 'none'">
+                        <p class="copyBtn">Click to copy</p>
+                    </div>
+                    <p class="keyVal">{{i.key.slice(0,20)}}...</p>
+                </td>
+                <td class="generatedApiPart" (mouseenter)="handleOnMouseEnterRow(i.active)" (click)="handleOnCopyClick(i.secKey, 'Secret Key')">
+                    <div class="copyBtnDiv">
+                        <p class="copyBtn" [style.display]="i.active ? 'flex' : 'none'">Click to copy</p>
+                    </div>
+                    <p class="keyVal">{{i.secKey.slice(0,20)}}...</p>
+                </td>
+                <td class="secKeyCreate genSecKeyTd">
+                    <div class="timePartOnLogs genSecKeyBtn">Edit Key</div>
+                    <button (click)="handleOnEditKeyPressed(i.key)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
+                            <g id="Group_17387" data-name="Group 17387" transform="translate(-2669 -504)">
+                                <rect id="Rectangle_8040" data-name="Rectangle 8040" width="48" height="48" rx="7" transform="translate(2669 504)" fill="#707070"/>
+                                <path id="Icon_material-edit" data-name="Icon material-edit" d="M4.5,21.434v4.457H8.957L22.1,12.747,17.644,8.29ZM25.547,9.3a1.183,1.183,0,0,0,0-1.676L22.766,4.844a1.183,1.183,0,0,0-1.676,0L18.915,7.019l4.457,4.457Z" transform="translate(2677.371 512.504)" fill="#fff"/>
+                            </g>
+                        </svg>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="ifNoKey" *ngIf="filteredUsers.length === 0" (click)="handleOnCreate()">
+        <div id="imageShowTableNoKey"></div>
+        <p>No Data Found</p>
+    </div>
+    <div class="disableShowDiv" [style.scale]="this.isKeyEnable ? '0' : '1'">
+        <p class="disableShowP">API key is Disabled</p>
+    </div>
+    <pagination-controls class="cust-pagination" (pageChange)="page = $event"></pagination-controls>
+</div>
