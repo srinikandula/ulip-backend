@@ -15,6 +15,10 @@ import Swal from "sweetalert2";
   styleUrls: ['./api-home.component.css']
 })
 export class ApiHomeComponent implements OnInit {
+  public searchTerm: string = '';
+  public page: number = 1;
+  public filteredUsers: any[] = [];
+
 handleOnEditKeyPressed(apikey: string) {
   this.router.navigate([`home/editkey/${apikey}`])
 }
@@ -53,6 +57,7 @@ handleOnEditKeyPressed(apikey: string) {
         console.log(data)
 
         this.apiHome = data.allKey
+        this.filteredUsers = this.apiHome
         // this.apiHome.sort(function(a,b){
         //   return new Date(b.updatedAt) - new Date(a.updatedAt);
         // });
@@ -75,7 +80,17 @@ handleOnEditKeyPressed(apikey: string) {
   ngOnInit() {
     this.keypage.pageNav = 0
   }
-  
+  filterUsers(): void {
+    if (!this.searchTerm) {
+      this.filteredUsers = this.apiHome;
+    } else {
+      this.filteredUsers = this.apiHome.filter(user =>
+        user.applicationName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        user.ownerName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        user.contactNo.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+  }
   handleOnLogout() {
     localStorage.removeItem("authtoken")
     localStorage.removeItem("roleName")
