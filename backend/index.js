@@ -39,6 +39,10 @@ app.use(helmet.noSniff());
 app.use(helmet.xssFilter({
   setOnOldIE: true
 }));
+app.use((req, res, next) => {
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  next();
+});
 
 // Set X-Frame-Options header
 app.use(helmet.frameguard({
