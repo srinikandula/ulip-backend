@@ -106,6 +106,7 @@ export class SideBarComponent implements OnInit {
     this.keypage.createKeyBool = false
   }
   handleOnCreateKey() {
+    console.log(123)
     this.keypage.createKeyBool = false
     const apiKey = self.crypto.randomUUID();
     let mySelectedString: string = '0000000000000000000000000000000'

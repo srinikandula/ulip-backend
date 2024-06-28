@@ -51,7 +51,7 @@
                 <td>{{user.email}}</td>
                 <td>{{user.roleName || '---'}}</td>
                 <td>{{user.status || '---'}}</td>
-                <td>
+                <td style="display: flex; align-items:center">
 <!--                    <button-->
 <!--                            class="active-button"-->
 <!--                            [ngClass]="{'inactive': user.status === 'Active', 'active': user.status !== 'Active'}"-->
@@ -66,8 +66,10 @@
                     <button *ngIf="user.status === 'Active'"
                             class="deactive-button"
                             (click)="deActiveUser(user)">De-activate
+                    </button>&nbsp;&nbsp;
+                    <button class="user-edit-button" (click)="editUser(user.username)">
+                        <i class="fas fa-edit"></i>
                     </button>
-
                 </td>
 
             </tr>
@@ -76,3 +78,47 @@
     </table>
     <pagination-controls class="cust-pagination" (pageChange)="page = $event"></pagination-controls>
 </div>
+
+<!-- edit user modal -->
+
+<p-dialog header="Edit User" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+          [draggable]="false" [resizable]="false" *ngIf="editUserObj">
+    <div class="input-row">
+        <div class="input_container">
+            <p class="label_font">User Name :</p>
+            <input autocomplete="off" type="text" id="username_input" class="input_field" [(ngModel)]="editUserObj.username" disabled>
+        </div>
+
+        <div class="input_container">
+            <p class="label_font">Contact No :</p>
+            <input autocomplete="off" type="text" id="contact_input" class="input_field" [(ngModel)]="editUserObj.contactNo">
+        </div>
+    </div>
+    <div class="input-row">
+        <div class="input_container">
+            <p class="label_font">E-mail :</p>
+            <input autocomplete="off" type="text" id="email_input" class="input_field" [(ngModel)]="editUserObj.email">
+        </div>
+        <div class="input_container">
+            <p class="label_font">Token Id :</p>
+            <input autocomplete="off" type="text" id="token_input" class="input_field" [(ngModel)]="editUserObj.tokenId">
+        </div>
+    </div>
+    <div class="input-row">
+        <div class="input_container">
+            <select [(ngModel)]="selectedRole"
+                    name="valueCheck" (change)="valueChange($event)" class="custom-select">
+                <option [ngValue]="undefined" disabled>Select Any</option>
+                <option *ngFor="let obj of roleArray"
+                        [ngValue]="obj.roleId" [selected]="obj.roleId == selectedRole"> {{ obj.roleName }}
+                </option>
+            </select>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button (click)="displayModal=false" label="Update" class="p-button-text" (onClick)="updateUser()"></p-button>&nbsp;&nbsp;
+        <p-button  (click)="displayModal=false" label="Cancel" class="p-button-text "></p-button>
+    </ng-template>
+</p-dialog>
+
+
