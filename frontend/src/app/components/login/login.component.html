@@ -51,7 +51,7 @@
                             </div>
                             
                             <div id="bottomLoginDiv">
-                                <a href="forget" class="red-link">Forget Password</a><br>
+                                <a class="red-link" id="pointer1" (click)="forgotPassword()" >Forget Password</a><br>
                                 <div id="buttonSubmit">
                                     <!-- <input type="submit" value="Login" id="loginBtn"> -->
                                     <button type="submit" id="loginBtn">Login</button>
@@ -69,3 +69,17 @@
 
     </div>
 </div>
+
+<p-dialog header="Forgot Password" [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw'}" [baseZIndex]="10000"
+          [draggable]="false" [resizable]="false" >
+    <div class="input-row">
+        <div class="input_container">
+            <p class="label_font">Email :</p>
+            <input autocomplete="off" type="text" id="username_input" class="input_field" [(ngModel)]="email" >
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button (click)="displayModal=false" label="Send" class="p-button-text"></p-button>&nbsp;&nbsp;
+        <p-button  (click)="displayModal=false" label="Cancel" class="p-button-text "></p-button>
+    </ng-template>
+</p-dialog>

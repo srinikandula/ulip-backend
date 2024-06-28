@@ -248,7 +248,31 @@
     font-weight: 350;
     color: #3062D0;
 }
+#pointer1{
+    cursor: pointer;
+}
+.label_font {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+}
 
+.input_field {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    line-height: 35px
+}
+
+.input_field:focus {
+    border-color: #fe4316d1;
+    box-shadow: 0 0 5px rgb(241 44 9 / 80%);
+    outline: none;
+}
 @media only screen and (max-width: 1200px) {
 
     #login_container_box {
