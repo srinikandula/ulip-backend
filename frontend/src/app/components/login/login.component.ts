@@ -15,7 +15,9 @@ import CryptoJS from "crypto-js";
 export class LoginComponent implements OnInit {
   username: string = ""
   password: string = ""
-  secretKey:any= "mllf3xpex2kPk"
+  secretKey:any= "mllf3xpex2kPk";
+  public displayModal: any = false;
+  email: any;
   handleOnLogin() {
     console.log("cliccked")
     const encryptedPassword = CryptoJS.AES.encrypt(this.password, this.secretKey).toString();
@@ -49,8 +51,10 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['home/createkey'])
     }
   }
- 
-  
+
+  forgotPassword(): void{
+    this.displayModal = true;
+  }
 
 
 

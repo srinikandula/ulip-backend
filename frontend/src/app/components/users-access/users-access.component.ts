@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {KeypageService} from "../../services/keypage/keypage.service";
@@ -18,13 +18,19 @@ export class UsersAccessComponent implements OnInit {
   public filteredUsers: any[] = [];
   public searchTerm: string = '';
   public page: number = 1;
-
+  public displayModal: any = false;
+  public editUserObj: any;
+  public selectedRole: any;
+  roleArray = [
+    {roleName: 'Admin', roleId: 'Admin' },
+    {roleName: 'User', roleId: 'User' }
+  ]
   constructor(
     private http: HttpClient,
     private router: Router,
     public keypage: KeypageService,
     private messageService: MessageService,
-    private apiSrivice: apiService
+    private apiSrivice: apiService,
   ) {
     this.tokeVal = localStorage.getItem('authtoken');
   }
@@ -130,4 +136,49 @@ export class UsersAccessComponent implements OnInit {
         });
       }
     });
-  }}
+  }
+  editUser(user: any): void{
+    this.displayModal = true;
+    const getUser = this.apiSrivice.mainUrl + 'user/getOne/' + user;
+    const headers = new HttpHeaders({
+      'auth-token': this.tokeVal || '',
+      'api-key': "16f78afa-e306-424e-8a08-21ad21629404",
+      'seckey': "f968799f2906991647c9941bbd8c97a746cd2cc320f390a310c170e0f072bc5bf71c372060e799b75a323f57d3ccdf8b",
+      'user': `${localStorage.getItem("ulip-person-username")}`
+    });
+    this.http.get<any>(getUser, { headers }).subscribe((response) => {
+      if (response) {
+        this.editUserObj = response.user;
+        this.selectedRole = this.editUserObj.roleName;
+      }
+    });
+  }
+  valueChange(event: any){
+    console.log("selected value",event.target.value , 'value of selected',this.selectedRole);
+  }
+  updateUser(): void{
+    const updateUser = this.apiSrivice.mainUrl + 'user/updateUser';
+    const headers = new HttpHeaders({
+      'auth-token': this.tokeVal || '',
+      'api-key': "16f78afa-e306-424e-8a08-21ad21629404",
+      'seckey': "f968799f2906991647c9941bbd8c97a746cd2cc320f390a310c170e0f072bc5bf71c372060e799b75a323f57d3ccdf8b",
+      'user': `${localStorage.getItem("ulip-person-username")}`
+    });
+    this.http.post<any>(updateUser,
+        {
+          username: this.editUserObj.username,
+          email: this.editUserObj.email,
+          tokenId: this.editUserObj.tokenId,
+          contactNo: this.editUserObj.contactNo,
+          roleName: this.selectedRole
+        },
+        { headers }).subscribe((response) => {
+      if (response) {
+        this.getAllUsers()
+        this.messageService.add({ severity: 'success', summary: response.message, detail: "" })
+      }
+    }, error => {
+      this.messageService.add({ severity: 'error', summary: error.error.message, detail: "" })
+    });
+  }
+}
