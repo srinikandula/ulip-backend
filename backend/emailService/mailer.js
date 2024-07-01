@@ -87,7 +87,7 @@ exports.sendEmailPassword = async (userObj, pass, done) => {
     let mailOptions = {
         from: process.env.fromMail,
         to: userObj.email,
-        subject: 'Generate Password - Ulip',
+        subject: 'Password Reset - ULIP',
         html: templateHtmlBody,
     };
 

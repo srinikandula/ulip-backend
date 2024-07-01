@@ -12,7 +12,7 @@ const CryptoJS = require("crypto-js");
 
 
 function generateRandomPassword(length) {
-    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+    const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$&";
     let password = "";
     for (let i = 0; i < length; i++) {
         const randomIndex = Math.floor(Math.random() * charset.length);
@@ -415,6 +415,9 @@ router.post("/forgotPassword",async(req,res)=>{
         const salt = await bcrypt.genSalt(10)
         var secPass = await bcrypt.hash(randomPassword, salt)
         const user = await User.findOne({where: {email: email}});
+        if (!email){
+            return res.status(400).json({error:"Please enter email" })
+        }
         if(!user){
        
         return res.status(400).json({error:"user not found" })
