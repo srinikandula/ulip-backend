@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   password: string = ""
   secretKey:any= "mllf3xpex2kPk";
   public displayModal: any = false;
-  email: any;
+  email: string = ""
   handleOnLogin() {
     console.log("cliccked")
     const encryptedPassword = CryptoJS.AES.encrypt(this.password, this.secretKey).toString();
@@ -54,9 +54,25 @@ export class LoginComponent implements OnInit {
 
   forgotPassword(): void{
     this.displayModal = true;
+    console.log(this.email,'------------------------')
+
   }
 
 
-
+  forgot(data:any){
+    console.log(data)
+    this.http.post<any>(this.apiSrivice.mainUrl + 'user/forgotPassword', {
+      "email": data,
+    }).subscribe({
+      next: data => {
+        console.log(data,'--------dataa')
+        this.messageService.add({ severity: 'success', summary: data.message, detail: ""})
+      },
+      error:error=>{
+        console.log (error.error,'-------------------errro')
+        this.messageService.add({ severity: 'error', summary: error.error.error, detail: ""})
+      }
+    })
+  }
 
 }

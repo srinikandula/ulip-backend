@@ -608,8 +608,7 @@ const ulipUiError = async (urlArray, mybody, respBody, appliName, myKey, req) =>
     const apiLogIs = await ApiLogs.create(newApiLog)
 }
 
-
-router.post("/ulipui/:ulipIs/:reqIs", fetchapiui, async (req, res) => {
+router.post("/ulipui/:ulipIs/:reqIs", fetchuser,fetchapiui, async (req, res) => {
 
     try {
         const url = `${process.env.ulip_url}/${req.params.ulipIs}/${req.params.reqIs}`
@@ -705,7 +704,7 @@ router.post("/ulipui/:ulipIs/:reqIs", fetchapiui, async (req, res) => {
 })
 
 
-router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'), fetchapiui, async (req, res) => {
+router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'),fetchuser, fetchapiui, async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).send({ code: 400, message: 'No file uploaded' });

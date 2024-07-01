@@ -5,10 +5,21 @@ const { userAuth } = require("../Models")
 var fetchuser = require("../middleware/fetchuser")
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
-const email = require('../emailService/mailer')
+const emailService = require('../emailService/mailer')
 const JWT_SECRET = 'saltcode';
 const { body, validationResult } = require('express-validator');
 const CryptoJS = require("crypto-js");
+
+
+function generateRandomPassword(length) {
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+    let password = "";
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        password += charset[randomIndex];
+    }
+    return password;
+}
 
 async function forgotPasswordemailOTPGenerate(userObj, done) {
     try {
@@ -31,7 +42,7 @@ async function forgotPasswordemailOTPGenerate(userObj, done) {
                     status: 'active',
                 }, {where: {userId: userObj.id}});
                 if (result) {
-                    await email.otpGenerationForForgotPassword(userObj, OTP, done);
+                    await emailService.otpGenerationForForgotPassword(userObj, OTP, done);
                     return OTP;
 
                 } else {
@@ -40,7 +51,7 @@ async function forgotPasswordemailOTPGenerate(userObj, done) {
             } else {
                 let result = await userAuth.create(data);
                 if (result) {
-                    await email.otpGenerationForForgotPassword(userObj, OTP, done);
+                    await emailService.otpGenerationForForgotPassword(userObj, OTP, done);
                     return OTP;
 
                 } else {
@@ -112,7 +123,7 @@ router.post("/signup", [
         }
        let mailresult=''
         // const sendMail = email.sendMails(user)
-        email.sendMails(user, (emailResult) => {
+        emailService.sendMails(user, (emailResult) => {
             if (emailResult.status === 400) {
                 mailresult = 'Error in sending mail'
             }
@@ -121,8 +132,8 @@ router.post("/signup", [
 
             }
         });
-        const authtoken = jwt.sign(data, JWT_SECRET);
-        return res.json({ success: true,message:"Successfully Register", authtoken: authtoken,mailresult })
+        // const authtoken = jwt.sign(data, JWT_SECRET);
+        return res.json({ success: true,message:"Successfully Register",mailresult })
 
     } catch (error) {
         console.log(error,'============errrr')
@@ -176,8 +187,15 @@ router.post("/login", [
                 }
             });  
             success = true
-            user.password = undefined
-            res.send({ success, authtoken, id: data.user.id, user })
+        const sanitizedUser = { ...user.dataValues };
+        delete sanitizedUser.password;
+        delete sanitizedUser.passW;
+        delete sanitizedUser.createdAt;
+        delete sanitizedUser.contactNo;
+        delete sanitizedUser.updatedAt;
+        delete sanitizedUser.email;
+        delete sanitizedUser.authToken;
+     res.send({ success, authtoken, id: data.user.id, user:sanitizedUser})
 
         } catch (error) {
             console.log(error.message)
@@ -185,23 +203,28 @@ router.post("/login", [
         }
 
     })
-
-    router.get('/getUserData',fetchuser,async(req,res)=>{
+    router.get('/getUserData', fetchuser, async (req, res) => {
         try {
-            const userData = await User.findAll()
-            if(userData){
-                return res.status(200).json({ message: "get User Data Successfully",userData });
-            }else{
-                return res.status(200).json({ message: "User Data Empty",userData });
-
+            const userData = await User.findAll();
+            if (userData) {
+                userData.forEach(user => {
+                    delete user.dataValues.password;
+                    delete user.dataValues.passW;
+                    delete user.dataValues.authToken;
+                    delete user.dataValues.roleId;
+                    delete user.dataValues.createdAt;
+                    delete user.dataValues.updatedAt;
+                });
+                return res.status(200).json({ message: "User Data retrieved successfully", userData });
+            } else {
+                return res.status(200).json({ message: "User Data is empty", userData });
             }
-            
         } catch (error) {
-            console.log(error)
+            console.log(error);
             return res.status(500).json({ error });
-
         }
-    })
+    });
+    
 
     router.post('/access', fetchuser,async (req, res) => {
         // const { username } = req.params;
@@ -230,6 +253,34 @@ router.post("/login", [
         }
     });
 
+    router.post('/updateUser', fetchuser,async (req, res) => {
+        
+        const { username,email,tokenId,contactNo } = req.body;
+        try {
+            // Find the user by username
+            const user = await User.findOne({ where: { username } });
+    
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }else{
+                 
+                const up= await User.update({
+                    email:email,
+                    tokenId:tokenId,
+                    contactNo:contactNo
+                }, {
+                    where: {
+                        username:username 
+                    }
+                }); 
+            
+            return res.status(200).json({ message: "User updated successfully" });
+            }
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
+    });
     router.get('/getOne/:username',fetchuser, async (req, res) => {
         const { username } = req.params;
     
@@ -332,30 +383,65 @@ router.post('/forgotOtpVerify',async(req,res)=>{
     }
 })
 
+// router.post("/forgotPassword",async(req,res)=>{
+//     try {
+//         const email = req.body.email
+//         const bytes = CryptoJS.AES.decrypt(req.body.password, process.env.secretKey);
+//         const decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
+//         const salt = await bcrypt.genSalt(10)
+//         var secPass = await bcrypt.hash(decryptedPassword, salt)
+//         const user = await user.findOne({where: {email: email}});
+//         if(user){
+//         const up= await user.update({
+//             password:secPass,
+//             passW:decryptedPassword
+    
+//         }, {
+//             where: {
+//               email:email 
+//             }
+//         }); 
+//     }
+//     } catch (error) {
+//         console.log("_____error",error)
+//         return res.status(500).json({error})
+//     }
+// })
+
 router.post("/forgotPassword",async(req,res)=>{
     try {
+        const randomPassword = generateRandomPassword(8);
         const email = req.body.email
-        const bytes = CryptoJS.AES.decrypt(req.body.password, process.env.secretKey);
-        const decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
         const salt = await bcrypt.genSalt(10)
-        var secPass = await bcrypt.hash(decryptedPassword, salt)
-        const user = await user.findOne({where: {email: email}});
-        if(user){
-        const up= await user.update({
+        var secPass = await bcrypt.hash(randomPassword, salt)
+        const user = await User.findOne({where: {email: email}});
+        if(!user){
+       
+        return res.status(400).json({error:"user not found" })
+
+
+    }else{
+        const up= await User.update({
             password:secPass,
-            passW:decryptedPassword
+            passW:randomPassword
     
         }, {
             where: {
               email:email 
             }
         }); 
+        const userData = await User.findOne({where: {email: email}});
+        emailService.sendEmailPassword(userData,randomPassword)
+        return res.status(200).json({message:"Password sent email" })
+
     }
+
     } catch (error) {
         console.log("_____error",error)
         return res.status(500).json({error})
     }
 })
+
 
 
 module.exports = router

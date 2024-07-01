@@ -17,8 +17,9 @@
 <body>
   <app-root></app-root>
   <script type="text/javascript">
-    if (window.top !== window.self) {
-        window.top.location = window.self.location;
+    console.log(top,'------top')
+    if (top !== self) {
+      top.location = self.location;
     }
   </script>
 </body>
