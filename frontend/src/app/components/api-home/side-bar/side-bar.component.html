@@ -84,20 +84,20 @@
             <div class="inputs_container">
                 <div class="input_label">Application Name</div>
                 <input [(ngModel)]="applicationName" (keypress)="validateNumberAndChar($event)" name="applicationName" type="text"
-                       pattern="[a-zA-Z0-9_]*" placeholder="Enter Application Name">
+                       pattern="[a-zA-Z0-9_]*" autocomplete="off" placeholder="Enter Application Name">
             </div>
             <div class="inputs_container">
                 <div class="input_label">Owner Name</div>
-                <input [(ngModel)]="ownerName" name="ownerName" type="text" placeholder="Enter Owner Name" (keypress)="validateNumberAndChar($event)">
+                <input [(ngModel)]="ownerName" name="ownerName" autocomplete="off" type="text" placeholder="Enter Owner Name" (keypress)="validateNumberAndChar($event)">
             </div>
             <div class="inputs_container">
                 <div class="input_label">Contact Number</div>
                 <input [(ngModel)]="contactName" name="contactNumber" type="text" placeholder="Enter Contact Number"
-                       (keypress)="validateNumber($event)" maxlength="10" minlength="10">
+                       (keypress)="validateNumber($event)" autocomplete="off" maxlength="10" minlength="10">
             </div>
             <div class="inputs_container">
                 <div class="input_label">Email Address</div>
-                <input [(ngModel)]="emailAddress" name="emailAddress" type="text" placeholder="Enter Email Address" (keypress)="validateEmail($event)">
+                <input [(ngModel)]="emailAddress" name="emailAddress" autocomplete="off" type="text" placeholder="Enter Email Address" (keypress)="validateEmail($event)">
             </div>
 
             <p id="ip_config_title">IP Config</p>
@@ -128,6 +128,11 @@
             </div>
 
         </div>
+<!--        <div *ngIf="errorMessages.length > 0" class="error-messages">-->
+<!--            <div *ngFor="let errorMessage of errorMessages" class="error-message">-->
+<!--                {{ errorMessage }}-->
+<!--            </div>-->
+<!--        </div>-->
 
         <div id="buttons_container">
             <div id="submitOptionKey">

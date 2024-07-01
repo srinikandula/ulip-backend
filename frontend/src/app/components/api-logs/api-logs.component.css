@@ -393,6 +393,36 @@ p-calendar {
     transform: translateY(5px);
     transition: all ease-out 0.1s;
 }
+/* Container for the search input */
+.search-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 600px; /* Adjust this value based on your layout */
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+/* Search input styling */
+.search-input {
+    width: 100%;
+    padding: 14px 15px;
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 8px; /* Rounded corners */
+    font-size: 16px; /* Increase font size */
+    transition: border-color 0.3s; /* Smooth transition for border color */
+}
+
+/* Focus state for the search input */
+.search-input:focus {
+    outline: none; /* Remove default outline */
+    border-color: #007bff; /* Change border color to blue on focus */
+}
+
+/* Additional styles for padding */
+.input-group {
+    padding: 10px 0;
+}
 
 @media only screen and (max-width: 600px) {
     .grey_font {

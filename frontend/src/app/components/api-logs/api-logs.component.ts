@@ -267,13 +267,14 @@ picker: any;
 
   }
 
-  filterBy(nameInput: HTMLInputElement) {
-    const filterValue = nameInput.value.trim();
-    if (filterValue) {
-      this.apiLogsTemp = this.apiLogs.filter(p => p.ulip.toLowerCase().includes(filterValue.toLowerCase()));
-    } else {
+  filterBy() {
+    if (!this.filterSearchvalue) {
       this.apiLogsTemp = this.apiLogs;
+    } else {
+      this.apiLogsTemp = this.apiLogs.filter(user =>
+          user.ulip.toLowerCase().includes(this.filterSearchvalue.toLowerCase()) ||
+          user.applicationName.toLowerCase().includes(this.filterSearchvalue.toLowerCase())
+      );
     }
   }
-
 }
