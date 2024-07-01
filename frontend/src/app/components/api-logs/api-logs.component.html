@@ -60,49 +60,60 @@
                     inputId="buttondisplay"></p-calendar>
             </div>
         </div>
-        <span class="p-input-icon-left searchLogsSpan">
-            <input placeholder="Search in table" type="text" [(ngModel)]="filterSearchvalue" #filterValue name="filterSearchvalue" />
-            <button (click)="filterBy(filterValue)">
-                <!-- <i class="fa-solid fa-magnifying-glass "></i> -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 19 19">
-                    <g id="search-normal" transform="translate(-428 -188)">
-                      <path id="Vector" d="M15.042,7.521A7.521,7.521,0,1,1,7.521,0,7.521,7.521,0,0,1,15.042,7.521Z" transform="translate(429.583 189.583)" fill="none" stroke="#292d32" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-                      <path id="Vector-2" data-name="Vector" d="M1.583,1.583,0,0" transform="translate(443.833 203.833)" fill="none" stroke="#292d32" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-                      <path id="Vector-3" data-name="Vector" d="M0,0H19V19H0Z" transform="translate(428 188)" fill="none" opacity="0"/>
-                    </g>
-                </svg>
-            </button>
-        </span>
-
-        <div class="card flex justify-content-center filterDiv">
-            <div class="filterBtnDiv">
-                <button (click)="handleOnToggleApiMenu()" style="height: 40px; width: 40px;">
-                    <!-- <i *ngIf="!apiMenuFilter" class="fa-solid fa-filter"></i>
-                    <i *ngIf="apiMenuFilter" class="fa-solid fa-xmark"></i> -->
-                    <svg id="filter" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 26 26">
-                        <g id="filter-2" data-name="filter">
-                          <path id="Vector" d="M13.5,2.2V4.624a4.319,4.319,0,0,1-1,2.532L8.2,11.341a3.762,3.762,0,0,0-1,2.532v4.734a2.531,2.531,0,0,1-.9,1.872l-1.4.991A2.038,2.038,0,0,1,1.8,19.6V13.763A4.516,4.516,0,0,0,1,11.451L0,10.295,5.82,0H11.5A2.115,2.115,0,0,1,13.5,2.2Z" transform="translate(9.1 2.1)" fill="#fff"/>
-                          <path id="Vector-2" data-name="Vector" d="M7.9,0,2.72,8.31.9,6.4a3.315,3.315,0,0,1-.9-2V2.1A2.03,2.03,0,0,1,2,0Z" transform="translate(3.4 2.1)" fill="#fff" opacity="0.5"/>
-                          <path id="Vector-3" data-name="Vector" d="M0,0H26V26H0Z" fill="none" opacity="0"/>
-                        </g>
-                    </svg>
-                </button>
-            </div>
-
-            <div id="filterMenuDiv" *ngIf="apiMenuFilter">
-
-                <div class="card flex justify-content-center">
-                    <h4 id="filterByH">Filter by</h4>
-                    <div class="flex flex-column gap-2">
-                        <div *ngFor="let category of categories" class="field-checkbox">
-                            <p-checkbox (onChange)="changeFilterChecks()" class="pCheckboxFilter"
-                                [label]="category.name" name="group" [value]="category"
-                                [(ngModel)]="selectedCategories"></p-checkbox>
-                        </div>
-                    </div>
-                </div>
+<!--        <span class="p-input-icon-left searchLogsSpan">-->
+<!--            <input placeholder="Search in table" type="text" [(ngModel)]="filterSearchvalue" #filterValue name="filterSearchvalue" />-->
+<!--            <button (click)="filterBy(filterValue)">-->
+<!--                &lt;!&ndash; <i class="fa-solid fa-magnifying-glass "></i> &ndash;&gt;-->
+<!--                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 19 19">-->
+<!--                    <g id="search-normal" transform="translate(-428 -188)">-->
+<!--                      <path id="Vector" d="M15.042,7.521A7.521,7.521,0,1,1,7.521,0,7.521,7.521,0,0,1,15.042,7.521Z" transform="translate(429.583 189.583)" fill="none" stroke="#292d32" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>-->
+<!--                      <path id="Vector-2" data-name="Vector" d="M1.583,1.583,0,0" transform="translate(443.833 203.833)" fill="none" stroke="#292d32" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>-->
+<!--                      <path id="Vector-3" data-name="Vector" d="M0,0H19V19H0Z" transform="translate(428 188)" fill="none" opacity="0"/>-->
+<!--                    </g>-->
+<!--                </svg>-->
+<!--            </button>-->
+<!--        </span>-->
+        <div class="input-group" style="padding: 10px 0;">
+            <div class="search-container">
+                <input
+                        type="text"
+                        class="form-control search-input"
+                        placeholder="Search in table..."
+                        [(ngModel)]="filterSearchvalue"
+                        (input)="filterBy()"
+                >
             </div>
         </div>
+
+<!--        <div class="card flex justify-content-center filterDiv">-->
+<!--            <div class="filterBtnDiv">-->
+<!--                <button (click)="handleOnToggleApiMenu()" style="height: 40px; width: 40px;">-->
+<!--                    &lt;!&ndash; <i *ngIf="!apiMenuFilter" class="fa-solid fa-filter"></i>-->
+<!--                    <i *ngIf="apiMenuFilter" class="fa-solid fa-xmark"></i> &ndash;&gt;-->
+<!--                    <svg id="filter" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 26 26">-->
+<!--                        <g id="filter-2" data-name="filter">-->
+<!--                          <path id="Vector" d="M13.5,2.2V4.624a4.319,4.319,0,0,1-1,2.532L8.2,11.341a3.762,3.762,0,0,0-1,2.532v4.734a2.531,2.531,0,0,1-.9,1.872l-1.4.991A2.038,2.038,0,0,1,1.8,19.6V13.763A4.516,4.516,0,0,0,1,11.451L0,10.295,5.82,0H11.5A2.115,2.115,0,0,1,13.5,2.2Z" transform="translate(9.1 2.1)" fill="#fff"/>-->
+<!--                          <path id="Vector-2" data-name="Vector" d="M7.9,0,2.72,8.31.9,6.4a3.315,3.315,0,0,1-.9-2V2.1A2.03,2.03,0,0,1,2,0Z" transform="translate(3.4 2.1)" fill="#fff" opacity="0.5"/>-->
+<!--                          <path id="Vector-3" data-name="Vector" d="M0,0H26V26H0Z" fill="none" opacity="0"/>-->
+<!--                        </g>-->
+<!--                    </svg>-->
+<!--                </button>-->
+<!--            </div>-->
+
+<!--            <div id="filterMenuDiv" *ngIf="apiMenuFilter">-->
+
+<!--                <div class="card flex justify-content-center">-->
+<!--                    <h4 id="filterByH">Filter by</h4>-->
+<!--                    <div class="flex flex-column gap-2">-->
+<!--                        <div *ngFor="let category of categories" class="field-checkbox">-->
+<!--                            <p-checkbox (onChange)="changeFilterChecks()" class="pCheckboxFilter"-->
+<!--                                [label]="category.name" name="group" [value]="category"-->
+<!--                                [(ngModel)]="selectedCategories"></p-checkbox>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </div>
 
