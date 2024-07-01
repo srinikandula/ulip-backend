@@ -78,16 +78,16 @@ exports.sendKeys = async (userObj, done) => {
     }
 };
 
-exports.otpGenerationForForgotPassword = async (userObj, OTP, done) => {
+exports.sendEmailPassword = async (userObj, pass, done) => {
     let file = fs.readFileSync(
         path.join(__dirname, '../email-templates', 'forgotPasswordAuthentication.html'),
         'utf8'
     );
-    let templateHtmlBody = file.replace('$$FULLNAME$$', userObj.username).replace('$$PASSWORD$$', OTP);
+    let templateHtmlBody = file.replace('$$FULLNAME$$', userObj.username).replace('$$PASSWORD$$', pass);
     let mailOptions = {
         from: process.env.fromMail,
         to: userObj.email,
-        subject: 'Forgot Password Authentication - Ulip',
+        subject: 'Generate Password - Ulip',
         html: templateHtmlBody,
     };
 
