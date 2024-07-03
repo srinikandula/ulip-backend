@@ -15,7 +15,7 @@
           </div>
           <div id="last_name_container" class="input_container">
               <p class="label_font">Confirm New Password :</p>
-              <input type="password"  autocomplete="off" id="last_name_input" class="input_field" [(ngModel)]="confirmPassword">
+              <input type="password"  autocomplete="off" id="last_name_input" class="input_field" [(ngModel)]="confirmPassword" (keydown)="onKeyDown($event)">
           </div>
 <!--          <div id="occupation_container" class="input_container">-->
 <!--              <p class="label_font">Occupation :</p>-->
@@ -31,7 +31,7 @@
 <!--          </div>-->
 
           <div id="save_btn_container">
-              <button class="change-password" (click)="changePassword()">Change Password</button>
+              <button class="change-password" (click)="onSubmit()">Change Password</button>
           </div>
       </div>
   </div>
