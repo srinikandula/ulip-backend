@@ -33,6 +33,15 @@ export class ProfileComponent implements OnInit {
     ngOnInit() {
     }
 
+    onKeyDown(event: KeyboardEvent) {
+        if (event.key === 'Enter') {
+            this.changePassword();
+        }
+    }
+
+    onSubmit() {
+        this.changePassword();
+    }
     changePassword(): void {
         const encryptedOldPassword = CryptoJS.AES.encrypt(this.oldPassword, this.secretKey).toString();
         const encryptedNewPassword = CryptoJS.AES.encrypt(this.newPassword, this.secretKey).toString();
