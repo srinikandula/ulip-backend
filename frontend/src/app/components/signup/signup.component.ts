@@ -16,12 +16,14 @@ export class SignupComponent {
   handleOnSubmitSignup() {
     const encryptedPassword = CryptoJS.AES.encrypt(this.password, this.secretKey).toString();
     const encryptedConPassword = CryptoJS.AES.encrypt(this.conPassword, this.secretKey).toString();
+    const encryptedEmail = CryptoJS.AES.encrypt(this.email, this.secretKey).toString();
+    const encryptedContact = CryptoJS.AES.encrypt(this.contact, this.secretKey).toString();
     this.http.post<any>(this.apiSrivice.mainUrl + 'user/signup', {
       "username":this.username,
       "tokenId":this.tokenId,
       "password":encryptedPassword,
-      "contactNo":this.contact,
-      "email":this.email,
+      "contactNo":encryptedContact,
+      "email":encryptedEmail,
       "conformpassword":encryptedConPassword
     }).subscribe({
       next: data => {

@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("roleName", data.user.roleName)
           this.router.navigate(['home/createkey'])
           this.messageService.add({ severity: 'success', summary: 'Login Success', detail: ""})
+          localStorage.setItem('currentUser', JSON.stringify(data));
         }
       },
       error:error=>{
