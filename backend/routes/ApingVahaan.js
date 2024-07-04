@@ -120,13 +120,25 @@ router.post("/createKey", [
     }
 
     try {
-        const { applicationName } = req.body;
+        const { applicationName,contactNo,email} = req.body;
         const applicationExists = await ApiKeys.findOne({
             where: { applicationName }
+          });
+          const emailExists = await ApiKeys.findOne({
+            where: { email }
+          });
+          const phoneExists = await ApiKeys.findOne({
+            where: { contactNo }
           });
       
           if (applicationExists) {
             return res.status(400).json({ message: 'Application Name already exists' });
+          }  
+          if (emailExists) {
+            return res.status(400).json({ message: 'Email already exists' });
+          }  
+          if (phoneExists) {
+            return res.status(400).json({ message: 'Contact No already exists' });
           }        
         let secKey = crypto.randomUUID()
         const newKey = crypto.createCipher('aes-128-cbc', "secKey");
