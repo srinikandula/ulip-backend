@@ -19,6 +19,13 @@ export class LoginComponent implements OnInit {
   public displayModal: any = false;
   email: string = ""
   handleOnLogin() {
+    if(this.username==''){
+      this.messageService.add({ severity: 'error', summary: 'Please Enter Username', detail: ""})
+    }else if(this.password==''){
+      this.messageService.add({ severity: 'error', summary: 'Please Enter Password', detail: ""})
+
+    }
+    else{
     console.log("cliccked")
     const encryptedPassword = CryptoJS.AES.encrypt(this.password, this.secretKey).toString();
     console.log("encryptedPassword------",encryptedPassword)
@@ -44,7 +51,7 @@ export class LoginComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: error.error.message, detail: ""})
       }
     })
-    
+  }
   }
   constructor(private http: HttpClient, private router:Router, private apiSrivice: apiService, private messageService: MessageService) { }
   ngOnInit(): void {
