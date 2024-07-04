@@ -151,7 +151,7 @@ router.post("/signup", [
         }
        let mailresult=''
         // const sendMail = email.sendMails(user)
-        emailService.sendMails(user, (emailResult) => {
+        emailService.sendMails(obj, (emailResult) => {
             if (emailResult.status === 400) {
                 mailresult = 'Error in sending mail'
             }
