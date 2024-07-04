@@ -144,19 +144,17 @@ router.post("/signup", [
 
 
 
-router.post("/login", [
-    body("username", "Username must be atleast 4 characters").isLength({ min: 4 }),
-    body("password", "Password must be atleast 8 characters").isLength({ min: 8 })
-]
-    , async (req, res) => {
-        const errors = validationResult(req)
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() })
-        }
-        try {
+router.post("/login", 
 
+     async (req, res) => {
+        try {
+             
             let success = false
             const { username, password } = req.body
+            console.log('------------',username,"-----",password)
+            if(username =='' ){
+                return res.status(400).json({ success: false, message: "Please Enter Username" });
+            }
             let user = await User.findOne({ where: { username: username } })
             if(!user){
                 return res.status(400).json({ success: false, message: "UserName Not Exist" });

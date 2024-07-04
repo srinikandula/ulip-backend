@@ -34,6 +34,18 @@ export class ProfileComponent implements OnInit {
     }
 
     changePassword(): void {
+        console.log(this.newPassword)
+        if (this.newPassword == ''||this.newPassword==undefined) {
+            this.messageService.add({ severity: 'error', summary:'Please Enter New Password', detail: ""})
+     } else if(this.oldPassword==''||this.oldPassword==undefined){
+        this.messageService.add({ severity: 'error', summary:'Please Enter Old Password', detail: ""})
+     }else if(this.confirmPassword==''||this.confirmPassword==undefined){
+        this.messageService.add({ severity: 'error', summary:'Please Enter confirm password', detail: ""})
+
+     } else if(this.newPassword != this.confirmPassword){
+        this.messageService.add({ severity: 'error', summary:'New password and confirm password do not match!', detail: ""})
+
+    }else {
         const encryptedOldPassword = CryptoJS.AES.encrypt(this.oldPassword, this.secretKey).toString();
         const encryptedNewPassword = CryptoJS.AES.encrypt(this.newPassword, this.secretKey).toString();
         const encryptedNewConfirmPassword = CryptoJS.AES.encrypt(this.confirmPassword, this.secretKey).toString();
@@ -59,5 +71,6 @@ export class ProfileComponent implements OnInit {
         },error => {
             this.messageService.add({ severity: 'error', summary: error.error.message, detail: ""})
         })
+    }
     }
 }
