@@ -19,9 +19,9 @@ export class LoginComponent implements OnInit {
   public displayModal: any = false;
   email: string = ""
   handleOnLogin() {
-    if(this.username==''){
+    if(this.username==''|| this.username==undefined){
       this.messageService.add({ severity: 'error', summary: 'Please Enter Username', detail: ""})
-    }else if(this.password==''){
+    }else if(this.password==''||this.password==undefined){
       this.messageService.add({ severity: 'error', summary: 'Please Enter Password', detail: ""})
 
     }
