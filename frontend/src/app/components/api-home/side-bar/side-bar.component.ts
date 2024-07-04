@@ -185,11 +185,16 @@ export class SideBarComponent implements OnInit {
 
         },
         error: error => {
+          console.log("-------",error)
           console.error("There is an error", error.error)
           if (error.error.errors) {
             for (let i = 0; i < error.error.errors.length; ++i) {
               this.messageService.add({ severity: 'error', summary: 'Failed', detail: error.error.errors[i].msg })
             }
+          }
+          if(error.error.message){
+            this.messageService.add({ severity: 'error', summary: 'Failed', detail: error.error.message })
+
           }
 
         }

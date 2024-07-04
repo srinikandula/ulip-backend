@@ -43,7 +43,6 @@ export class ProfileComponent implements OnInit {
         this.changePassword();
     }
     changePassword(): void {
-        console.log(this.newPassword)
         if (this.newPassword == ''||this.newPassword==undefined) {
             this.messageService.add({ severity: 'error', summary:'Please Enter New Password', detail: ""})
      } else if(this.oldPassword==''||this.oldPassword==undefined){
