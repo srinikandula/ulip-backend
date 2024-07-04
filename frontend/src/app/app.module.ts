@@ -51,6 +51,7 @@ import { LoadingInterceptor } from './loading.interceptor';
 import { UsersAccessComponent } from './components/users-access/users-access.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {BnNgIdleService} from "bn-ng-idle";
+import {FloatLabelModule} from "primeng/floatlabel";
 
 
 
@@ -138,7 +139,8 @@ import {BnNgIdleService} from "bn-ng-idle";
     SliderModule,
     MultiSelectModule,
     NgxPaginationModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    FloatLabelModule
 
   ],
   providers: [KeypageService, MessageService, ToastService, WebsocketService, ConfirmationService, BnNgIdleService, {

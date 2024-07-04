@@ -107,7 +107,7 @@ export class SideBarComponent implements OnInit {
   }
   handleOnCreateKey() {
     console.log(123)
-    this.keypage.createKeyBool = false
+    // this.keypage.createKeyBool = false
     const apiKey = self.crypto.randomUUID();
     let mySelectedString: string = '0000000000000000000000000000000'
     console.log("my selected is ", this.selectedUlipAccessUnOf)
@@ -177,6 +177,11 @@ export class SideBarComponent implements OnInit {
             }
           })
           this.applicationName = ''
+          this.ownerName = ''
+          this.contactName = ''
+          this.emailAddress = ''
+          this.positionOptions = [];
+          this.keypage.createKeyBool = false;
 
         },
         error: error => {
