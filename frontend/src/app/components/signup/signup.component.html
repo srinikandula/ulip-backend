@@ -20,35 +20,35 @@
                                         <p>Token Id</p>
                                     </div>
                                     <input class="inputTexts" [(ngModel)]="tokenId" name="tokenId" id='tokenId'
-                                        placeholder="Enter your Token Id" required><br>
+                                        placeholder="Enter your Token Id" autocomplete="off" required><br>
                                 </div>
                                 <div class="inputDivAllTexts">
                                     <div class="inputDivUpperText">
                                         <p>Username</p>
                                     </div>
                                     <input class="inputTexts" [(ngModel)]="username" name="userame" id='username'
-                                        placeholder="Enter your Username" required><br>
+                                        placeholder="Enter your Username" autocomplete="off" required><br>
                                 </div>
                                 <div class="inputDivAllTexts">
                                     <div class="inputDivUpperText">
                                         <p>Password</p>
                                     </div>
                                     <input class="inputTexts" [(ngModel)]="password" type="password" name="password" id="password"
-                                        placeholder="Password" required><br>
+                                        placeholder="Password" autocomplete="off" required><br>
                                 </div>
                                 <div class="inputDivAllTexts">
                                     <div class="inputDivUpperText">
                                         <p>Confirm Password</p>
                                     </div>
                                     <input class="inputTexts" [(ngModel)]="conPassword" name="con_pass" type="password" id="con_pass"
-                                        placeholder="Confirm Password" required><br>
+                                        placeholder="Confirm Password" autocomplete="off" required><br>
                                 </div>
                                 <div class="inputDivAllTexts">
                                     <div class="inputDivUpperText">
                                         <p>Email</p>
                                     </div>
                                     <input class="inputTexts" [(ngModel)]="email" name="email" type="email" id="email" placeholder="Email"
-                                        required><br>
+                                           autocomplete="off"  required><br>
                                 </div>
 
                                 <div class="inputDivAllTexts">
@@ -64,6 +64,7 @@
                                            (keypress)="onKeyPress($event)"
                                            maxlength="10"
                                            minlength="10"
+                                           autocomplete="off"
                                            required><br>
                                 </div>
                             </div>
