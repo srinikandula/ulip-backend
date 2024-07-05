@@ -58,14 +58,15 @@ export class HomeComponent implements OnInit {
     this.router.navigate(["home/createkey"])
   }
 
-  constructor(private router: Router, public keypage: KeypageService, private apiSrivice: apiService, private http: HttpClient,) {
+  constructor(private router: Router,private messageService: MessageService, public keypage: KeypageService, private apiSrivice: apiService, private http: HttpClient,) {
     this.ulipPersonName = `${localStorage.getItem('ulip-person-username')}`;
   }
 
   handleOnLogout() {
     this.http.post(this.apiSrivice.mainUrl +'user/logout', {username: this.userName}).subscribe(
         response => {
-          console.log('Logged out successfully');
+          this.messageService.add({ severity: 'success', summary: 'Logged out successfully', detail: ""})
+          window.location.reload();
         },
         error => {
           localStorage.removeItem("authtoken")
