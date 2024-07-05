@@ -29,7 +29,6 @@ export class AppComponent implements OnInit {
             if (isTimedOut && !this.isSessionExpired) {
                 this.isSessionExpired = true; // Set the flag to true to prevent repeated calls
                 this.http.post(this.apiService.mainUrl + 'user/logout', { username: this.userName }).subscribe((res: any) => {
-                    console.log('session expired');
                     this.messageService.add({ severity: 'error', summary: 'session expired', detail: "" })
                     localStorage.clear();
                     this.router.navigate(['/login']).then(() => {
