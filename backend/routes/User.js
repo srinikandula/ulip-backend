@@ -8,6 +8,7 @@ var bcrypt = require('bcryptjs');
 const emailService = require('../emailService/mailer')
 const JWT_SECRET = 'saltcode';
 const { body, validationResult } = require('express-validator');
+const validator = require('validator');
 const CryptoJS = require("crypto-js");
 
 
@@ -71,8 +72,8 @@ async function forgotPasswordemailOTPGenerate(userObj, done) {
 router.post("/signup", [
     body("username", "Username must be atleast 4 characters").isLength({ min: 4 }),
     body('tokenId').isNumeric().withMessage('Token Id must be a number').isInt({ min: 3 }).withMessage('Token Id must be at least 3'),
-    body("contactNo", "Contact Number must be atleast 10 characters").isNumeric().withMessage('contactNo must be a Number').isInt({ min: 10 }).withMessage('ContactNo must be at 10 Numbers'),
-    body("email", "Must be a email").isEmail()
+    // body("contactNo", "Contact Number must be atleast 10 characters").isNumeric().withMessage('contactNo must be a Number').isInt({ min: 10 }).withMessage('ContactNo must be at 10 Numbers'),
+    // body("email", "Must be a email").isEmail()
 ], async (req, res) => {
     let success = false
     const errors = validationResult(req)
@@ -80,10 +81,26 @@ router.post("/signup", [
         return res.status(400).json({ errors: errors.array() })
     }
     try {
+        const indianPhoneNumberPattern = /^[6789]\d{9}$/;
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const bytesEmail= CryptoJS.AES.decrypt(req.body.email, process.env.secretKey);
+        const decryptedEmail = bytesEmail.toString(CryptoJS.enc.Utf8);
+        const bytesPhone= CryptoJS.AES.decrypt(req.body.contactNo, process.env.secretKey);
+        const decryptedPhone = bytesPhone.toString(CryptoJS.enc.Utf8); 
         const bytesPass = CryptoJS.AES.decrypt(req.body.password, process.env.secretKey);
         const decryptedPassword = bytesPass.toString(CryptoJS.enc.Utf8);
         const bytesConPass = CryptoJS.AES.decrypt(req.body.conformpassword, process.env.secretKey);
         const decryptedConPassword = bytesConPass.toString(CryptoJS.enc.Utf8);
+        if (!emailPattern.test(decryptedEmail)) {
+            return res.status(400).json({
+              message: 'Please Enter Vaild Email'
+            });
+          }
+          if (!indianPhoneNumberPattern.test(decryptedPhone)) {
+            return res.status(400).json({
+              message: 'Please enter a valid Indian phone number'
+            });
+          }
         if (!decryptedPassword || decryptedPassword.length < 8 || !decryptedPassword.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$/)) {
             return res.status(400).json({
               message: 'Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, and one special character.'
@@ -93,11 +110,11 @@ router.post("/signup", [
         return res.status(400).json({ success: false, message: "Mismatch the password" });
 
         }
-        const emailCheck = await User.findOne({ where: { email: req.body.email } });
+        const emailCheck = await User.findOne({ where: { email: decryptedEmail } });
         if (emailCheck) {
             return res.status(400).json({ success: false, message: "Email already Exist" });
         }
-        const phoneCheck = await User.findOne({ where: { contactNo: req.body.contactNo } });
+        const phoneCheck = await User.findOne({ where: { contactNo: decryptedPhone } });
         if (phoneCheck) {
             return res.status(400).json({ success: false, message: "contact number already Exist" });
         }
@@ -112,18 +129,29 @@ router.post("/signup", [
         const user = req.body
         const salt = await bcrypt.genSalt(10)
         var secPass = await bcrypt.hash(decryptedPassword, salt)
-        user.password = secPass
-        user.passW = decryptedPassword
-        user.status="InActive"
-        user.roleName="User"
-        user.roleId=2
-        const userIs = await User.create(user)
+        // user.password = secPass
+        // user.passW = decryptedPassword
+        // user.status="InActive"
+        // user.roleName="User"
+        // user.roleId=2
+        const obj ={
+            email: decryptedEmail,
+            contactNo: decryptedPhone,
+            username: req.body.username,
+            tokenId: req.body.tokenId,
+            password:secPass,
+            passW:decryptedPassword,
+            status:"InActive",
+            roleName:"User",
+            roleId:2
+        }
+        const userIs = await User.create(obj)
         const data = {
             user: { id: userIs.id }
         }
        let mailresult=''
         // const sendMail = email.sendMails(user)
-        emailService.sendMails(user, (emailResult) => {
+        emailService.sendMails(obj, (emailResult) => {
             if (emailResult.status === 400) {
                 mailresult = 'Error in sending mail'
             }
