@@ -37,14 +37,14 @@
                                     <div class="inputDivUpperText">
                                         <p>Username</p>
                                     </div>
-                                    <input class="inputTexts" [(ngModel)]="username" name="username" id='username' autocomplete="off" placeholder="Enter your username" required><br>
+                                    <input class="inputTexts" [(ngModel)]="username" [ngModelOptions]="{standalone: true}" name="username" id='username' autocomplete="off" placeholder="Enter your username" required><br>
                                 </div>
                                 
                                 <div class="inputDivAllTexts">
                                     <div class="inputDivUpperText">
                                         <p>Password</p>
                                     </div>
-                                    <input class="inputTexts" [(ngModel)]="password" type="password" autocomplete="off" name="password" id='pass' placeholder="Enter password" required>
+                                    <input class="inputTexts" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" type="password" autocomplete="off" name="password" id='pass' placeholder="Enter password" required>
                                     
                                 </div>  
 

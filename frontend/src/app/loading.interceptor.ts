@@ -36,7 +36,6 @@ export class LoadingInterceptor implements HttpInterceptor {
         }),
         catchError((error: HttpErrorResponse) => {
           if (error.status === 401) {
-            this.messageService.add({ severity: 'error', summary: 'Session Expired', detail: ""})
             localStorage.clear();
             this.router.navigate(['/login']);
           }

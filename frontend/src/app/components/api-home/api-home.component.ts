@@ -97,6 +97,7 @@ handleOnEditKeyPressed(apikey: string) {
     localStorage.removeItem("ulip-person-tokenId")
     localStorage.removeItem("roleId")
     localStorage.removeItem("ulip-person-username")
+    localStorage.removeItem("currentUser")
     console.log("LocalStorage after removal:", localStorage);
     this.router.navigate(['login'])
   }
