@@ -25,14 +25,14 @@ export class AppComponent implements OnInit {
     title = 'Mahindra ULIP Interface';
 
     ngOnInit(): void {
-        this.bnIdle.startWatching(9).subscribe((isTimedOut: boolean) => {
-            if (isTimedOut && !this.isSessionExpired) {
+        this.bnIdle.startWatching(900).subscribe((isTimedOut: boolean) => {
+            if (isTimedOut === true && !this.isSessionExpired) {
                 this.isSessionExpired = true; // Set the flag to true to prevent repeated calls
                 this.http.post(this.apiService.mainUrl + 'user/logout', { username: this.userName }).subscribe((res: any) => {
                     this.messageService.add({ severity: 'error', summary: 'session expired', detail: "" })
                     localStorage.clear();
+                    // window.location.reload();
                     this.router.navigate(['/login']).then(() => {
-                        // window.location.reload();
                     });
                 });
             }
