@@ -1,0 +1,342 @@
+
+
+body, html {
+    height: 100vh;
+    margin: 0;
+    font-family: "georama";
+    font-stretch: semi-expanded;
+}
+
+.grey_font {
+    color: #676767;
+}
+#content_table {
+    position: relative;
+    /* top: 50%; */
+    top: 50px;
+    left: 50%;
+    display: flex;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    justify-content: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+
+
+th,
+td {
+    /* padding: 15px; */
+    /* border: 1px solid black; */
+    color: black;
+    height: 9vh;
+
+    text-align: start;
+    padding-left: 15px;
+}
+
+thead {
+    th {
+        background-color: #c2cbd9;
+    }
+}
+
+tbody {
+    background-color: white;
+    tr {
+        &:hover {
+            background-color: rgb(235, 234, 234);
+        }
+
+    }
+}
+.keyVal:hover{
+    text-decoration:underline;
+    cursor: pointer;
+}
+#history_keys_title {
+    display: inline-block;
+    height: 30px;
+    font-weight: 600;
+}
+#desc_page_name {
+    font-size: 25px;
+    font-weight: bold;
+}
+/*.active-button {*/
+/*    background-color: red;*/
+/*    border: none;*/
+/*    color: white;*/
+/*    padding: 15px 14px;*/
+/*    text-align: center;*/
+/*    text-decoration: none;*/
+/*    display: inline-block;*/
+/*    font-size: 16px;*/
+/*    border-radius: 10px;*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); !* Adds a subtle shadow *!*/
+/*}*/
+
+/* Add the following CSS to your styles */
+/*.active-button {*/
+/*    border: none;*/
+/*    color: white;*/
+/*    padding: 15px 15px;*/
+/*    text-align: center;*/
+/*    text-decoration: none;*/
+/*    display: inline-block;*/
+/*    font-size: 16px;*/
+/*    border-radius: 8px;*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/
+/*    transition: background-color 0.3s, box-shadow 0.3s;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.active-button.active {*/
+/*    background-color: #28a745; !* Green for active *!*/
+/*}*/
+
+/*.active-button.active:hover {*/
+/*    background-color: #218838; !* Darker green on hover *!*/
+/*    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);*/
+/*}*/
+
+/*.active-button.active:active {*/
+/*    background-color: #1e7e34; !* Even darker green when active (clicked) *!*/
+/*    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);*/
+/*}*/
+
+/*.active-button.inactive {*/
+/*    background-color: #dc3545; !* Red for inactive *!*/
+/*}*/
+
+/*.active-button.inactive:hover {*/
+/*    background-color: #c82333; !* Darker red on hover *!*/
+/*    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);*/
+/*}*/
+
+/*.active-button.inactive:active {*/
+/*    background-color: #bd2130; !* Even darker red when active (clicked) *!*/
+/*    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);*/
+/*}*/
+
+/*.active-button:focus {*/
+/*    outline: none;*/
+/*    box-shadow: 0 0 0 3px rgba(130, 138, 145, 0.5); !* Custom focus outline *!*/
+/*}*/
+
+
+/* Styles for the 'Active' button */
+.active-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 15px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.active-button:hover {
+    background-color: #218838;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.active-button:active {
+    background-color: #1e7e34;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.active-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.5);
+}
+
+/* Styles for the 'De-active' button */
+.deactive-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 15px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.deactive-button:hover {
+    background-color: #c82333;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.deactive-button:active {
+    background-color: #bd2130;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.deactive-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.5);
+}
+
+.search-container {
+    position: relative;
+    margin: 20px;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    transition: border-color 0.3s ease-in-out;
+  }
+  
+  .search-input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .search-input::placeholder {
+    color: #999;
+  }
+  
+  .search-container .search-input {
+    padding-left: 40px;
+  }
+  
+  .search-container::before {
+    content: "\f002"; /* FontAwesome search icon */
+    font-family: FontAwesome;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #999;
+  }
+  .cust-pagination {
+    display: flex;
+    justify-content: end;
+    margin-top: 20px; /* Margin between table and pagination */
+  }
+  
+  .cust-pagination .ng-star-inserted {
+    margin: 0 5px;
+  }
+  
+  .cust-pagination .ng-star-inserted a {
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .cust-pagination .ng-star-inserted a.active {
+    font-weight: bold;
+  }
+.user-edit-button {
+    padding: 23px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    justify-content: center;
+}
+
+.user-edit-button:hover {
+    background-color: #a81725; /* Darker blue on hover */
+}
+
+.user-edit-button i {
+    font-size: 16px; /* Icon size */
+}
+
+.input-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.input_container {
+    flex: 1;
+    margin-right: 1rem;
+}
+
+.input_container:last-child {
+    margin-right: 0;
+}
+
+.label_font {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.input_field {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input_field:focus {
+    border-color: #66afe9;
+    outline: none;
+    box-shadow: 0 0 5px rgb(102 175 233 / 60%)
+}
+
+.input_field:disabled {
+    background-color: #f0f0f0; /* light gray background */
+    color: #a0a0a0; /* gray text */
+    border: 1px solid #d0d0d0; /* gray border */
+    cursor: not-allowed; /* change cursor to indicate disabled state */
+}
+.custom-select {
+    width: 50%;
+    padding: 10px;
+    padding-right: 30px; /* Add some padding to the right to make room for the arrow */
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    appearance: none; /* Remove default arrow in some browsers */
+    -webkit-appearance: none; /* Remove default arrow in Safari */
+    -moz-appearance: none; /* Remove default arrow in Firefox */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-caret-down-fill" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658c-.566-.638-.106-1.658.753-1.658h9.592c.86 0 1.32 1.02.754 1.658l-4.796 5.482c-.566.648-1.514.648-2.08 0z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px 16px;
+}
+
+.custom-select:focus {
+    border-color: #66afe9;
+    outline: none;
+    box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+}

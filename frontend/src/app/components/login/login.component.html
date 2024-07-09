@@ -37,21 +37,21 @@
                                     <div class="inputDivUpperText">
                                         <p>Username</p>
                                     </div>
-                                    <input class="inputTexts" [(ngModel)]="username" name="username" id='username' placeholder="Enter your username" required><br>
+                                    <input class="inputTexts" [(ngModel)]="username" [ngModelOptions]="{standalone: true}" name="username" id='username' autocomplete="off" placeholder="Enter your username" required><br>
                                 </div>
                                 
                                 <div class="inputDivAllTexts">
                                     <div class="inputDivUpperText">
                                         <p>Password</p>
                                     </div>
-                                    <input class="inputTexts" [(ngModel)]="password" type="password" name="password" id='pass' placeholder="Enter password" required>
+                                    <input class="inputTexts" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" type="password" autocomplete="off" name="password" id='pass' placeholder="Enter password" required>
                                     
                                 </div>  
 
                             </div>
                             
                             <div id="bottomLoginDiv">
-                                <a href="forget" class="red-link">Forget Password</a><br>
+                                <a class="red-link" id="pointer1" (click)="forgotPassword()" >Forget Password</a><br>
                                 <div id="buttonSubmit">
                                     <!-- <input type="submit" value="Login" id="loginBtn"> -->
                                     <button type="submit" id="loginBtn">Login</button>
@@ -69,3 +69,17 @@
 
     </div>
 </div>
+
+<p-dialog header="Forgot Password" [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw'}" [baseZIndex]="10000"
+          [draggable]="false" [resizable]="false" >
+    <div class="input-row">
+        <div class="input_container">
+            <p class="label_font">Email :</p>
+            <input autocomplete="off" type="text" id="username_input" class="input_field" [(ngModel)]="email" >
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button (click)="forgot(email)" label="Send" class="p-button-text"></p-button>&nbsp;&nbsp;
+        <p-button  (click)="displayModal=false" label="Cancel" class="p-button-text "></p-button>
+    </ng-template>
+</p-dialog>

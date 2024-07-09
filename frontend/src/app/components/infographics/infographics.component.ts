@@ -18,6 +18,8 @@ interface City {
   styleUrls: ['./infographics.component.css']
 })
 export class InfographicsComponent implements OnInit {
+  date = new Date();
+
   sidebarVisible2: boolean = false;
   valueTimeline!: number;
 
@@ -401,9 +403,9 @@ export class InfographicsComponent implements OnInit {
         this.totalReq = data.allLogs.length
         this.totalSucReq = 0
         let tempcountSuc = 0;
-        console.log(data.allLogs, "are my logs")
+        // console.log(data.allLogs, "are my logs")
         for(let i = 0; i<data.allLogs.length; ++i){
-          console.log("logis ", (data.allLogs[i]))
+          // console.log("logis ", (data.allLogs[i]))
           if(data.allLogs[i].resData && JSON.parse(data.allLogs[i].resData).code && Number(JSON.parse(data.allLogs[i].resData).code) === 200){
             tempcountSuc++
           }
@@ -561,5 +563,9 @@ export class InfographicsComponent implements OnInit {
 
 
 
+  }
+
+  dateFun() {
+    console.log(this.date)
   }
 }

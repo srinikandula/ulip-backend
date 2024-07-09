@@ -10,9 +10,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Georama:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <!-- <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css">                                            -->
-  <script src="https://kit.fontawesome.com/7183ad8e8d.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/7183ad8e8d.js" crossorigin="anonymous">
+  </script>
+  
 </head>
 <body>
   <app-root></app-root>
+  <script type="text/javascript">
+    console.log(top,'------top')
+    if (top !== self) {
+      top.location = self.location;
+    }
+  </script>
 </body>
 </html>

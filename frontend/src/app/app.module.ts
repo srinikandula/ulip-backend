@@ -48,6 +48,10 @@ import { BulkUploadComponent } from './components/bulk-upload/bulk-upload.compon
 import { DragdropfileDirective } from './directive/dragdropfile.directive';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { LoadingInterceptor } from './loading.interceptor';
+import { UsersAccessComponent } from './components/users-access/users-access.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import {BnNgIdleService} from "bn-ng-idle";
+import {FloatLabelModule} from "primeng/floatlabel";
 
 
 
@@ -101,6 +105,7 @@ import { LoadingInterceptor } from './loading.interceptor';
     BulkUploadComponent,
     DragdropfileDirective,
     SpinnerComponent,
+    UsersAccessComponent,
 
   ],
   imports: [
@@ -133,10 +138,12 @@ import { LoadingInterceptor } from './loading.interceptor';
     ProgressBarModule,
     SliderModule,
     MultiSelectModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgxPaginationModule,
+    NgMultiSelectDropDownModule.forRoot(),
+    FloatLabelModule
 
   ],
-  providers: [KeypageService, MessageService, ToastService, WebsocketService, ConfirmationService, {
+  providers: [KeypageService, MessageService, ToastService, WebsocketService, ConfirmationService, BnNgIdleService, {
     provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
   }],
   bootstrap: [AppComponent]

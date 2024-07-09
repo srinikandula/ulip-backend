@@ -8,7 +8,7 @@
                 alt="mahindra logo" id="mahindra_logo">
         </div>
 
-        <div id="left_container_home" class="grey_font">Home</div>
+<!--        <div id="left_container_home" class="grey_font">Home</div>-->
         <!-- <div id="menu_items_container"> -->
         <ul id="left_container_menu" [style.display]="sidebarOpen?'block':'flex'"
         [style.flexDirection]="sidebarOpen?'column':'column'"
@@ -71,6 +71,15 @@
                 <div id="red_bar" [style.backgroundColor]="keypage.pageNav === 4 ? '#D3223A' : ''"></div>
                 <i class="fa-sharp fa-solid fa-cloud-arrow-up"></i>
                 <span [style.display]="sidebarOpen?'block':'none'">Bulk Upload</span>
+            </li>
+            <li id="menu_view_logs" class="grey_font menu_items" *ngIf="userRole === 'Admin'"
+                [style.borderLeftColor]="this.keypage.pageNav === 5 ? '#D6223A' : 'transparent'"
+                [style.color]="this.keypage.pageNav === 5 ? '#D3223A' : ''" (click)="navigateToUserAccess()"
+                [style.justifyContent]="sidebarOpen?'':'center'"
+            >
+                <div id="red_bar" [style.backgroundColor]="keypage.pageNav === 5 ? '#D3223A' : ''"></div>
+                <i class="fa-solid fa-users"></i>
+                <span [style.display]="sidebarOpen?'block':'none'">User Access</span>
             </li>
 
             <!-- </div> -->

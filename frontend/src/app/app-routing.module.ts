@@ -10,39 +10,62 @@ import { FetchulipComponent } from './components/tools/fetchulip/fetchulip.compo
 import { ProfileComponent } from './components/profile/profile.component';
 import { InfographicsComponent } from './components/infographics/infographics.component';
 import {BulkUploadComponent} from "./components/bulk-upload/bulk-upload.component";
+import {UsersAccessComponent} from "./components/users-access/users-access.component";
+import {AuthGuard} from "./healper/auth.guard";
 
 
 const routes: Routes = [
   {
     path: "home",
+    data:{expectedRole:['2', '1']},
     component: HomeComponent,
     children: [{
       path: "createkey",
+      canActivate:[AuthGuard],
+      data:{expectedRole:['2', '1']},
       component: ApiHomeComponent
     },
     {
       path: "keylogs",
+      data:{expectedRole:['2', '1']},
+      canActivate:[AuthGuard],
       component: ApiLogsComponent
     },
     {
       path: 'editkey/:apikey',
+      data:{expectedRole:['2', '1']},
+      canActivate:[AuthGuard],
       component: EditKeyComponent
     },
     {
       path: 'tools/fetchulip',
+      data:{expectedRole:['2', '1']},
+      canActivate:[AuthGuard],
       component: FetchulipComponent
     },
     {
-      path: 'profile',
+      path: 'changePassword',
+      data:{expectedRole:['2', '1']},
+      canActivate:[AuthGuard],
       component: ProfileComponent
     },
     {
       path: 'analytics',
+      data:{expectedRole:['2', '1']},
+      canActivate:[AuthGuard],
       component: InfographicsComponent
     },
     {
       path: 'bulkUpload',
+      canActivate:[AuthGuard],
+      data:{expectedRole:['2', '1']},
       component: BulkUploadComponent
+    },
+      {
+      path: 'userAccess',
+        canActivate:[AuthGuard],
+        data:{expectedRole:['1']},
+      component: UsersAccessComponent
     }
 
     ]

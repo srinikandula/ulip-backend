@@ -6,6 +6,7 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { KeypageService } from 'src/app/services/keypage/keypage.service';
 import { MessageService } from 'primeng/api';
 import {apiService} from "../../services/api/apiservice";
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -14,6 +15,10 @@ import {apiService} from "../../services/api/apiservice";
   styleUrls: ['./api-home.component.css']
 })
 export class ApiHomeComponent implements OnInit {
+  public searchTerm: string = '';
+  public page: number = 1;
+  public filteredUsers: any[] = [];
+
 handleOnEditKeyPressed(apikey: string) {
   this.router.navigate([`home/editkey/${apikey}`])
 }
@@ -52,6 +57,7 @@ handleOnEditKeyPressed(apikey: string) {
         console.log(data)
 
         this.apiHome = data.allKey
+        this.filteredUsers = this.apiHome
         // this.apiHome.sort(function(a,b){
         //   return new Date(b.updatedAt) - new Date(a.updatedAt);
         // });
@@ -59,6 +65,7 @@ handleOnEditKeyPressed(apikey: string) {
       },
       error: error => {
         console.error("There is an error", error)
+         Swal.fire('error',error.error.error,'error')
       }
     })
 
@@ -73,9 +80,25 @@ handleOnEditKeyPressed(apikey: string) {
   ngOnInit() {
     this.keypage.pageNav = 0
   }
-  
+  filterUsers(): void {
+    if (!this.searchTerm) {
+      this.filteredUsers = this.apiHome;
+    } else {
+      this.filteredUsers = this.apiHome.filter(user =>
+        user.applicationName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        user.ownerName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        user.contactNo.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+  }
   handleOnLogout() {
     localStorage.removeItem("authtoken")
+    localStorage.removeItem("roleName")
+    localStorage.removeItem("ulip-person-tokenId")
+    localStorage.removeItem("roleId")
+    localStorage.removeItem("ulip-person-username")
+    localStorage.removeItem("currentUser")
+    console.log("LocalStorage after removal:", localStorage);
     this.router.navigate(['login'])
   }
   handleOnCreate() {

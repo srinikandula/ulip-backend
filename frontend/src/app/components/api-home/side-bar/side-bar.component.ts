@@ -106,7 +106,8 @@ export class SideBarComponent implements OnInit {
     this.keypage.createKeyBool = false
   }
   handleOnCreateKey() {
-    this.keypage.createKeyBool = false
+    console.log(123)
+    // this.keypage.createKeyBool = false
     const apiKey = self.crypto.randomUUID();
     let mySelectedString: string = '0000000000000000000000000000000'
     console.log("my selected is ", this.selectedUlipAccessUnOf)
@@ -176,14 +177,24 @@ export class SideBarComponent implements OnInit {
             }
           })
           this.applicationName = ''
+          this.ownerName = ''
+          this.contactName = ''
+          this.emailAddress = ''
+          this.positionOptions = [];
+          this.keypage.createKeyBool = false;
 
         },
         error: error => {
+          console.log("-------",error)
           console.error("There is an error", error.error)
           if (error.error.errors) {
             for (let i = 0; i < error.error.errors.length; ++i) {
               this.messageService.add({ severity: 'error', summary: 'Failed', detail: error.error.errors[i].msg })
             }
+          }
+          if(error.error.message){
+            this.messageService.add({ severity: 'error', summary: 'Failed', detail: error.error.message })
+
           }
 
         }
@@ -195,7 +206,25 @@ export class SideBarComponent implements OnInit {
 
 
   }
-
+  validateEmail(event: KeyboardEvent) {
+    const input = event.key;
+    if (/[0-9a-zA-Z@.]/.test(input)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
+  validateNumberAndChar(event: KeyboardEvent) {
+    const input = event.key;
+    // Regular expression to allow alphanumeric characters, @ symbol, dot, and dash
+    if (/^[a-zA-Z0-9@.\-]*$/.test(input)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
   validateNumber(event: KeyboardEvent) {
     const input = event.key;
     if (/[0-9]/.test(input)) {
