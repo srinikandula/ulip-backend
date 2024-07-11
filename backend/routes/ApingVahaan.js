@@ -274,9 +274,7 @@ router.post("/createLog", [
 router.post("/fetchKeys", fetchuser, async (req, res) => {
     try {
 
-        // let allKey = await ApiKeys.findAll({ where: { username: req.usn } })
-        let allKey = await ApiKeys.findAll()
-
+        let allKey = await ApiKeys.findAll({ where: { username: req.usn } })
         res.send({ success: true, allKey })
 
     } catch (error) {
