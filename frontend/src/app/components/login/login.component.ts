@@ -41,7 +41,8 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("ulip-person-username", data.user.username)
           localStorage.setItem("roleId", data.user.roleId)
           localStorage.setItem("roleName", data.user.roleName)
-          this.router.navigate(['home/createkey'])
+          // this.router.navigate(['home/createkey'])
+          this.router.navigate(['home/tools/fetchulip'])
           this.messageService.add({ severity: 'success', summary: 'Login Success', detail: ""})
           localStorage.setItem('currentUser', JSON.stringify(data));
         }
