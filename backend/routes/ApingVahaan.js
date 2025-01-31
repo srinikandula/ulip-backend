@@ -834,6 +834,7 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'),fetchuser, fetchapiu
                                     rc_tax_upto.setHours(0, 0, 0, 0);
                                 }
                                 console.log(rc_tax_upto,'------------------------rc_tax_upto')
+                                console.log(rc_tax_upto > currentDate,'------------------------rc_tax_upto > currentDate')
                                 const rc_fit_upto = vehicleDetails.rc_fit_upto ? new Date(vehicleDetails.rc_fit_upto) : null;
                                 console.log(rc_fit_upto,'------------------------rc_fit_upto')
                                 const rc_pucc_upto = vehicleDetails.rc_pucc_upto ? new Date(vehicleDetails.rc_pucc_upto) : null;
@@ -843,7 +844,7 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'),fetchuser, fetchapiu
                                 const valid = (rc_tax_upto && rc_fit_upto && rc_pucc_upto && rc_insurance_upto && rc_regn_upto &&
                                     rc_tax_upto > currentDate && rc_fit_upto > currentDate && rc_pucc_upto > currentDate &&
                                     rc_insurance_upto > currentDate && rc_regn_upto > currentDate) ? "Fit To Go" : "Not Fit To Go";
-    
+                                    console.log(valid,'---------------valid')
                                 responses.push({
                                     vehiclenumber: vehicleNumber,
                                     OwnerName: vehicleDetails.rc_owner_name || 'OwnerName Not Found',
