@@ -830,7 +830,8 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'),fetchuser, fetchapiu
                                 console.log(vehicleDetails.rc_tax_upto,'------------------------vehicleDetails.rc_tax_upto')
                                 if(vehicleDetails.rc_tax_upto=='LTT'){
                                     rc_tax_upto = currentDate
-                                    rc_tax_upto.setDate(rc_tax_upto.getDate() + 2)
+                                    rc_tax_upto.setDate(rc_tax_upto.getDate() + 2);
+                                    rc_tax_upto.setHours(0, 0, 0, 0);
                                 }
                                 console.log(rc_tax_upto,'------------------------rc_tax_upto')
                                 const rc_fit_upto = vehicleDetails.rc_fit_upto ? new Date(vehicleDetails.rc_fit_upto) : null;
