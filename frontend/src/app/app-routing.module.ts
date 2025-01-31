@@ -19,21 +19,34 @@ const routes: Routes = [
     path: "home",
     data:{expectedRole:['2', '1']},
     component: HomeComponent,
-    children: [{
+    children: [
+      {
+        path: 'tools/fetchulip',
+        data:{expectedRole:['2', '1']},
+        canActivate:[AuthGuard],
+        component: FetchulipComponent
+      },
+      {
+        path: 'bulkUpload',
+        canActivate:[AuthGuard],
+        data:{expectedRole:['2', '1']},
+        component: BulkUploadComponent
+      },
+        {
       path: "createkey",
       canActivate:[AuthGuard],
-      data:{expectedRole:['2', '1']},
+      data:{expectedRole:[ '1']},
       component: ApiHomeComponent
     },
     {
       path: "keylogs",
-      data:{expectedRole:['2', '1']},
+      data:{expectedRole:[ '1']},
       canActivate:[AuthGuard],
       component: ApiLogsComponent
     },
     {
       path: 'editkey/:apikey',
-      data:{expectedRole:['2', '1']},
+      data:{expectedRole:['1']},
       canActivate:[AuthGuard],
       component: EditKeyComponent
     },
@@ -51,15 +64,9 @@ const routes: Routes = [
     },
     {
       path: 'analytics',
-      data:{expectedRole:['2', '1']},
+      data:{expectedRole:['1']},
       canActivate:[AuthGuard],
       component: InfographicsComponent
-    },
-    {
-      path: 'bulkUpload',
-      canActivate:[AuthGuard],
-      data:{expectedRole:['2', '1']},
-      component: BulkUploadComponent
     },
       {
       path: 'userAccess',
