@@ -829,14 +829,14 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'),fetchuser, fetchapiu
                                 let rc_tax_upto = vehicleDetails.rc_tax_upto ? new Date(tax_conv) : null;
                                 console.log(vehicleDetails.rc_tax_upto,'------------------------vehicleDetails.rc_tax_upto')
                                 if(vehicleDetails.rc_tax_upto=='LTT'){
-                                    rc_tax_upto = currentDate
-                                    rc_tax_upto.setDate(rc_tax_upto.getDate() + 2);
+                                    rc_tax_upto = new Date();
+                                    rc_tax_upto.setDate(rc_tax_upto.getDate() + 2); // Ensure 2 days ahead
                                     rc_tax_upto.setHours(0, 0, 0, 0);
                                 }
                                 console.log(rc_tax_upto,'------------------------rc_tax_upto')
+                                console.log(currentDate,'------------------------currentDate')
                                 console.log(rc_tax_upto > currentDate,'------------------------rc_tax_upto > currentDate')
                                 const rc_fit_upto = vehicleDetails.rc_fit_upto ? new Date(vehicleDetails.rc_fit_upto) : null;
-                                console.log(rc_fit_upto,'------------------------rc_fit_upto')
                                 const rc_pucc_upto = vehicleDetails.rc_pucc_upto ? new Date(vehicleDetails.rc_pucc_upto) : null;
                                 const rc_insurance_upto = vehicleDetails.rc_insurance_upto ? new Date(vehicleDetails.rc_insurance_upto) : null;
                                 const rc_regn_upto = vehicleDetails.rc_regn_upto ? new Date(vehicleDetails.rc_regn_upto) : null;
@@ -844,7 +844,6 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'),fetchuser, fetchapiu
                                 const valid = (rc_tax_upto && rc_fit_upto && rc_pucc_upto && rc_insurance_upto && rc_regn_upto &&
                                     rc_tax_upto > currentDate && rc_fit_upto > currentDate && rc_pucc_upto > currentDate &&
                                     rc_insurance_upto > currentDate && rc_regn_upto > currentDate) ? "Fit To Go" : "Not Fit To Go";
-                                    console.log(valid,'---------------valid')
                                 responses.push({
                                     vehiclenumber: vehicleNumber,
                                     OwnerName: vehicleDetails.rc_owner_name || 'OwnerName Not Found',
