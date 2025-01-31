@@ -800,6 +800,9 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'),fetchuser, fetchapiu
                                 const vehicleDetails = parsedData.VehicleDetails;
                                 let tax_conv = vehicleDetails.rc_tax_upto ? parseDate(vehicleDetails.rc_tax_upto) : null;
                                 const rc_tax_upto = vehicleDetails.rc_tax_upto ? new Date(tax_conv) : null;
+                                if(vehicleDetails.rc_tax_upto=='LTT'){
+                                    rc_tax_upto = currentDate
+                                }
                                 const rc_fit_upto = vehicleDetails.rc_fit_upto ? new Date(vehicleDetails.rc_fit_upto) : null;
                                 const rc_pucc_upto = vehicleDetails.rc_pucc_upto ? new Date(vehicleDetails.rc_pucc_upto) : null;
                                 const rc_insurance_upto = vehicleDetails.rc_insurance_upto ? new Date(vehicleDetails.rc_insurance_upto) : null;
