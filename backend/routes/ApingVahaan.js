@@ -35,16 +35,43 @@ function excelSerialDateToJSDate(serial) {
     const day = ("0" + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
 }
+// function parseDate(dateStr) {
+//     // Split the date string by '-'
+//     const parts = dateStr.split('-');
+//     // Extract the day, month, and year
+//     const day = parseInt(parts[0], 10);
+//     const month = parseInt(parts[1], 10) - 1; // Months are 0-based in JavaScript Date
+//     const year = parseInt(parts[2], 10);
+//     // Create and return the new Date object
+//     return new Date(year, month, day);
+// }
+
 function parseDate(dateStr) {
-    // Split the date string by '-'
-    const parts = dateStr.split('-');
-    // Extract the day, month, and year
-    const day = parseInt(parts[0], 10);
-    const month = parseInt(parts[1], 10) - 1; // Months are 0-based in JavaScript Date
-    const year = parseInt(parts[2], 10);
-    // Create and return the new Date object
-    return new Date(year, month, day);
+    if (!dateStr) return null; // Handle null, undefined, or empty string
+
+    if (dateStr instanceof Date && !isNaN(dateStr)) {
+        return dateStr; // Already a valid Date object
+    }
+
+    if (typeof dateStr !== "string") return null;
+
+    // Check if format is DD-MM-YYYY
+    if (/^\d{2}-\d{2}-\d{4}$/.test(dateStr)) {
+        const parts = dateStr.split('-');
+        const day = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1; // JS months are 0-based
+        const year = parseInt(parts[2], 10);
+        return new Date(year, month, day);
+    }
+
+    // Check if format is YYYY-MM-DD
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+        return new Date(dateStr); // JS can directly parse YYYY-MM-DD
+    }
+
+    return null; // Return null if format is incorrect
 }
+
 router.post("/sendmailcreatekey", [
     body("email", "Must be a email").isEmail(),
     body("applicationName", "Application Name must have some value").isLength({ min: 1 }),
@@ -273,9 +300,8 @@ router.post("/createLog", [
 
 router.post("/fetchKeys", fetchuser, async (req, res) => {
     try {
-
-       // let allKey = await ApiKeys.findAll({ where: { username: req.usn } })
-         let allKey = await ApiKeys.findAll()
+        //let allKey = await ApiKeys.findAll({ where: { username: req.usn } })
+        let allKey = await ApiKeys.findAll()
         res.send({ success: true, allKey })
 
     } catch (error) {
@@ -799,7 +825,16 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'),fetchuser, fetchapiu
                                 const parsedData = await parser.parseStringPromise(json.response[0].response);
                                 const vehicleDetails = parsedData.VehicleDetails;
                                 let tax_conv = vehicleDetails.rc_tax_upto ? parseDate(vehicleDetails.rc_tax_upto) : null;
-                                const rc_tax_upto = vehicleDetails.rc_tax_upto ? new Date(tax_conv) : null;
+                                let rc_tax_upto = vehicleDetails.rc_tax_upto ? new Date(tax_conv) : null;
+                                console.log(vehicleDetails.rc_tax_upto,'------------------------vehicleDetails.rc_tax_upto')
+                                if(vehicleDetails.rc_tax_upto=='LTT'){
+                                    rc_tax_upto = new Date();
+                                    rc_tax_upto.setDate(rc_tax_upto.getDate() + 2); // Ensure 2 days ahead
+                                    rc_tax_upto.setHours(0, 0, 0, 0);
+                                }
+                                console.log(rc_tax_upto,'------------------------rc_tax_upto')
+                                console.log(currentDate,'------------------------currentDate')
+                                console.log(rc_tax_upto > currentDate,'------------------------rc_tax_upto > currentDate')
                                 const rc_fit_upto = vehicleDetails.rc_fit_upto ? new Date(vehicleDetails.rc_fit_upto) : null;
                                 const rc_pucc_upto = vehicleDetails.rc_pucc_upto ? new Date(vehicleDetails.rc_pucc_upto) : null;
                                 const rc_insurance_upto = vehicleDetails.rc_insurance_upto ? new Date(vehicleDetails.rc_insurance_upto) : null;
@@ -808,7 +843,6 @@ router.post("/ulipxl/:ulipIs/:reqIs", upload.single('file'),fetchuser, fetchapiu
                                 const valid = (rc_tax_upto && rc_fit_upto && rc_pucc_upto && rc_insurance_upto && rc_regn_upto &&
                                     rc_tax_upto > currentDate && rc_fit_upto > currentDate && rc_pucc_upto > currentDate &&
                                     rc_insurance_upto > currentDate && rc_regn_upto > currentDate) ? "Fit To Go" : "Not Fit To Go";
-    
                                 responses.push({
                                     vehiclenumber: vehicleNumber,
                                     OwnerName: vehicleDetails.rc_owner_name || 'OwnerName Not Found',
