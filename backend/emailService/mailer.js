@@ -27,8 +27,8 @@ exports.sendMails = async (userObj, done) => {
 
     let mailOptions = {
         from: process.env.fromMail,
-        to: ['Srivyas.kopperla@mahindralogistics.com','29002168@mahindralogistics.com'],
-        cc: ['29002891@mahindralogistics.com',userObj.email],
+        to: ['Srivyas.kopperla@mahindralogistics.com'],
+        cc: ['MLLPRODUCT-IT@mahindralogistics.com',userObj.email],
         subject: 'User Access Creation - ULIP',
         html: templateHtmlBody
     };
