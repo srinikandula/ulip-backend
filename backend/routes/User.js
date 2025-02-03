@@ -281,7 +281,7 @@ router.post("/login",
 
     router.post('/updateUser', fetchuser,async (req, res) => {
         
-        const { username,email,tokenId,contactNo } = req.body;
+        const { username,email,tokenId,contactNo, roleName} = req.body;
         try {
             // Find the user by username
             const user = await User.findOne({ where: { username } });
@@ -293,7 +293,8 @@ router.post("/login",
                 const up= await User.update({
                     email:email,
                     tokenId:tokenId,
-                    contactNo:contactNo
+                    contactNo:contactNo,
+                    roleName:roleName
                 }, {
                     where: {
                         username:username 
