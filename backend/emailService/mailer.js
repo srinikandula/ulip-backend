@@ -28,7 +28,7 @@ exports.sendMails = async (userObj, done) => {
     let mailOptions = {
         from: process.env.fromMail,
         to: ['Srivyas.kopperla@mahindralogistics.com'],
-        cc: ['MLLPRODUCT-IT@mahindralogistics.com',userObj.email],
+        cc: ['MLLPRODUCT-IT@mahindralogistics.com','tms.support@mllltd.zohodesk.com',userObj.email],
         subject: 'User Access Creation - ULIP',
         html: templateHtmlBody
     };

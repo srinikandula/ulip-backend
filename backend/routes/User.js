@@ -285,7 +285,12 @@ router.post("/login",
         try {
             // Find the user by username
             const user = await User.findOne({ where: { username } });
-    
+             let roleId ;
+             if (roleName == 'Admin'){
+               roleId = '1'
+             }else{
+               roleId='2'
+             }
             if (!user) {
                 return res.status(404).json({ message: "User not found" });
             }else{
@@ -294,7 +299,9 @@ router.post("/login",
                     email:email,
                     tokenId:tokenId,
                     contactNo:contactNo,
-                    roleName:roleName
+                    roleName:roleName,
+                    roleId:roleId
+
                 }, {
                     where: {
                         username:username 
