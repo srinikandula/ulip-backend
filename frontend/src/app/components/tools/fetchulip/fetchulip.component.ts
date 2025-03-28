@@ -37,20 +37,51 @@ export class FetchulipComponent implements OnInit {
       }
     }
   }
-  findUnixDate(dateString: string) {
-    const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    const dateArr = dateString.split("-")
-    const date = dateArr[0]
-    const myMont = month.indexOf(dateArr[1]) + 1
-    const year = dateArr[2]
-    const dateInString: string = String(year) + "-" + String(myMont) + "-" + String(date)
-    console.log("date in string is ", dateInString)
-    const myDateIs = new Date(dateInString)
+  // findUnixDate(dateString: string) {
+  //   const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  //   const dateArr = dateString.split("-")
+  //   const date = dateArr[0]
+  //   const myMont = month.indexOf(dateArr[1]) + 1
+  //   const year = dateArr[2]
+  //   const dateInString: string = String(year) + "-" + String(myMont) + "-" + String(date)
+  //   console.log("date in string is ", dateInString)
+  //   const myDateIs = new Date(dateInString)
+  //   const unixTimestamp = Math.floor(myDateIs.getTime() / 1000);
+  //
+  //   return unixTimestamp;
+  // }
+  findUnixDate(dateString: string | null | undefined) {
+    if (!dateString) {  // Check if dateString is undefined or null
+      console.warn("findUnixDate received an undefined or null dateString");
+      return 0;  // Return a default value (Unix timestamp 0) or handle as needed
+    }
+
+    const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const dateArr = dateString.split("-");
+
+    if (dateArr.length !== 3) {  // Ensure the date format is correct
+      console.error("Invalid date format received in findUnixDate:", dateString);
+      return 0;
+    }
+
+    const date = dateArr[0];
+    const myMonth = month.indexOf(dateArr[1]) + 1;
+    const year = dateArr[2];
+
+    if (myMonth === 0) {  // If month is not found in the list
+      console.error("Invalid month format in dateString:", dateString);
+      return 0;
+    }
+
+    const dateInString: string = `${year}-${myMonth}-${date}`;
+    console.log("Formatted date string:", dateInString);
+
+    const myDateIs = new Date(dateInString);
     const unixTimestamp = Math.floor(myDateIs.getTime() / 1000);
 
-    return unixTimestamp
-
+    return unixTimestamp;
   }
+
   fetchArrObj(mydata2: any) {
 
 
@@ -194,11 +225,33 @@ export class FetchulipComponent implements OnInit {
           console.log("Inside the date conversion")
           let rcRegnDate = Number(this.findUnixDate(mydata.rc_regn_upto))
           let rcFitDate = Number(this.findUnixDate(mydata.rc_fit_upto))
-          let rcTaxDateValStr = String(mydata.rc_tax_upto)
-          let rcTaxDateArr = rcTaxDateValStr.split("-")
-          let rcTaxDateFinStr = String(rcTaxDateArr[2]) + "-" + String(rcTaxDateArr[1]) + "-" + String(rcTaxDateArr[0])
-          let rcTaxDateVal = new Date(rcTaxDateFinStr)
-          let rcTaxDate = Number(Math.floor(rcTaxDateVal.getTime() / 1000))
+
+          // let rcTaxDateValStr = String(mydata.rc_tax_upto)
+          // let rcTaxDateArr = rcTaxDateValStr.split("-")
+          // let rcTaxDateFinStr = String(rcTaxDateArr[2]) + "-" + String(rcTaxDateArr[1]) + "-" + String(rcTaxDateArr[0])
+          // let rcTaxDateVal = new Date(rcTaxDateFinStr)
+          // let rcTaxDate = Number(Math.floor(rcTaxDateVal.getTime() / 1000))
+
+          let rcTaxDate: number = 0; // Declare rcTaxDate with a default value
+          let rcTaxDateVal: any
+          let rcTaxDateFinStr: any
+          let rcTaxDateValStr = mydata.rc_tax_upto ? String(mydata.rc_tax_upto) : ""; // Check if it exists
+          if (rcTaxDateValStr && rcTaxDateValStr.includes("-")) {
+            let rcTaxDateArr = rcTaxDateValStr.split("-");
+            if (rcTaxDateArr.length === 3) { // Ensure valid format (YYYY-MM-DD or DD-MM-YYYY)
+              rcTaxDateFinStr = `${rcTaxDateArr[2]}-${rcTaxDateArr[1]}-${rcTaxDateArr[0]}`;
+              rcTaxDateVal = new Date(rcTaxDateFinStr);
+              rcTaxDate = Math.floor(rcTaxDateVal.getTime() / 1000); // Assign value here
+              console.log("RC Tax Date: ", rcTaxDate);
+            } else {
+              console.error("Invalid rc_tax_upto format:", rcTaxDateValStr);
+            }
+          } else {
+            console.warn("rc_tax_upto is undefined, empty, or not in the correct format.");
+          }
+
+// Now rcTaxDate will always have a value (either a valid date or 0)
+
           let rcInsuDate = Number(this.findUnixDate(mydata.rc_insurance_upto))
           let rcPuccDate = Number(this.findUnixDate(mydata.rc_pucc_upto))
           console.log("my rc tax date ", rcTaxDate, rcTaxDateVal, todayDateUnix, mydata.rc_tax_upto, rcTaxDateFinStr)
