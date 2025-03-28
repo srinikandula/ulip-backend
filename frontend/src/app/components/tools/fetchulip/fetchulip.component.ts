@@ -182,7 +182,13 @@ export class FetchulipComponent implements OnInit {
           reqObj[myKeyArr[i]] = this.textInputUlip[i]
           continue
         }
-        reqObj[myKeyArr[i]] = this.textInputUlip[i]
+        //         reqObj[myKeyArr[i]] = this.textInputUlip[i]
+
+        if (myKeyArr[i] === 'rc_regn_no' || myKeyArr[i].toLowerCase().includes("vehicle")) {
+          reqObj[myKeyArr[i]] = this.textInputUlip[i].toUpperCase();
+        } else {
+          reqObj[myKeyArr[i]] = this.textInputUlip[i];
+        }
       }
     }
     else {
